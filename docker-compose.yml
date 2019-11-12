@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  client:
+    build: ./client
+    ports:
+      - 8080:8080
+    volumes:
+      - ./client:/data
+    environment:
+      - API_URL=server:8081/
+
+  server:
+    build: ./server
+    ports:
+      - 8081:8081
+    volumes:
+      - ./server:/data
+    depends_on: 
+      - server-database
+    environment:
+      - DATABASE_URL=server-database:27017
+      - FIREBASE_TYPE=service_account
+      - FIREBASE_PROJECT_ID=sw-project-9335a
+      - FIREBASE_PRIVATE_KEY_ID=d69f8214ed45413ff6e4b2aa81574934444f8905
+      - FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCPzwgoAth4c/LA\nbHiglIAeClNh7QqTHDgNVIm4ENJCZUItDT/oZVJRXgNLnCN6xg761aDl3Kj/tAwY\nabUy+8naXOcGc4+rNYyn9r34vEpzsJ7LoxZhzDOSAqw+zkUzZioKq72ELLXi5pQp\nnhurabjmxb4FlfOd4aWOvZwiPus3tdldB3+h3lfGOr68mOrUObrs/spu37pFcz+/\ntpb6CniZfN2KBhRbe+GLdrIPBzHqlY7LLfHJcEcDDlhjiqDlPz+yFtqEntwy6JSh\n9Ba21Kynw4pFtYc37cTQaj5dajkI2Eo0ynTkCvT9s3Ep9fzWF3sEB0OHx+5VAPFw\n7NZ6Asy9AgMBAAECggEAILpGWiq5noIOuRWGh078cDm727GhQjT+GaSHWhUz8KnQ\nO2YESQyEBSH+4H52gZqg7ptfDGjhKh5M0WJ/Owzb1X7mkcyLYfSkH9aSydB6JiWI\nIgJp1dRt2RkUH4/8ZjPmNfr7PKEbPLnqdqU1mVdMXfKbKfTEFkZz0c4bghytFcaM\nyflcd8MH85Q+Glq6myabdLJ++HbvDE3er919UkHi6sHx18IFuz934Fkzfy7yGXOn\n2ZGGE8h7+BiOq/uLSCITMOYpegf1OAFKpQ4wecwikbWwMc3drdbap6rdphCmDQC3\nLNMyJy9ZkQQ4QVzHVZdMIaqOxjS4AdMhJO5Aw6TiKQKBgQDDZ07PIVm2PfHH588J\nxt1O1ArEIkFJ6h2hc4gqOmRtTUuUnqajPlYKrHOcdn9jCdpuBRgA+u2dSprNnZsk\nUz5xVFfkwV064Mi7eC4nW29QaMMkh2DTpbO5yVtajkLcMVRxasijo97kAq4mVGvt\n1/tVcDbzYGsDzckevEhAwdkvJQKBgQC8Z7cK7fls712dKM0+dSdXD9GCPz/nB8ay\nRLY99pvxvNXGwWIEREHhFkVakEnSwjv+/rrTgaKWn7rpHH/gRAC5Kzim8yz6MYZs\nYh8ybBCVkq1Onn6XTFeQzQIoPWT4vM+/jGThi7zP6LSxbXNbAsjxl4bKjBmQeswi\no2ueJP1fuQKBgQCSIUkTp9pCatLM7/OqWRkaIYMnqIJw929PVWooQmDmSN7T902h\nWTXZZ5xSD2A2vaCnlJGd8goPDkL0r//cy5AwCqZsgZrqND6JzFefwUZeuOnvAHsN\n7KaasxXpg+hGaXHAG96OWjePBt4b9hh813+zJmdB3QJK5vOYU7ApFY8JLQKBgQCP\nL0d2P/uy5YvA1/R8Bi86xGPWV9lp7If+jafvGY/UvU2+utOSKInk1bcpp8TjLwjH\nt7Im8jutu4Eijq1EtInUMFvizaceEit2DXBmMqi78/hQarYMqFFYU+XSzS4CuAQv\nMDSvETMS02kX+vWTcl9i9GTVZHo9SoX/wTEVxEjnyQKBgQCJjkUJ6bMQom1b9+dl\nLHiVDRclobxKIPKgu/pyI8GEC+U38K0V62VCfFPItT2fov2JVlJudRA4f+uuxgnZ\nEAkvFjjIJ1ANQX9vcuDos5+6RrCHaOjBk4nY2levtezAonAsHaPAct34f3RV3v5y\nDbGg9WlCcZFLfYvcyL/JYOgSxQ==\n-----END PRIVATE KEY-----\n
+      - FIREBASE_CLIENT_EMAIL=firebase-adminsdk-je3pc@sw-project-9335a.iam.gserviceaccount.com
+      - FIREBASE_CLIENT_ID=117490820427343384145
+      - FIREBASE_AUTH_URI=https://accounts.google.com/o/oauth2/auth
+      - FIREBASE_TOKEN_URI=https://oauth2.googleapis.com/token
+      - FIREBASE_AUTH_PROVIDER_X509_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
+      - FIREBASE_CLIENT_X509_CERT_URL=https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-je3pc%40sw-project-9335a.iam.gserviceaccount.com
+    
+  server-database:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db:/data/db
+
+    
