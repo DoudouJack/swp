@@ -2,8 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-const admin = require('firebase-admin');
-//var Post = require("../models/posts");
+const authController = require("./controllers/authController")
 
 const app = express()
 app.use(morgan('combined'))
@@ -42,7 +41,7 @@ db.once("open", function(callback){
 });
 
 
-/* FIREBASE */
+/* FIREBASE 
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -64,27 +63,11 @@ admin.initializeApp({
 
 module.exports = admin;
 
-async function verifyToken(req, res, next) {
-  const idToken = req.headers.authorization
-  
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken)
-    
-    if(decodedToken){
-      req.body.uid = decodedToken.uid
-      return next()
-    } else {
-      return res.status(401).send('Nicht Authorisiert!')
-    }  
-  } catch (e) {
-    return res.status(401).send('Nicht Authorisiert!')
-  }
-}
+*/
 
 // SERVER Setup
-app.get('/', verifyToken, async(req, res) => {
-  res.send("works");
-});
+app.get('/', authController.checkAuth)
+
 
 
 app.listen(process.env.PORT || 8081)
