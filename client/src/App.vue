@@ -1,18 +1,26 @@
 <template>
   <div>
-    <navbar></navbar>
+    <!-- <navbar></navbar> -->
+    <temp></temp>
     <main class="py-4">
       <router-view></router-view>
     </main>
   </div>
 </template>
 <script>
-import navbar from './components/Navbar'
+import temp from './components/Temp'
+
+export default {
+  components: {
+    temp
+  }
+}
+/*import navbar from './components/Navbar'
 export default {
   components: {
     navbar
   }
-}
+}*/
 </script>
 
 <style lang="scss">
@@ -20,13 +28,15 @@ export default {
   $font-stack: 'Raleway', -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   $font-stack-heading:'Montserrat', -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 body{
+  font-family: $font-stack;
+
   h1, h2, h3, h4, h5, h6 {
     font-family:  $font-stack-heading;
   }
 }
 
 #app {
-  font-family: $font-stack;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
