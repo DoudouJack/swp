@@ -3,19 +3,29 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const authController = require("./controllers/authController")
+const user = require('./routes/user.routes');
+
 
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
+app.use('/user', user);
 
 // DB Setup
 var mongoose = require('mongoose');
 
+
+/*
 var DATABASE_URL = process.env.DATABASE_URL || 'server-database:27017'
 var DATABASE_NAME = 'sw-project'
+*/
 
-mongoose.connect(`mongodb://${DATABASE_URL}/{DATABASE_NAME}`, { useNewUrlParser: true });
+var DATABASE_URL = process.env.DATABASE_URL || 'localhost:27017'
+var DATABASE_NAME = 'local'
+
+
+mongoose.connect(`mongodb://${DATABASE_URL}/${DATABASE_NAME}`, { useNewUrlParser: true });
 
 var db = mongoose.connection;
 
@@ -26,7 +36,7 @@ db.on('error', function (error) {
   // See: https://github.com/Automattic/mongoose/issues/5169
   if (error.message && error.message.match(/failed to connect to server .* on first connect/)) {
     setTimeout(function () {
-      mongoose.connect(`mongodb://${DATABASE_URL}/{DATABASE_NAME}`, { useNewUrlParser: true }).catch(() => {
+      mongoose.connect(`mongodb://${DATABASE_URL}/${DATABASE_NAME}`, { useNewUrlParser: true }).catch(() => {
         // empty catch avoids unhandled rejections
       });
     }, 20 * 1000);
