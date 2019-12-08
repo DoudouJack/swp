@@ -1,4 +1,4 @@
-const admin = require('./middlewareDB')
+const admin = require('../con/middlewareDB')
 
 const createAuth = async (idToken) => {
     try {

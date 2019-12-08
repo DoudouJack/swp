@@ -1,22 +1,24 @@
-const { middelwareService } = require('../middleware/middleware')
+const { transactionService } = require('../services/transactions')
 
 
 //const { auth } = middelwareService
 /*
  * call other imported services, or same service but different functions here if you need to
 */
-const checkAuth = async (req, res, next) => {
-  const idToken = req.headers.authorization
-  
+const transaction = async (req, res, next) => { 
+  const userID = req.query.userID 
+
+  // $_GET['userID']
   try {
-    const internalresponse = await middelwareService(idToken)
-    
+    const internalresponse = await transactionService(userID)
+    console.log("internal response")
+    console.log(internalresponse)
     // other service call (or same service, different function can go here)
     // i.e. - await generateBlogpostPreview()
     if(internalresponse){
-      res.status(200).send('Authorisiert!')
+      // return json
     } else {
-      res.status(401).send('Nicht Authorisiert!')
+     // return empty json
     }
     next()
   } catch(e) {
@@ -27,5 +29,5 @@ const checkAuth = async (req, res, next) => {
 }
 
 module.exports = {
-  checkAuth
+    transaction
 }
