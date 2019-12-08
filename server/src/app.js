@@ -16,6 +16,9 @@ app.use(cors())
 app.get('/', authController.checkAuth)
 app.get('/transactions', generalController.transaction)
 app.get('/createTransaction', generalController.createTransaction)
+app.get('/createUser', generalController.createUser)
+
+app.get('/getUserbyID', generalController.getUserByID)
 
 
 app.listen(process.env.PORT || 8081)
