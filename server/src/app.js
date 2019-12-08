@@ -15,7 +15,7 @@ app.use(cors())
 // ROUTES
 app.get('/', authController.checkAuth)
 app.get('/transactions', generalController.transaction)
-app.get('/user', )
+
 
 
 app.listen(process.env.PORT || 8081)
