@@ -1,19 +1,44 @@
 const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
-const { transactionSchema } = require('../models/transaction_schema')
+Transaction = require('../models/transaction_schema')
 
 const getTransactions = async (userID) => {
     try {
         console.log(userID)
         console.log("IN HERE")
-   
-    
-        var Transaction = mongoose.model('Transaction', transactionSchema, "Transaction")
+        
+        /* let collection2 = [];
 
-        Transaction.find({"transactionID": "t2"}, function(err,collection){ 
-            if (err) console.log(err);
-            console.log(collection)
-         
+        const query = await Transaction.get( (err,collection) => { 
+            if (err) {
+                console.log(err)
+            }
+            else{
+                console.log(collection);
+                return collection
+            } 
+        }); */
+
+        const transactions = await Transaction.find({}).exec();
+
+        return transactions;
+       
+    } catch (e) {
+        return false
+    }
+}
+
+const createTransactions = async (userID) => {
+    try {
+
+        let transaction = new Transaction()
+
+        /* TODO  */
+        transaction.transactionID = 'julian123'
+
+        transaction.save( (err) => { 
+            if (err) console.log(err)
+            else console.log('saved')
         });
 
         
@@ -25,5 +50,6 @@ const getTransactions = async (userID) => {
 }
 
 module.exports = {
-    transactionService: getTransactions
+    transactionServiceGet: getTransactions,
+    transactionServiceCreate: createTransactions,
 }

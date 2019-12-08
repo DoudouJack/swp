@@ -1,10 +1,16 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var transactionSchema = new Schema({
-    _id: Schema.Types.ObjectId,
-    transactionID: String,
-    dateOfPayment: String,
+
+/* TODO EXTEND REQUIRED */
+var transaction = mongoose.Schema({
+    transactionID: {
+        type: String,
+        required: true
+    },
+    dateOfPayment: {
+        type: String,
+        default: Date.now
+    },
     activityID: String,
     userID: String,
     amount: String,
@@ -13,6 +19,8 @@ var transactionSchema = new Schema({
 });
 
 
-module.exports = {
-    transactionSchema
+var Transaction = module.exports = mongoose.model('Transaction', transaction)
+
+module.exports.get = function (callback) {
+    Transaction.find(callback)
 }

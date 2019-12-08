@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 
 var DATABASE_URL = process.env.DATABASE_URL || 'server-database:27017'
-var DATABASE_NAME = 'local'
+var DATABASE_NAME = 'sw-project'
+console.log(DATABASE_URL)
 
 mongoose.connect(`mongodb://${DATABASE_URL}/${DATABASE_NAME}`, { useNewUrlParser: true });
 
