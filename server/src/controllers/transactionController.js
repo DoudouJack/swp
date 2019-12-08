@@ -24,7 +24,7 @@ const transaction = async (req, res, next) => {
     } else {
       // return empty json
       res.status(404).json({
-        message: 'No content',
+        message: 'No data entries available. Please create some in /createTransaction before.',
         data: []
       })
     }
@@ -38,25 +38,30 @@ const transaction = async (req, res, next) => {
 
 
 const createTransaction = async (req, res, next) => {
-  const userID = req.query.userID
+  const userID = req.body.userID
+  const transactionID = req.body.transactionID
+  const activityID = req.body.activityID
+  const amount = req.body.amount
+  const currency = req.body.currency
+  const isPaid = req.body.isPaid
 
-  // $_GET['userID']
   try {
-    const internalresponse = await transactionServiceCreate(userID)
+    const internalresponse = await transactionServiceCreate(userID, transactionID, activityID, amount, currency, isPaid)
     console.log("internal response create")
     console.log(internalresponse)
-    // other service call (or same service, different function can go here)
-    // i.e. - await generateBlogpostPreview()
-    if (internalresponse) {
-      // return json
+    
+    if (internalresponse !== false) {
+      res.sendStatus(200).json({
+        "message" : "Saved Succesfully"
+      })
     } else {
-      // return empty json
+      res.sendStatus(404).json({
+        "message" : "Error while saving"
+      })
     }
-    next()
   } catch (e) {
     console.log(e.message)
     res.sendStatus(500) && next(error)
-
   }
 }
 

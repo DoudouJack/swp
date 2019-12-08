@@ -28,21 +28,20 @@ const getTransactions = async (userID) => {
     }
 }
 
-const createTransactions = async (userID) => {
+const createTransactions = async (userID, transactionID, activityID, amount, currency, isPaid) => {
     try {
-
         let transaction = new Transaction()
 
-        /* TODO  */
-        transaction.transactionID = 'julian123'
+        transaction.transactionID = transactionID
+        transaction.activityID = activityID
+        transaction.userID = userID
+        transaction.amount = amount
+        transaction.currency = currency
+        transaction.isPaid = isPaid
 
-        transaction.save( (err) => { 
-            if (err) console.log(err)
-            else console.log('saved')
-        });
-
-        
-        return true;
+        const ret = await transaction.save();
+    
+        return ret;
        
     } catch (e) {
         return false

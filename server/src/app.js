@@ -6,7 +6,7 @@ const app = express()
 
 /* CONTROLLER */
 const authController = require("./controllers/authController")
-const generalController = require("./controllers/generalController")
+const transactionController = require("./controllers/transactionController")
 
 app.use(morgan('combined'))
 app.use(bodyParser.json())
@@ -14,8 +14,12 @@ app.use(cors())
 
 // ROUTES
 app.get('/', authController.checkAuth)
-app.get('/transactions', generalController.transaction)
-app.get('/createTransaction', generalController.createTransaction)
+
+/* GET http://localhost:8081/transactions?userID=20 */
+app.get('/transactions', transactionController.transaction)
+
+/*  http://localhost:8081/createTransaction  POST */
+app.post('/createTransaction', transactionController.createTransaction)
 
 
 app.listen(process.env.PORT || 8081)

@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-
-/* TODO EXTEND REQUIRED */
 var transaction = mongoose.Schema({
     transactionID: {
         type: String,
@@ -11,11 +9,26 @@ var transaction = mongoose.Schema({
         type: String,
         default: Date.now
     },
-    activityID: String,
-    userID: String,
-    amount: String,
-    currency: String,
-    isPaid: Boolean
+    activityID: {
+        type: String,
+        required: true
+    },
+    userID: {
+        type: String,
+        required: true
+    },
+    amount: {
+        type: String,
+        required: true
+    },
+    currency: {
+        type: String,
+        required: true
+    },
+    isPaid: {
+        type: Boolean,
+        required: true
+    }
 });
 
 
