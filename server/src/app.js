@@ -21,5 +21,8 @@ app.get('/transactions', transactionController.transaction)
 /*  http://localhost:8081/createTransaction  POST */
 app.post('/createTransaction', transactionController.createTransaction)
 
+app.get('/createUser', transactionController.createUser)
+app.get('/getUserbyID', transactionController.getUserByID)
+
 
 app.listen(process.env.PORT || 8081)
