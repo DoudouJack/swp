@@ -7,6 +7,7 @@ const app = express()
 /* CONTROLLER */
 const authController = require("./controllers/authController")
 const transactionController = require("./controllers/transactionController")
+const userController = require('./controllers/userController')
 
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ extended: false }));

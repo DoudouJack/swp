@@ -8,19 +8,21 @@
   </div>
 </template>
 <script>
-import temp from './components/Temp'
+import temp from './components/temp'
 
 export default {
   components: {
     temp
   }
 }
-/*import navbar from './components/Navbar'
+/**
+ * import navbar from './components/Navbar'
 export default {
   components: {
     navbar
   }
-}*/
+}
+ **/
 </script>
 
 <style lang="scss">
