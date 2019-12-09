@@ -2,23 +2,8 @@ const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
 Transaction = require('../models/transaction_schema')
 
-const getTransactions = async (userID) => {
+const getTransactions = async () => {
     try {
-        console.log(userID)
-        console.log("IN HERE")
-        
-        /* let collection2 = [];
-
-        const query = await Transaction.get( (err,collection) => { 
-            if (err) {
-                console.log(err)
-            }
-            else{
-                console.log(collection);
-                return collection
-            } 
-        }); */
-
         const transactions = await Transaction.find({}).exec();
 
         return transactions;
@@ -48,7 +33,53 @@ const createTransactions = async (userID, transactionID, activityID, amount, cur
     }
 }
 
+const getTransactionFor = async(activityID) => {
+    try {
+        console.log("get")
+        console.log(activityID)
+
+        if(activityID === undefined){
+            throw new Error('undefined id')
+        }
+
+        const transactionFor = await Transaction.find({'activityID': activityID}).exec();
+
+        return transactionFor;
+       
+    } catch (e) {
+        return false
+    }
+}
+
+const updateTransaction = async(activityID, userID) => {
+    try {
+        
+        if(activityID === undefined && userID === undefined){
+            throw new Error('undefined id')
+        }
+
+        const filter = { activityID: activityID, userID: userID };
+        const update = { isPaid: true };
+
+        
+        const transactionUpdate = await Transaction.findOneAndUpdate(filter, update);
+
+       // const transactionUpdate = await Transaction.find({'activityID': activityID, 'userID': userID}).exec();
+        
+        console.log(transactionUpdate)
+        
+        const ret = await transactionUpdate.save();
+        
+        return ret;
+       
+    } catch (e) {
+        return false
+    }
+}
+
 module.exports = {
-    transactionServiceGet: getTransactions,
+    transactionServiceGetAll: getTransactions,
     transactionServiceCreate: createTransactions,
+    transactionServiceGetFor: getTransactionFor,
+    transactionServiceUpdateIsPaid : updateTransaction
 }

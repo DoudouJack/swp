@@ -1,0 +1,14 @@
+API NEEDED ROUTES:
+    ☐ Transaction
+        ✔ Create Transaction @done(19-12-09 00:08)
+        ✔ Get single transaction (activityID) @done(19-12-09 21:42)
+        ✔ Get all transactions @done(19-12-09 00:09)
+        ✔ Update isPaid of transaction @done(19-12-09 22:17)
+        ☐ in create function make only one user per activityID
+        ☐ Delete transaction
+    ☐ Acitvity
+        ☐ Wenn eine Activity erstellt wird => Split() => createTransaction
+    ☐ User
+    ☐ Project
+    ☐ Misc
+        ☐ *Middelware* between all routes!

@@ -1,5 +1,7 @@
-const { transactionServiceGet } = require('../services/transactions')
+const { transactionServiceGetAll } = require('../services/transactions')
 const { transactionServiceCreate } = require('../services/transactions')
+const { transactionServiceGetFor } = require('../services/transactions')
+const { transactionServiceUpdateIsPaid } = require('../services/transactions')
 const { userServiceGet } = require('../services/users')
 const { userServiceCreate } = require('../services/users')
 
@@ -9,11 +11,8 @@ const { userServiceCreate } = require('../services/users')
  * call other imported services, or same service but different functions here if you need to
 */
 const transaction = async (req, res, next) => {
-  const userID = req.query.userID
-
-  // $_GET['userID']
   try {
-    const internalresponse = await transactionServiceGet(userID)
+    const internalresponse = await transactionServiceGetAll()
     console.log("internal response")
     console.log(internalresponse)
     // other service call (or same service, different function can go here)
@@ -26,7 +25,7 @@ const transaction = async (req, res, next) => {
       
     } else {
       // return empty json
-      res.status(404).json({
+      res.json({
         message: 'No data entries available. Please create some in /createTransaction before.',
         data: []
       })
@@ -58,7 +57,7 @@ const createTransaction = async (req, res, next) => {
         "message" : "Saved Succesfully"
       })
     } else {
-      res.sendStatus(404).json({
+      res.json({
         "message" : "Error while saving"
       })
     }
@@ -66,6 +65,80 @@ const createTransaction = async (req, res, next) => {
     console.log(e.message)
     res.sendStatus(500) && next(error)
   }
+}
+
+const getTransactionFor = async (req, res, next) => {
+    
+    console.log(req.query)
+    console.log(req.query.activityID)
+    console.log(req.body)
+    
+    let activityID;
+
+    /* EXPORT TO FUNCTION */
+    if (Object.keys(req.body).length === 0) {
+      activityID = req.query.activityID
+    }
+    else {
+      activityID = req.body.activityID 
+    }
+    
+    try {
+      const internalresponse = await transactionServiceGetFor(activityID)
+      console.log("internal response create")
+      console.log(internalresponse)
+    
+    if (internalresponse !== false) {
+      res.json({
+        "message" : "success",
+        "data": internalresponse
+      })
+    } else {
+      res.json({
+        "message" : "Error. Something went wrong."
+      })
+    }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+
+}
+
+
+const updateTransactionIsPaid = async (req, res, next) => {
+  let activityID
+  let userID
+
+    /* EXPORT TO FUNCTION */
+    if (Object.keys(req.body).length === 0) {
+      activityID = req.query.activityID
+      userID = req.quiery.userID
+    }
+    else {
+      activityID = req.body.activityID 
+      userID = req.body.userID
+    }
+    
+    try {
+      const internalresponse = await transactionServiceUpdateIsPaid(activityID, userID)
+      console.log("internal response update")
+      console.log(internalresponse)
+    
+    if (internalresponse !== false) {
+      res.json({
+        "message" : "success",
+        "data": []
+      })
+    } else {
+      res.json({
+        "message" : "Error. Something went wrong."
+      })
+    }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
 }
 
 
@@ -130,6 +203,8 @@ const getUserByID = async (req, res, next) => {
 module.exports = {
   transaction,
   createTransaction,
+  getTransactionFor,
   getUserByID,
-  createUser
+  createUser,
+  updateTransactionIsPaid 
 }
