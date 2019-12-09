@@ -4,7 +4,7 @@
             <div class="header-container container-fluid">
                 <div id="account-nav">
                     <div class="avatar-container">
-                        <img class="avatar" src="../../public/img/noimg.jpeg">
+                        <!--<img class="avatar" src="../../public/img/noimg.jpeg">-->
                     </div>
                     <div class="dropdown account-dropdown">
                         <div class="dropdown-inner account-dropdown-inner">
@@ -83,7 +83,20 @@
 </template>
 
 <script>
+export default {
+  name: 'temp'
+  /**
+ * data: {
+        transactions: [] // initialize empty array
+    },
+    mounted() { // when the Vue app is booted up, this is run automatically.
+        var dataURL = '127.0.0.1/transactions';
+        var self = this;// create a closure to access component in the callback below
+        $.getJSON(dataURL, function(data) {
+            self.posts = data;
+        }) */
 
+}
 </script>
 
 <style lang="scss">
