@@ -23,23 +23,29 @@ const getUserByID = async (userID) => {
 
 
 
-const createUser = async () => {
+const createUser = async (userID, name, fon, email) => {
     try {
 
         let user = new User()
        
-        user.userID = 'u1'
-        user.name = 'User Eins'
-        user.fon = 123456789
-        user.email = 'user@user1.de'
+        user.userID = userID
+        user.name = name
+        user.fon = fon
+        user.email = email
         
+        console.log(user)
+
+        const ret = await user.save();
+
+        
+     /*   
         user.save( (err) => { 
             if (err) console.log(err)
             else console.log('user created and saved')
         });
-
+*/
         
-        return true;
+        return ret;
        
     } catch (e) {
         return false
@@ -51,5 +57,5 @@ const createUser = async () => {
 
 module.exports = {
     userServiceGet: getUserByID,
-    userServiceCreate: createUser
+    userServiceCreate: createUser,
 }

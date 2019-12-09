@@ -7,6 +7,7 @@ const app = express()
 /* CONTROLLER */
 const authController = require("./controllers/authController")
 const transactionController = require("./controllers/transactionController")
+const userController = require('./controllers/userController')
 
 app.use(morgan('combined'))
 app.use(bodyParser.json())
@@ -21,8 +22,9 @@ app.get('/transactions', transactionController.transaction)
 /*  http://localhost:8081/createTransaction  POST */
 app.post('/createTransaction', transactionController.createTransaction)
 
-app.get('/createUser', transactionController.createUser)
-app.get('/getUserbyID', transactionController.getUserByID)
+app.post('/createUser', userController.createUser)
+
+app.get('/getUserbyID', userController.getUserByID)
 
 
 app.listen(process.env.PORT || 8081)

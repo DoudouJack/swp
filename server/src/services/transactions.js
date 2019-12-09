@@ -39,6 +39,8 @@ const createTransactions = async (userID, transactionID, activityID, amount, cur
         transaction.currency = currency
         transaction.isPaid = isPaid
 
+        console.log(transaction)
+
         const ret = await transaction.save();
     
         return ret;

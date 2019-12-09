@@ -1,7 +1,7 @@
 const { transactionServiceGet } = require('../services/transactions')
 const { transactionServiceCreate } = require('../services/transactions')
-const { userServiceGet } = require('../services/users')
-const { userServiceCreate } = require('../services/users')
+//const { userServiceGet } = require('../services/users')
+//const { userServiceCreate } = require('../services/users')
 
 
 //const { auth } = middelwareService
@@ -68,7 +68,7 @@ const createTransaction = async (req, res, next) => {
   }
 }
 
-
+/*
 const createUser = async (req, res, next) => {
   const userID = req.query.userID
 
@@ -123,13 +123,11 @@ const getUserByID = async (req, res, next) => {
   }
 }
 
-
+*/
 
 
 
 module.exports = {
   transaction,
-  createTransaction,
-  getUserByID,
-  createUser
+  createTransaction
 }
