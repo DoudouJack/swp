@@ -37,6 +37,9 @@ app.post('/createUser', userController.createUser)
 /* http://localhost:8081/getUserByID?userID=u1 */
 app.get('/getUserbyID', userController.getUserByID)
 
+/* http://localhost:8081/getUserBalanceByID?userID=u1 */
+app.get('/getUserBalanceByID', userController.getUserBalanceByID)
+
 
 
 

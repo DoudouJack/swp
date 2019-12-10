@@ -8,19 +8,30 @@ const getUserByID = async (reqUserID) => {
         console.log("get")
         console.log(reqUserID)
 
-       /* if(reqUserID === undefined){
+        if(reqUserID === undefined){
             throw new Error('User not found :(')
         }
-        */
+        
         const user = await User.findOne({'userID' : reqUserID}).exec();
 
         return user;
-/*
-        User.findById(userID, function (err, user) {
-            if (err) return next(err);
-            res.send(user);
-        })
-*/
+
+    }   catch (e) {
+        return false
+    }
+    
+}
+
+const getUserBalanceByID = async (reqUserID) => {
+    try {
+        if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        
+        const user = await User.findOne({'userID' : reqUserID}).exec();
+
+        return user.balance;
+
     }   catch (e) {
         return false
     }
@@ -55,6 +66,7 @@ const createUser = async (userID, name, fon, email) => {
 
 
 module.exports = {
-    userServiceGet: getUserByID,
+    userServiceGet: getUserByID, 
+    userServiceGetBalance: getUserBalanceByID,
     userServiceCreate: createUser,
 }
