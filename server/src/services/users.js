@@ -3,21 +3,28 @@ const { mongoose } = require('../con/dbcon')
 User = require('../models/user.model')
 
 
-
-
-
-const getUserByID = async (userID) => {
+const getUserByID = async (reqUserID) => {
     try {
-        console.log(userID)
-        
+        console.log("get")
+        console.log(reqUserID)
+
+       /* if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        */
+        const user = await User.findOne({'userID' : reqUserID}).exec();
+
+        return user;
+/*
         User.findById(userID, function (err, user) {
             if (err) return next(err);
             res.send(user);
         })
-
+*/
     }   catch (e) {
         return false
     }
+    
 }
 
 

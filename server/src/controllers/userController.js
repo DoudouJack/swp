@@ -32,28 +32,45 @@ const createUser = async (req, res, next) => {
   }
 
 
+
+
   const getUserByID = async (req, res, next) => {
-    const userID = req.query.userID
+   
+    console.log(req.query)
+    console.log(req.query.userID)
+    console.log(req.body)
+
+    let userID;
+    
   
+    if(Object.keys(req.body).length === 0) {
+      userID = req.query.userID
+    } else {
+      userID = req.body.userID
+    }
+
+
     // $_GET['userID']
     try {
       const internalresponse = await userServiceGet(userID)
       console.log("internal response")
       console.log(internalresponse)
       
-      if (internalresponse.length > 0) {
+
+
+      if (internalresponse !== false) {
         res.json({
-          message: 'success',
-          data: internalresponse
+          "message" : "success",
+          "data": internalresponse
         })
-        
       } else {
-        // return empty json
-        res.status(404).json({
-          message: 'No user found',
-          data: []
+        res.json({
+          "message" : "Error. Something went wrong."
         })
       }
+      
+        
+      
       
     } catch (e) {
       console.log(e.message)

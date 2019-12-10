@@ -29,8 +29,12 @@ app.get('/getTransactionFor', transactionController.getTransactionFor)
 /*  http://localhost:8081/updateTransactionIsPaid?activityID=a2&userID=u1  GET */
 app.get('/updateTransactionIsPaid', transactionController.updateTransactionIsPaid)
 
+
+
+/*  http://localhost:8081/createUser POST */
 app.post('/createUser', userController.createUser)
 
+/* http://localhost:8081/getUserByID?userID=u1 */
 app.get('/getUserbyID', userController.getUserByID)
 
 
