@@ -2,8 +2,7 @@ const { transactionServiceGetAll } = require('../services/transactions')
 const { transactionServiceCreate } = require('../services/transactions')
 const { transactionServiceGetFor } = require('../services/transactions')
 const { transactionServiceUpdateIsPaid } = require('../services/transactions')
-const { userServiceGet } = require('../services/users')
-const { userServiceCreate } = require('../services/users')
+
 
 
 //const { auth } = middelwareService
@@ -142,60 +141,6 @@ const updateTransactionIsPaid = async (req, res, next) => {
 }
 
 
-const createUser = async (req, res, next) => {
-  const userID = req.query.userID
-
-  // $_GET['userID']
-  try {
-    const internalresponse = await userServiceCreate(userID)
-    console.log("internal response create")
-    console.log(internalresponse)
-    
-    if (internalresponse) {
-      // return json
-    } else {
-      // return empty json
-    }
-    next()
-  } catch (e) {
-    console.log(e.message)
-    res.sendStatus(500) && next(error)
-
-  }
-}
-
-
-
-const getUserByID = async (req, res, next) => {
-  const userID = req.query.userID
-
-  // $_GET['userID']
-  try {
-    const internalresponse = await userServiceGet(userID)
-    console.log("internal response")
-    console.log(internalresponse)
-    
-    if (internalresponse.length > 0) {
-      res.json({
-        message: 'success',
-        data: internalresponse
-      })
-      
-    } else {
-      // return empty json
-      res.status(404).json({
-        message: 'No user found',
-        data: []
-      })
-    }
-    
-  } catch (e) {
-    console.log(e.message)
-    res.sendStatus(500) && next(error)
-
-  }
-}
-
 
 
 
@@ -203,7 +148,5 @@ module.exports = {
   transaction,
   createTransaction,
   getTransactionFor,
-  getUserByID,
-  createUser,
   updateTransactionIsPaid 
 }

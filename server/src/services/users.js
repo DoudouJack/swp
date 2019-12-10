@@ -36,15 +36,7 @@ const createUser = async (userID, name, fon, email) => {
         console.log(user)
 
         const ret = await user.save();
-
-        
-     /*   
-        user.save( (err) => { 
-            if (err) console.log(err)
-            else console.log('user created and saved')
-        });
-*/
-        
+      
         return ret;
        
     } catch (e) {

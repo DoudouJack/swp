@@ -7,7 +7,7 @@ const app = express()
 /* CONTROLLER */
 const authController = require("./controllers/authController")
 const transactionController = require("./controllers/transactionController")
-const userController = require('./controllers/userController')
+const userController = require("./controllers/userController")
 
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,8 +29,11 @@ app.get('/getTransactionFor', transactionController.getTransactionFor)
 /*  http://localhost:8081/updateTransactionIsPaid?activityID=a2&userID=u1  GET */
 app.get('/updateTransactionIsPaid', transactionController.updateTransactionIsPaid)
 
-app.get('/createUser', transactionController.createUser)
-app.get('/getUserbyID', transactionController.getUserByID)
+app.post('/createUser', userController.createUser)
+
+app.get('/getUserbyID', userController.getUserByID)
+
+
 
 
 app.listen(process.env.PORT || 8081)
