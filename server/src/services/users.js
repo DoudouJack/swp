@@ -38,9 +38,6 @@ const getUserBalanceByID = async (reqUserID) => {
     
 }
 
-
-
-
 const createUser = async (userID, name, fon, email) => {
     try {
 
@@ -62,11 +59,31 @@ const createUser = async (userID, name, fon, email) => {
     }
 }
 
+const updateUser = async ( userID, name, fon, email) => {
+    try {
 
+        if(userID === undefined){
+            throw new Error('User not found :(')
+        }
+        var query = {'userID' : userID};
+        const updatedUser = await User.findOneAndUpdate(query,
+            {'userID' : userID, 'name' : name, 'fon' : fon, 'email' : email}
+            ).exec();
+        
+        const ret = await updatedUser.save();
+        
+        return ret;
+
+
+    }   catch (e) {
+        return false
+    }
+}
 
 
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
     userServiceCreate: createUser,
+    userServiceUpdate: updateUser
 }

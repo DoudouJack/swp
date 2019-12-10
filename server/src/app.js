@@ -40,6 +40,11 @@ app.get('/getUserbyID', userController.getUserByID)
 /* http://localhost:8081/getUserBalanceByID?userID=u1 */
 app.get('/getUserBalanceByID', userController.getUserBalanceByID)
 
+/*http://localhost:8081/updateUser POST */
+app.post('/updateUser', userController.updateUser)
+
+
+
 
 
 

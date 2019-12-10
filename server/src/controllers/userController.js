@@ -1,6 +1,9 @@
 const { userServiceGet } = require('../services/users')
 const { userServiceCreate } = require('../services/users')
 const { userServiceGetBalance} = require('../services/users')
+const { userServiceUpdate} = require('../services/users')
+
+
 
 const createUser = async (req, res, next) => {
     const userID = req.body.userID
@@ -105,8 +108,46 @@ const createUser = async (req, res, next) => {
     }
   }
 
+  
+  const updateUser = async(req, res, next) => {
+    let userID
+    
+    if (Object.keys(req.body).length === 0) {
+        userID = req.quiery.userID
+    }
+    else {
+        userID = req.body.userID
+    }
+
+    try {
+      const internalresponse = await userServiceUpdate(req.body.userID, req.body.name, req.body.fon, req.body.email)
+      console.log("internal response update")
+      console.log(internalresponse)
+    
+    if (internalresponse !== false) {
+      res.json({
+        "message" : "success",
+        "data": []
+      })
+    } else {
+      res.json({
+        "message" : "Error. Something went wrong."
+      })
+    }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+
+
+  }
+  
+
+
   module.exports = {
     getUserByID,
     getUserBalanceByID,
-    createUser
+    createUser,
+    updateUser
   }
+  
