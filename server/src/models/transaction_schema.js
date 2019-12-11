@@ -31,6 +31,8 @@ var transaction = mongoose.Schema({
     }
 });
 
+transaction.index({userID: 1, activityID: 1}, {unique: true})
+
 
 var Transaction = module.exports = mongoose.model('Transaction', transaction)
 

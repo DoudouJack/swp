@@ -39,17 +39,19 @@ var activity = mongoose.Schema({
     },
     isCompleted: {
         type: Boolean,
-        required: true
+        default: false
     },
     activityType: {
         type: Boolean,
-        required: false
+        default: false
     }
-
 });
 
+activity.index({projectID: 1, activityID: 1}, {unique: true})
+activity.index({activityID: 1},{unique: true})
 
-var Activity = module.exports = mongoose.model('Activity', activity)
+
+var Activity = module.exports = mongoose.model('activities', activity)
 
 module.exports.get = function (callback) {
     Activity.find(callback)

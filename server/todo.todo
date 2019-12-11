@@ -4,10 +4,14 @@ API NEEDED ROUTES:
         ✔ Get single transaction (activityID) @done(19-12-09 21:42)
         ✔ Get all transactions @done(19-12-09 00:09)
         ✔ Update isPaid of transaction @done(19-12-09 22:17)
-        ☐ in create function make only one user per activityID
-        ☐ Delete transaction
+        ✔ in create function make only one user per activityID @done(19-12-11 17:12) Should be done due to index
     ☐ Acitvity
         ☐ Wenn eine Activity erstellt wird => Split() => createTransaction
+        ☐ Create Activity
+        ☐ Get all Activities
+        ☐ Update single activity
+        ☐ Get single activity
+        ☐ create index in schema
     ☐ User
     ☐ Project
     ☐ Misc

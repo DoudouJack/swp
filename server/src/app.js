@@ -8,6 +8,7 @@ const app = express()
 const authController = require("./controllers/authController")
 const transactionController = require("./controllers/transactionController")
 const userController = require("./controllers/userController")
+const activityController = require("./controllers/activityController")
 
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,6 +18,7 @@ app.use(cors())
 // ROUTES
 app.get('/', authController.checkAuth)
 
+/* TRANSACTION */
 /* GET http://localhost:8081/transactions */
 app.get('/transactions', transactionController.transaction)
 
@@ -30,7 +32,16 @@ app.get('/getTransactionFor', transactionController.getTransactionFor)
 app.get('/updateTransactionIsPaid', transactionController.updateTransactionIsPaid)
 
 
+/* ACTIVITY */
+/* GET http://localhost:8081/activity */
+app.get('/activity', activityController.activity)
+/*  http://localhost:8081/createActivity  POST */
+app.post('/createActivity', activityController.createActivity)
 
+/* PROJECT */
+
+
+/* USER */
 /*  http://localhost:8081/createUser POST */
 app.post('/createUser', userController.createUser)
 
