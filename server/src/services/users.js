@@ -80,10 +80,31 @@ const updateUser = async ( userID, name, fon, email) => {
     }
 }
 
+const changeUserState = async ( userID, active) => {
+    try {
+
+        if(userID === undefined){
+            throw new Error('User not found :(')
+        }
+        var query = {'userID' : userID};
+        const updatedUser = await User.findOneAndUpdate(query,
+            {'userID' : userID, 'active' : active}
+            ).exec();
+        
+        const ret = await updatedUser.save();
+        
+        return ret;
+
+
+    }   catch (e) {
+        return false
+    }
+}
 
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
     userServiceCreate: createUser,
-    userServiceUpdate: updateUser
+    userServiceUpdate: updateUser,
+    userServiceChangeState: changeUserState
 }

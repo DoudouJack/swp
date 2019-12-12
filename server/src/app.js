@@ -55,8 +55,15 @@ app.get('/getUserbyID', userController.getUserByID)
 /* http://localhost:8081/getUserBalanceByID?userID=u1 */
 app.get('/getUserBalanceByID', userController.getUserBalanceByID)
 
-/*http://localhost:8081/updateUser POST */
-app.post('/updateUser', userController.updateUser)
+/*http://localhost:8081/updateUser PUT */
+app.put('/updateUser', userController.updateUser)
+
+/*http://localhost:8081/changeUserState PUT  
+Body: "userID" : "u1",
+	  "active" : "false"*/
+app.put('/changeUserState', userController.changeUserState)
+
+
 
 
 
