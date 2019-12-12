@@ -9,6 +9,8 @@ const authController = require("./controllers/authController")
 const transactionController = require("./controllers/transactionController")
 const userController = require("./controllers/userController")
 const activityController = require("./controllers/activityController")
+const projectController = require("./controllers/projectController")
+
 
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,7 +21,7 @@ app.use(cors())
 app.get('/', authController.checkAuth)
 
 /* TRANSACTION */
-/* GET http://localhost:8081/transactions */
+/* http://localhost:8081/transactions GET */
 app.get('/transactions', transactionController.transaction)
 
 /*  http://localhost:8081/createTransaction  POST */
@@ -33,16 +35,34 @@ app.get('/updateTransactionIsPaid', transactionController.updateTransactionIsPai
 
 
 /* ACTIVITY */
-/* GET http://localhost:8081/activity */
-app.get('/activity', activityController.activity)
+/* http://localhost:8081/activity GET */
+app.get('/activities', activityController.activity)
+
 /*  http://localhost:8081/createActivity  POST */
 app.post('/createActivity', activityController.createActivity)
+
 /*  http://localhost:8081/updateActivity  POST */
 app.post('/updateActivity', activityController.updateActivity)
+
 /* http://localhost:8081/getSingleActivity?id=5df12e80a5155f02f34dd850*/
 app.get('/getSingleActivity', activityController.getSingleActivity)
 
+
 /* PROJECT */
+/* GET http://localhost:8081/project */
+app.get('/projects', projectController.project)
+
+/* http://localhost:8081/getSingleProject?id= GET */
+app.get('/getSingleProject', projectController.getSingleProject)
+
+/* http://localhost:8081/createProject  POST */
+app.post('/createProject', projectController.createProject)
+
+/* http://localhost:8081/addMember  POST */
+app.post('/addMember', projectController.addMember)
+
+/* http://localhost:8081/addActivity  POST */
+app.post('/addActivity', projectController.addActivity)
 
 
 /* USER */
@@ -62,6 +82,8 @@ app.put('/updateUser', userController.updateUser)
 Body: "userID" : "u1",
 	  "active" : "false"*/
 app.put('/changeUserState', userController.changeUserState)
+
+
 
 
 

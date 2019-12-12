@@ -27,13 +27,17 @@ var project = mongoose.Schema({
     },
     projectCompleted: {
         type: Boolean,
-        required: true
+        default: false
     },
     projectPayType: {
         type: Boolean,
         required: true
     }
 });
+
+
+project.index({projectID: 1, activity: 1}, {unique: true})
+project.index({projectID: 1},{unique: true})
 
 
 var Project = module.exports = mongoose.model('Project', project)
