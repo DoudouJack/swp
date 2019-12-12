@@ -37,6 +37,10 @@ app.get('/updateTransactionIsPaid', transactionController.updateTransactionIsPai
 app.get('/activity', activityController.activity)
 /*  http://localhost:8081/createActivity  POST */
 app.post('/createActivity', activityController.createActivity)
+/*  http://localhost:8081/updateActivity  POST */
+app.post('/updateActivity', activityController.updateActivity)
+/* http://localhost:8081/getSingleActivity?id=5df12e80a5155f02f34dd850*/
+app.get('/getSingleActivity', activityController.getSingleActivity)
 
 /* PROJECT */
 

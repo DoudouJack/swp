@@ -1,5 +1,6 @@
 const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
+const { ObjectId } = mongoose.Types.ObjectId
 Activity = require('../models/activity_schema')
 
 const getActivities = async () => {
@@ -44,8 +45,45 @@ const split = async(memberLength, amount) => {
     return ret
 }
 
+const updateActivity = async(activityID, title, description, member, amount, currency, projectID, id) => {
+    try {
+        if(id === undefined){
+            throw new Error('undefined id')
+        }
+
+        const splitAmount = await split(parseFloat(member.length), parseFloat(amount)) 
+        
+        const filter = {_id: ObjectId(id)}
+        const update = {activityID: activityID, title: title, description: description, member: member, amount: amount, splitAmount: splitAmount, currency: currency, projectID: projectID}
+        
+        const activityUpdate = await Activity.findByIdAndUpdate(filter, update, {new: true}) // returns querys
+        const ret = await activityUpdate.save()
+        
+        return ret
+
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
+const getSingleActivity = async(id) => {
+    try {
+        if(id === undefined){
+            throw new Error('undefined id')
+        }
+        const ret = await Activity.find({'_id': ObjectId(id)}).exec();
+        return ret
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
 
 module.exports = {
     activityServiceGetAll: getActivities,
-    activityServiceCreate: createActivity
+    activityServiceCreate: createActivity,
+    activityServiceUpdate: updateActivity,
+    activityServiceGetSingleActivity: getSingleActivity
 }

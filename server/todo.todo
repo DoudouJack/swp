@@ -5,13 +5,14 @@ API NEEDED ROUTES:
         ✔ Get all transactions @done(19-12-09 00:09)
         ✔ Update isPaid of transaction @done(19-12-09 22:17)
         ✔ in create function make only one user per activityID @done(19-12-11 17:12) Should be done due to index
+        ✔ create increment id (index) @done(19-12-12 18:25)
     ☐ Acitvity
-        ☐ Wenn eine Activity erstellt wird => Split() => createTransaction
-        ☐ Create Activity
-        ☐ Get all Activities
-        ☐ Update single activity
-        ☐ Get single activity
-        ☐ create index in schema
+        ✔ Wenn eine Activity erstellt wird => Split() => createTransaction @done(19-12-11 19:09)
+        ✔ Create Activity @done(19-12-11 19:09)
+        ✔ Get all Activities @done(19-12-11 19:09)
+        ✔ Update single activity @done(19-12-12 18:55)
+        ✔ Get single activity @done(19-12-12 19:31)
+        ✔ create increment id (index in schema) @done(19-12-12 18:25)
     ☐ User
     ☐ Project
     ☐ Misc

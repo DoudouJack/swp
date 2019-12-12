@@ -1,5 +1,7 @@
 const { activityServiceGetAll } = require('../services/activities')
 const { activityServiceCreate } = require('../services/activities')
+const { activityServiceUpdate } = require('../services/activities')
+const { activityServiceGetSingleActivity } = require('../services/activities')
 
 //const { auth } = middelwareService
 /*
@@ -41,7 +43,7 @@ const createActivity = async (req, res, next) => {
     const amount = req.body.amount
     const currency = req.body.currency
     const projectID = req.body.projectID
-    
+
     try {
         const internalresponse = await activityServiceCreate(activityID, title, description, member, amount, currency, projectID)
         console.log("internal response")
@@ -61,7 +63,79 @@ const createActivity = async (req, res, next) => {
             })
         }
     } catch (error) {
-        console.log(e.message)
+        console.log(error.message)
+        res.sendStatus(500) && next(error)
+    }
+}
+
+const updateActivity = async (req, res, next) => {
+    const activityID = req.body.activityID
+    const title = req.body.title
+    const description = req.body.description
+    const member = req.body.member
+    const amount = req.body.amount
+    const currency = req.body.currency
+    const projectID = req.body.projectID
+    const id = req.body.id
+
+    try {
+        const internalresponse = await activityServiceUpdate(activityID, title, description, member, amount, currency, projectID, id)
+        console.log("internal response")
+        console.log(internalresponse)
+
+        if (internalresponse !== false) {
+            res.json({
+                message: 'Updated succesfully.',
+                data: internalresponse
+            })
+
+        } else {
+            // return empty json
+            res.json({
+                message: 'Error while updating entry.',
+                data: []
+            })
+        }
+    } catch (error) {
+        console.log(error.message)
+        res.sendStatus(500) && next(error)
+    }
+
+}
+
+const getSingleActivity = async (req, res, next) => {
+    let id;
+
+    /* EXPORT TO FUNCTION */
+    if (Object.keys(req.body).length === 0) {
+        id = req.query.id
+    }
+    else {
+        id = req.body.id
+    }
+
+    try {
+        const internalresponse = await activityServiceGetSingleActivity(id)
+
+        console.log("internal response")
+        console.log(internalresponse)
+
+        if (internalresponse !== false) {
+            res.json({
+                message: 'Success.',
+                data: internalresponse
+            })
+
+        } else {
+            // return empty json
+            res.json({
+                message: 'Error.',
+                data: []
+            })
+        }
+
+    } catch (error) {
+        console.log(error.message)
         res.sendStatus(500) && next(error)
     }
 }
@@ -71,5 +145,7 @@ const createActivity = async (req, res, next) => {
 
 module.exports = {
     activity,
-    createActivity
+    createActivity,
+    updateActivity,
+    getSingleActivity
 }
