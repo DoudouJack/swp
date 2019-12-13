@@ -42,6 +42,16 @@
                         </div>
                     </div>
                 </div>
+                <div id="transactions" class="container-fluid data-row-container">
+                  <h4> Test Ed: Transactions an sich wollen wir nicht so auspucken, aber für den Beispiel <br> siehe el "transactions" und use of v-for loop mit v-bind:key </h4>
+                  <!--<span>{{transactionsData}}</span>-->
+                  <div v-for="tdata in transactionsData" v-bind:key="tdata">
+                    Transaction ID: {{tdata.transactionID}} -
+                    Date of Payment : {{ tdata.dateOfPayment }} -
+                    User ID: {{tdata.userID}}
+                  </div>
+                  <h4> End of Test </h4>
+                </div>
 
                 <div class="container-fluid activities-container">
                     <article class="activity">
@@ -60,6 +70,24 @@
                                 </div>
                             </div>
                         </div>
+                    </article>
+                    <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
+                      <div class="row">
+                        <div class="col-6">
+                          <h4 class="activitiy-header">
+                            {{adata.title}}
+                          </h4>
+                          <span class="activity-desc" > {{adata.date}} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+                        </div>
+                        <div class="col-6">
+                          <div class="activity-open-amount">
+                                      <span class="amount-positive">
+                                        <!-- Hier unten sollte zB die methode das tun was sie soll, wenn ich auskommentiere geht das komplett weg-->
+                                          25€ <!--{{ splitAmount(adata.amount) }}-->
+                                      </span>
+                          </div>
+                        </div>
+                      </div>
                     </article>
                 </div>
 
@@ -83,20 +111,46 @@
 </template>
 
 <script>
+/* eslint-env jquery */
+import axios from 'axios'
+
 export default {
-  name: 'temp'
-  /**
- * data: {
-        transactions: [] // initialize empty array
-    },
-    mounted() { // when the Vue app is booted up, this is run automatically.
-        var dataURL = '127.0.0.1/transactions';
-        var self = this;// create a closure to access component in the callback below
-        $.getJSON(dataURL, function(data) {
-            self.posts = data;
-        }) */
+  name: 'temp',
+  el: '#transactions',
+  data: function () {
+    return {
+      transactionsData: [],
+      activitiesData: []
+    }
+  },
+  mounted () {
+    axios.get('http://127.0.0.1:8081/transactions')
+      .then(response => {
+        this.transactionsData = response.data.data
+      })
+    axios.get('http://127.0.0.1:8081/activities')
+      .then(response => {
+        this.activitiesData = response.data.data
+      })
+  },
+  methods: {
+    /*    convertDate (date) {
+      date.format('dd.mm.YYYY hh:MM:ss')
+      return date
+    }, */
+    splitAmount (amount) {
+      var members
+      members = this.activitiesData.member
+      var count
+      count = members.length
+      var splitted
+      splitted = this.activitiesData.amount / count
+      return splitted
+    }
+  }
 
 }
+
 </script>
 
 <style lang="scss">
