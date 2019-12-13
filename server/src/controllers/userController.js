@@ -1,8 +1,9 @@
 const { userServiceGet } = require('../services/users')
 const { userServiceCreate } = require('../services/users')
-const { userServiceGetBalance} = require('../services/users')
-const { userServiceUpdate} = require('../services/users')
-const { userServiceChangeState} = require('../services/users')
+const { userServiceGetBalance } = require('../services/users')
+const { userServiceUpdate } = require('../services/users')
+const { userServiceChangeState } = require('../services/users')
+const { userServiceDeleteUser } = require('../services/users')
 
 
 
@@ -147,14 +148,14 @@ const createUser = async (req, res, next) => {
     let userID
     
     if (Object.keys(req.body).length === 0) {
-        userID = req.quiery.userID
+        userID = req.query.userID
     }
     else {
         userID = req.body.userID
     }
 
     try {
-      const internalresponse = await userServiceChangeState(req.body.userID, req.body.active)
+      const internalresponse = await userServiceChangeState(req.query.userID, req.body.active)
       console.log("internal response update")
       console.log(internalresponse)
     
@@ -176,6 +177,51 @@ const createUser = async (req, res, next) => {
 
   }
   
+  const deleteUser = async (req, res, next) => {
+   
+    console.log(req.query)
+    console.log(req.query.userID)
+    console.log(req.body)
+
+    let userID;
+    
+  
+    if(Object.keys(req.body).length === 0) {
+      userID = req.query.userID
+    } else {
+      userID = req.body.userID
+    }
+
+
+    // $_GET['userID']
+    try {
+      const internalresponse = await userServiceDeleteUser(userID)
+      console.log("internal response")
+      console.log(internalresponse)
+      
+
+
+      if (internalresponse !== false) {
+        res.json({
+          "message" : "User: "+userID+" deleted"
+          
+        })
+      } else {
+        res.json({
+          "message" : "Error. Something went wrong."
+        })
+      }
+      
+        
+      
+      
+    } catch (e) {
+      console.log(e.message)
+     // res.sendStatus(500) && next(error)
+  
+    }
+  }
+
 
 
   module.exports = {
@@ -183,6 +229,7 @@ const createUser = async (req, res, next) => {
     getUserBalanceByID,
     createUser,
     updateUser,
-    changeUserState
+    changeUserState,
+    deleteUser
   }
   

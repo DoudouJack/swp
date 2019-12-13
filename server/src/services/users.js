@@ -1,5 +1,6 @@
 const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
+
 User = require('../models/user.model')
 
 
@@ -101,10 +102,30 @@ const changeUserState = async ( userID, active) => {
     }
 }
 
+const deleteUser = async (reqUserID) => {
+    try {
+        console.log("get")
+        console.log(reqUserID)
+
+        if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        
+        const user = await User.findOneAndRemove({'userID' : reqUserID}).exec();
+
+        return user;
+
+    }   catch (e) {
+        return false
+    }
+    
+}
+
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
     userServiceCreate: createUser,
     userServiceUpdate: updateUser,
-    userServiceChangeState: changeUserState
+    userServiceChangeState: changeUserState,
+    userServiceDeleteUser: deleteUser
 }

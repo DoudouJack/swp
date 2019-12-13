@@ -66,22 +66,36 @@ app.post('/addActivity', projectController.addActivity)
 
 
 /* USER */
-/*  http://localhost:8081/createUser POST */
+/*  http://localhost:8081/createUser POST 
+Body: 	userID : "u1"
+		"name" : "User One",
+		"fon" : "99999999",
+		"email" : "userone@usermail.de"*/
 app.post('/createUser', userController.createUser)
 
-/* http://localhost:8081/getUserByID?userID=u1 */
+/* http://localhost:8081/getUserByID?userID=u1 GET*/
 app.get('/getUserbyID', userController.getUserByID)
 
-/* http://localhost:8081/getUserBalanceByID?userID=u1 */
+/* http://localhost:8081/getUserBalanceByID?userID=u1 GET*/
 app.get('/getUserBalanceByID', userController.getUserBalanceByID)
 
-/*http://localhost:8081/updateUser PUT */
+/*http://localhost:8081/updateUser?userID=u1 PUT 
+Body: 	"name" : "User One",
+		"fon" : "99999999",
+		"email" : "userone@usermail.de"*/
 app.put('/updateUser', userController.updateUser)
 
 /*http://localhost:8081/changeUserState PUT  
 Body: "userID" : "u1",
 	  "active" : "false"*/
 app.put('/changeUserState', userController.changeUserState)
+
+/* http://localhost:8081/deleteUser?userID=u1 DELETE*/
+app.delete('/deleteUser', userController.deleteUser)
+
+
+
+
 
 
 
