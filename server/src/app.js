@@ -90,8 +90,7 @@ Body: "userID" : "u1",
 	  "active" : "false"*/
 app.put('/changeUserState', userController.changeUserState)
 
-
-
+/* http://localhost:8081/deleteUser?userID=u1 DELETE*/
 app.delete('/deleteUser', userController.deleteUser)
 
 
