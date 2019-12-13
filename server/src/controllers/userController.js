@@ -29,8 +29,8 @@ const createUser = async (req, res, next) => {
       }
       next()
     } catch (e) {
-      console.log(e.message)
-      res.sendStatus(500) && next(error)
+     // console.log(e.message)
+     // res.sendStatus(500) && next(error)
   
     }
   }
@@ -121,7 +121,7 @@ const createUser = async (req, res, next) => {
     }
 
     try {
-      const internalresponse = await userServiceUpdate(req.body.userID, req.body.name, req.body.fon, req.body.email)
+      const internalresponse = await userServiceUpdate(req.query.userID, req.body.name, req.body.fon, req.body.email)
       console.log("internal response update")
       console.log(internalresponse)
     
