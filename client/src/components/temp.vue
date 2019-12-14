@@ -276,7 +276,6 @@ export default {
         cursor: pointer;
     }
     a{
-        text-decoration: none;
         &:hover{
             text-decoration: none;
         }
