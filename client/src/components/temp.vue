@@ -1,5 +1,8 @@
 <template>
     <div id="app-container">
+
+        <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
+        <!-- TODO: Auslagern in eigenes Template -->
         <section id="header" class="visible-container">
             <div class="header-container container-fluid">
                 <div id="account-nav">
@@ -18,9 +21,12 @@
                 </div>
             </div>
         </section>
+        <!-- **************** ENDE HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
 
+        <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
         <section id="body">
 
+            <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
             <article class="data-row">
                 <div class="container-fluid data-row-container">
                     <div class="row">
@@ -54,6 +60,7 @@
                 </div>
 
                 <div class="container-fluid activities-container">
+
                     <article class="activity">
                         <div class="row">
                             <div class="col-6">
@@ -71,6 +78,8 @@
                             </div>
                         </div>
                     </article>
+
+                    <!-- **************** START TRANSAKTION ELEMENT :: ZUM LOOPEN ****************  -->
                     <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
                       <div class="row">
                         <div class="col-6">
@@ -89,24 +98,31 @@
                         </div>
                       </div>
                     </article>
+                    <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
+
                 </div>
 
             </article>
+            <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
 
         </section>
+        <!-- **************** ENDE BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
 
+        <!-- **************** START FOOTER ELEMENT MIT RECHTLICHEM UND HILFE ****************  -->
         <section id="footer" class="visible-container">
             <div class="footer-container container-fluid">
                 <nav id="footer-nav">
                     <ul class="menu-list horizontal">
-                        <li>Hilfe erhalten</li>
-                        <li>Datenschutz</li>
-                        <li>Impressum</li>
-                        <li>Allgemeine Geschäftsbedingungen</li>
+                        <li><a href="/">Hilfe erhalten</a></li>
+                        <li><a href="/">Datenschutz</a></li>
+                        <li><a href="/">Impressum</a></li>
+                        <li><a href="/">Allgemeine Geschäftsbedingungen</a></li>
                     </ul>
                 </nav>
             </div>
         </section>
+        <!-- **************** ENDE FOOTER ELEMENT MIT RECHTLICHEM UND HILFE ****************  -->
+
     </div>
 </template>
 
