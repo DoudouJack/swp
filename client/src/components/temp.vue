@@ -48,16 +48,6 @@
                         </div>
                     </div>
                 </div>
-                <div id="transactions" class="container-fluid data-row-container">
-                  <h4> Test Ed: Transactions an sich wollen wir nicht so auspucken, aber für den Beispiel <br> siehe el "transactions" und use of v-for loop mit v-bind:key </h4>
-                  <!--<span>{{transactionsData}}</span>-->
-                  <div v-for="tdata in transactionsData" v-bind:key="tdata">
-                    Transaction ID: {{tdata.transactionID}} -
-                    Date of Payment : {{ tdata.dateOfPayment }} -
-                    User ID: {{tdata.userID}}
-                  </div>
-                  <h4> End of Test </h4>
-                </div>
 
                 <div class="container-fluid activities-container">
 
