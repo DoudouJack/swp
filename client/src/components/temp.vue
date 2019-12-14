@@ -1,20 +1,70 @@
 <template>
     <div id="app-container">
+        <section class="off-screen-elements">
 
+            <!-- **** START ADD ACTIVITIY MODAL -->
+            <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="add-activity-modal-lable">Aktivität hinzufügen</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="">
+                                <input placeholder="Name der Aktivität" type="text" name="activityName"><br>
+                                <input placeholder="Betrag in Euro" type="number" name="activityAmmount"><br>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- **** END ADD ACTIVITIY MODAL -->
+
+        <!-- **** START SETTINGS MODAL -->
+        <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="settings-modal-lable">Einstellungen</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- **** END SETTINGS MODAL -->
+
+        <!-- **** END ADD ACTIVITIY MODAL -->
         <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
         <!-- TODO: Auslagern in eigenes Template -->
         <section id="header" class="visible-container">
             <div class="header-container container-fluid">
-                <div id="account-nav">
-                    <div class="avatar-container">
-                        <!--<img class="avatar" src="../../public/img/noimg.jpeg">-->
+                <div id="account-nav" class="limit">
+                    <div class="avatar-container limit">
+                        <img class="avatar" src="../../public/img/noimg.jpeg">
                     </div>
                     <div class="dropdown account-dropdown">
-                        <div class="dropdown-inner account-dropdown-inner">
+                        <div class="dropdown-inner account-dropdown-inner dark">
                             <ul class="menu-list vertical">
-                                <li>Mein Account</li>
-                                <li>Log out</li>
-                                <li>Einstellungen</li>
+                                <li><a href="/">Mein Account</a></li>
+                                <li><a href="/">Log out</a></li>
+                                <li class="clickable" data-toggle="modal" data-target="#settings">Einstellungen</li>
                             </ul>
                         </div>
                     </div>
@@ -43,15 +93,28 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            <span>Activities</span><i class="fas fa-plus-circle icon-right"></i>
+                        <div class="col icon-heading">
+                            <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
                         </div>
                     </div>
                 </div>
 
+                <!--<span>
+                <div id="transactions" class="container-fluid data-row-container">
+                  <h4> Test Ed: Transactions an sich wollen wir nicht so auspucken, aber für den Beispiel <br> siehe el "transactions" und use of v-for loop mit v-bind:key </h4>
+                  <span>{{transactionsData}}</span>
+                  <div v-for="tdata in transactionsData" v-bind:key="tdata">
+                    Transaction ID: {{tdata.transactionID}} -
+                    Date of Payment : {{ tdata.dateOfPayment }} -
+                    User ID: {{tdata.userID}}
+                  </div>
+                  <h4> End of Test </h4>
+                </div>-->
+
                 <div class="container-fluid activities-container">
 
-                    <article class="activity">
+                <!-- **************** START TRANSAKTION ELEMENT :: ZUM LOOPEN ****************  -->
+                <article class="activity">
                         <div class="row">
                             <div class="col-6">
                                 <h4 class="activitiy-header">
@@ -68,8 +131,8 @@
                             </div>
                         </div>
                     </article>
-
                     <!-- **************** START TRANSAKTION ELEMENT :: ZUM LOOPEN ****************  -->
+
                     <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
                       <div class="row">
                         <div class="col-6">
@@ -161,19 +224,23 @@ export default {
 
 <style lang="scss">
 
+    $color1: #6495E3;
+    $text-light: #f9f9f9;
     $innergap: 20px;
     $outergap: 20px;
     $background: #f3f3f3;
+    $background-alt: $color1;
     $border-radius: 7px;
     $bordercolor: red;
     $border-width: 3px;
     $border-style: solid;
+    $shadow: 0 0 30px -5px #999;
 
     body{
         padding: 15px;
     }
 
-    div{
+    div.limit{
         height: 100%;
     }
     .fa, .fas, .fab{
@@ -192,7 +259,9 @@ export default {
         padding-bottom: $innergap;
         margin-bottom: $outergap;
     }
-
+    i{
+        vertical-align: top;
+    }
     img{
         max-height:100%;
         width: auto;
@@ -202,6 +271,20 @@ export default {
         font-size: 22px;
         font-weight: 700;
         text-transform: uppercase;
+    }
+    .clickable{
+        cursor: pointer;
+    }
+    a{
+        text-decoration: none;
+        &:hover{
+            text-decoration: none;
+        }
+    }
+    .dark{
+        h1,h2,h3,h4,h5,h6,p,span,a,li{
+            color: $text-light;
+        }
     }
     article.activity{
         padding-top: 20px;
@@ -235,6 +318,8 @@ export default {
         -moz-border-radius: $border-radius;
         border-radius: $border-radius;
         padding: 15px;
+        box-shadow: $shadow;
+        background: $background-alt;
         &:after{
             content: '';
             position: absolute;
@@ -307,6 +392,18 @@ export default {
         }
         li:last-of-type::after{
             content: none;
+        }
+    }
+
+    .icon-heading{
+        h3{
+            display: inline-block;
+            ~i{
+                font-size: 24px;
+            }
+        }
+        i{
+
         }
     }
 </style>
