@@ -28,6 +28,31 @@
         </section>
         <!-- **** END ADD ACTIVITIY MODAL -->
 
+        <!-- **** START ADD PERSON MODAL -->
+        <!-- TODO: Wie machen: In Projekt Template auslagen und ID Dynamisch generieren? Oder mittels gloabler Variable dynamisch Inhalt generieren? -->
+        <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="add-activity-modal-lable">Person hinzufügen</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName"><br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- **** END ADD PERSON MODAL -->
+
         <!-- **** START SETTINGS MODAL -->
         <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -54,7 +79,7 @@
         <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
         <!-- TODO: Auslagern in eigenes Template -->
         <section id="header" class="visible-container">
-            <div class="header-container container-fluid">
+            <div class="header-container dark container-fluid">
                 <div id="account-nav" class="limit">
                     <div class="avatar-container limit">
                         <img class="avatar" src="../../public/img/noimg.jpeg">
@@ -81,10 +106,10 @@
                 <div class="container-fluid data-row-container">
                     <div class="row">
                         <div class="col-9">
-                            <h3 class="data-row-title">Urlaub Mallorca</h3>
+                            <h2 class="data-row-title">Urlaub Mallorca</h2>
                         </div>
                         <div class="col-3">
-                            <span>2 Personen</span><i class="fas fa-plus-circle icon-right"></i>
+                            <span>2 Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
                         </div>
                     </div>
                     <div class="row">
@@ -93,9 +118,11 @@
                             <p>{{ response }}</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row row-activities-headline">
                         <div class="col icon-heading">
-                            <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
+                            <div class="headline-wrapper">
+                                <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,7 +143,7 @@
 
                 <!-- **************** START TRANSAKTION ELEMENT :: ZUM LOOPEN ****************  -->
                 <article class="activity">
-                        <div class="row">
+                        <div class="row row-activity">
                             <div class="col-6">
                                 <h4 class="activitiy-header">
                                     Restaurant Montag
@@ -163,7 +190,7 @@
         <!-- **************** ENDE BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
 
         <!-- **************** START FOOTER ELEMENT MIT RECHTLICHEM UND HILFE ****************  -->
-        <section id="footer" class="visible-container">
+        <section id="footer" class="visible-container dark">
             <div class="footer-container container-fluid">
                 <nav id="footer-nav">
                     <ul class="menu-list horizontal">
@@ -245,20 +272,24 @@ export default {
 
 <style lang="scss">
 
+    /*VARIABLES*/
     $color1: #6495E3;
     $text-light: #f9f9f9;
     $innergap: 20px;
     $outergap: 20px;
-    $background: #f3f3f3;
+    $background: #ececec;
+    $white: #fbfbfb;
+    $background-dark: #343944;
     $background-alt: $color1;
     $border-radius: 7px;
-    $bordercolor: red;
+    $bordercolor: #cacaca;
     $border-width: 3px;
     $border-style: solid;
-    $shadow: 0 0 30px -5px #999;
+    $shadow: 0 0 30px -5px #4a3939;
 
     body{
         padding: 15px;
+        background: $background;
     }
 
     div.limit{
@@ -275,26 +306,46 @@ export default {
         -webkit-border-radius: $border-radius;
         -moz-border-radius: $border-radius;
         border-radius: $border-radius;
-        background: $background;
+        background: $white;
         padding: $innergap;
         padding-bottom: $innergap;
         margin-bottom: $outergap;
     }
-    i{
-        vertical-align: top;
-    }
+
     img{
         max-height:100%;
         width: auto;
     }
+    input{
+        width: 100%;
+        mac-width: 500px;
+    }
 
+    h2{
+        text-transform: uppercase;
+    }
     h3{
         font-size: 22px;
         font-weight: 700;
         text-transform: uppercase;
     }
+    .headline-wrapper{
+        border-bottom: $border-width solid $bordercolor;
+    }
+
+    /*LINKS & BUTTONS*/
+
+    i{
+        display: inline-block;
+    }
     .clickable{
         cursor: pointer;
+    }
+    i.clickable{
+        transition: transform .6s ease-in-out;
+        &:hover{
+            transform: rotate(180deg);
+        }
     }
     a{
         &:hover{
@@ -314,12 +365,19 @@ export default {
         text-transform: uppercase;
         font-weight: 700;
     }
-    .header-container{
+
+    /*HEADER STYLING*/
+
+    #header .header-container{
         height:80px;
+        background: $background-dark;
     }
     #account-nav{
         display: inline-block;
     }
+
+    /*DROPDOWNS*/
+
     .dropdown {
         position: absolute;
         width: 250px;
@@ -348,7 +406,7 @@ export default {
             width: 0;
             height: 0;
             border: 10px solid transparent;
-            border-bottom-color: #629c4f;
+            border-bottom-color: $background-alt;
             border-top: 0;
             margin-left: 10px;
             margin-top: -10px;
@@ -383,19 +441,27 @@ export default {
         border-radius: 50%;
     }
 
+    /*MAIN DATA*/
+
     .data-row{
         padding-top: $innergap;
         padding-bottom: $innergap;
-        background: $background;
+        background: $white;
         margin: $outergap auto;
         -webkit-border-radius: $border-radius;
         -moz-border-radius: $border-radius;
         border-radius: $border-radius;
         .data-row-container{
-
         }
     }
+    .row-activities-headline{
+        margin-top: $innergap;
+    }
 
+    /*FOOTER*/
+    #footer .footer-container{
+        background: $background-dark;
+    }
     #footer-nav ul{
         font-size: 12px;
     }
