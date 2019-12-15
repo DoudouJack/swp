@@ -15,7 +15,7 @@ const getProjects = async () => {
     }
 }
 
-const createProject = async(projectID, title, description, member, activity, projectPayType) => {
+const createProject = async(title, description, member, activity, projectPayType) => {
     try {
         let link = await createLink()
         let project = new Project()

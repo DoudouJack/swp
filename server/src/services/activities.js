@@ -15,7 +15,7 @@ const getActivities = async () => {
 }
 
 
-const createActivity = async(activityID, title, description, member, amount, currency, projectID) => {
+const createActivity = async(title, description, member, amount, currency, projectID) => {
     try {
         const splitAmount = await split(parseFloat(member.length), parseFloat(amount)) 
         let activity = new Activity()

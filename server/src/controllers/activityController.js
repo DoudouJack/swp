@@ -36,7 +36,6 @@ const activity = async (req, res, next) => {
 }
 
 const createActivity = async (req, res, next) => {
-    const activityID = req.body.activityID
     const title = req.body.title
     const description = req.body.description
     const member = req.body.member
@@ -45,7 +44,7 @@ const createActivity = async (req, res, next) => {
     const projectID = req.body.projectID
 
     try {
-        const internalresponse = await activityServiceCreate(activityID, title, description, member, amount, currency, projectID)
+        const internalresponse = await activityServiceCreate(title, description, member, amount, currency, projectID)
         console.log("internal response")
         console.log(internalresponse)
 

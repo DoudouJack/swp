@@ -15,10 +15,10 @@ API NEEDED ROUTES:
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
     ☐ User
     ☐ Project
-        ☐ Create Project
-        ☐ Get All Projects
-        ☐ Get single Project
-        ☐ Update single project
-        ☐ Add member to project
+        ✔ Create Project @done(19-12-12 21:28)
+        ✔ Get All Projects @done(19-12-12 21:28)
+        ✔ Get single Project @done(19-12-12 21:28)
+        ✔ Update single project @done(19-12-12 21:28)
+        ✔ Add member to project @done(19-12-12 21:28)
     ☐ Misc
         ☐ *Middelware* between all routes!

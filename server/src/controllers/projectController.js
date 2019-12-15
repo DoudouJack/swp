@@ -39,7 +39,6 @@ const project = async(req, res, next) => {
 }
 
 const createProject = async(req, res, next) => {
-    const projectID = req.body.projectID
     const title = req.body.title
     const description = req.body.description
     const member = req.body.member
@@ -47,7 +46,7 @@ const createProject = async(req, res, next) => {
     const projectPayType = req.body.projectPayType
 
     try {
-        const internalresponse = await projectServiceCreateProject(projectID, title, description, member, activity, projectPayType)
+        const internalresponse = await projectServiceCreateProject(title, description, member, activity, projectPayType)
         console.log("internal response")
         console.log(internalresponse)
 
