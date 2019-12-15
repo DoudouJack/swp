@@ -14,13 +14,13 @@
                         </div>
                         <div class="modal-body">
                             <form action="">
-                                <input placeholder="Name der Aktivität" type="text" name="activityName"><br>
-                                <input placeholder="Betrag in Euro" type="number" name="activityAmmount"><br>
+                                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName"><br>
+                                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount"><br>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-                            <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+                            <button type="submit" class="btn btn-primary" @click="postPost()" data-dismiss="modal">Speichern & Schließen</button>
                         </div>
                     </div>
                 </div>
@@ -90,6 +90,7 @@
                     <div class="row">
                         <div class="col">
                             <span>November 2018 | 500€</span>
+                            <p>{{ response }}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -189,7 +190,10 @@ export default {
   data: function () {
     return {
       transactionsData: [],
-      activitiesData: []
+      activitiesData: [],
+      actName: '',
+      actAmount: '',
+      response: ''
     }
   },
   mounted () {
@@ -215,6 +219,23 @@ export default {
       var splitted
       splitted = this.activitiesData.amount / count
       return splitted
+    },
+    postPost () {
+      axios.post('http://127.0.0.1:8081/createActivity', {
+        activityID: 'a3',
+        title: this.actName,
+        description: this.actName,
+        member: ['u1', 'u2'],
+        amount: this.actAmount,
+        currency: 'EUR',
+        projectID: 'p1'
+      })
+        .then(response => {
+          this.response = response
+        })
+        .catch(e => {
+          this.error.push(e)
+        })
     }
   }
 
