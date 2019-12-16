@@ -7,7 +7,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="add-activity-modal-lable">Aktivität hinzufügen</h5>
+                            <h5 class="modal-title">Aktivität hinzufügen</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -34,7 +34,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="add-activity-modal-lable">Person hinzufügen</h5>
+                        <h5 class="modal-title">Person hinzufügen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -58,7 +58,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="settings-modal-lable">Einstellungen</h5>
+                        <h5 class="modal-title">Einstellungen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -80,7 +80,7 @@
         <!-- TODO: Auslagern in eigenes Template -->
         <section id="header" class="visible-container">
             <div class="header-container dark container-fluid">
-                <div id="account-nav" class="limit">
+                <div id="account-nav" class="trigger limit">
                     <div class="avatar-container limit">
                         <img class="avatar" src="../../public/img/noimg.jpeg">
                     </div>
@@ -386,9 +386,6 @@ export default {
         padding-top: 15px;
         z-index: 9999;
     }
-    .dropdown-layover{
-
-    }
     .dropdown-inner{
         position: relative;
         background: #629c4f;
@@ -418,6 +415,7 @@ export default {
         list-style-position: outside;
         padding: 0;
         text-align: left;
+        margin-bottom: 0;
         li{
             border-bottom: 1px solid $background;
             padding: 5px 0;
@@ -427,12 +425,16 @@ export default {
         }
 
     }
-
-    #account-nav .dropdown{
-        display: none;
+    .trigger .dropdown{
+        visibility: hidden;
+        opacity: 0;
+        transform: translatey(-20px);
+        transition: .3s ease-in-out, opacity .25s ease-in-out;
     }
-    #account-nav:hover .dropdown{
-        display: block;
+    .trigger:hover .dropdown{
+        visibility: visible;
+        opacity: 1;
+        transform: translatey(0);
     }
 
     img.avatar{
