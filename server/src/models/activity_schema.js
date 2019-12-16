@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var activity = mongoose.Schema({
     activityID: {
         type: String,
-        required: true
+        required: false
     },
     title: {
         type: String,

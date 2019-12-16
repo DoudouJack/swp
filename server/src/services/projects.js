@@ -20,7 +20,6 @@ const createProject = async(title, description, member, activity, projectPayType
         let link = await createLink()
         let project = new Project()
 
-        project.projectID = projectID,
         project.title = title
         project.description = description
         project.member = member
