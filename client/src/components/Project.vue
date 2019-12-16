@@ -1,4 +1,29 @@
 <template>
+  <div>
+    <!-- **** START ADD PERSON MODAL -->
+  <!-- TODO: Wie machen: In Projekt Template auslagen und ID Dynamisch generieren? Oder mittels gloabler Variable dynamisch Inhalt generieren? -->
+  <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Person hinzufügen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName"><br>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- **** END ADD PERSON MODAL -->
   <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
   <section id="body">
 
@@ -22,15 +47,143 @@
 
       <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     </article>
-    <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
 
-  </section>
+    <div v-for="pdata in projectData" v-bind:key="pdata">
+    <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
+    <article class="data-row">
+      <div class="container-fluid data-row-container">
+        <div class="row">
+          <div class="col-9">
+            <h2 class="data-row-title">{{pdata.title}}</h2>
+          </div>
+          <div class="col-3">
+            <span>2 Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span>November 2018 | 500€</span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
+    </article>
+    <div class="container-fluid activities-container" id="#activity">
+    <div class="row row-activities-headline">
+      <div class="col icon-heading">
+        <div class="headline-wrapper">
+          <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
+        </div>
+      </div>
+    </div>
+    <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
+      <div class="row">
+        <div class="col-6">
+          <h4 class="activitiy-header">
+            {{adata.title}}
+          </h4>
+          <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+        </div>
+        <div class="col-6">
+          <div class="activity-open-amount">
+                                      <span class="amount-positive">
+                                          {{ adata.splitAmount }} {{adata.currency}}
+                                      </span>
+          </div>
+        </div>
+      </div>
+    </article>
+    </div>
+
+    <section class="off-screen-elements">
+
+      <!-- **** START ADD ACTIVITIY MODAL -->
+      <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Aktivität hinzufügen</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName"><br>
+                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount"><br>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+              <button type="submit" class="btn btn-primary" @click="postPost()" data-dismiss="modal">Speichern & Schließen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- **** END ADD ACTIVITIY MODAL -->
+  </div>
+
   <!-- **************** ENDE BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
+  </section>
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'Project'
+  name: 'Project',
+  data: function () {
+    return {
+      projectData: [],
+      activitiesData: [],
+      actName: '',
+      actAmount: '',
+      response: ''
+    }
+  },
+  mounted () {
+    axios.get('http://127.0.0.1:8081/projects')
+      .then(response => {
+        this.projectData = response.data.data
+      })
+    axios.get('http://127.0.0.1:8081/activities')
+      .then(response => {
+        this.activitiesData = response.data.data
+      })
+  },
+  methods: {
+    getActivities () {
+      axios.get('http://127.0.0.1:8081/activities')
+        .then(response => {
+          this.activitiesData = response.data.data
+        })
+    },
+    convertDate (date) {
+      let ret = date.format('dd.mm.YYYY hh:MM:ss')
+      return ret
+    },
+    postPost () {
+      axios.post('http://127.0.0.1:8081/createActivity', {
+        title: this.actName,
+        description: this.actName,
+        member: ['u1', 'u2'],
+        amount: this.actAmount,
+        currency: 'EUR',
+        projectID: 'p1'
+      })
+        .then(response => {
+          this.response = response
+          this.getActivities()
+        })
+        .catch(e => {
+          this.error.push(e)
+        })
+    }
+  }
 }
 </script>
 

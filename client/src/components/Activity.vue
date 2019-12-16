@@ -1,59 +1,6 @@
 <template>
   <!-- **************** START ACTIVITY ELEMENT :: ZUM LOOPEN ****************  -->
-  <div class="container-fluid activities-container" id="#activity">
-  <section class="off-screen-elements">
 
-    <!-- **** START ADD ACTIVITIY MODAL -->
-    <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Aktivität hinzufügen</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="">
-              <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName"><br>
-              <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount"><br>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" @click="postPost()" data-dismiss="modal">Speichern & Schließen</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- **** END ADD ACTIVITIY MODAL -->
-
-    <div class="row row-activities-headline">
-      <div class="col icon-heading">
-        <div class="headline-wrapper">
-          <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
-        </div>
-      </div>
-    </div>
-  <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
-    <div class="row">
-      <div class="col-6">
-        <h4 class="activitiy-header">
-          {{adata.title}}
-        </h4>
-        <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
-      </div>
-      <div class="col-6">
-        <div class="activity-open-amount">
-                                      <span class="amount-positive">
-                                          {{ adata.splitAmount }} {{adata.currency}}
-                                      </span>
-        </div>
-      </div>
-    </div>
-  </article>
-  </div>
 </template>
 
 <script>

@@ -1,55 +1,10 @@
 <template>
-    <div id="app-container">
-        <!-- **** START ADD PERSON MODAL -->
-        <!-- TODO: Wie machen: In Projekt Template auslagen und ID Dynamisch generieren? Oder mittels gloabler Variable dynamisch Inhalt generieren? -->
-        <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Person hinzufügen</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName"><br>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- **** END ADD PERSON MODAL -->
 
-        <!-- **** START SETTINGS MODAL -->
-        <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Einstellungen</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- **** END SETTINGS MODAL -->
 
         <!-- **** END ADD ACTIVITIY MODAL -->
 
-    </div>
+
 </template>
 
 <script>
