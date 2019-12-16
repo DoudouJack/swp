@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- <navbar></navbar> -->
+    <Header></Header>
     <temp></temp>
+    <Project></Project>
+    <Activity></Activity>
+    <Footer></Footer>
     <main class="py-4">
       <router-view></router-view>
     </main>
@@ -9,10 +13,18 @@
 </template>
 <script>
 import temp from './components/temp'
+import Activity from './components/Activity'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Project from './components/Project'
 
 export default {
   components: {
-    temp
+    temp,
+    Header,
+    Project,
+    Activity,
+    Footer
   }
 }
 /**
