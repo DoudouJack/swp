@@ -14,6 +14,10 @@ API NEEDED ROUTES:
         ✔ Get single activity @done(19-12-12 19:31)
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
     ☐ User
+        ☐ show users activities
+        ☐ show users projects
+        ☐ show users transactions
+        ☐ change: userID --> dbID
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
         ✔ Get All Projects @done(19-12-12 21:28)
