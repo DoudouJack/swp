@@ -20,7 +20,6 @@ const createActivity = async(title, description, member, amount, currency, proje
         const splitAmount = await split(parseFloat(member.length), parseFloat(amount)) 
         let activity = new Activity()
 
-        activity.activityID = activityID
         activity.title = title
         activity.description = description
         activity.member = member
