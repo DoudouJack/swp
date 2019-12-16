@@ -167,7 +167,7 @@
                           <h4 class="activitiy-header">
                             {{adata.title}}
                           </h4>
-                          <span class="activity-desc" > {{ convertDate(adata.date) }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+                          <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
                         </div>
                         <div class="col-6">
                           <div class="activity-open-amount">
@@ -255,7 +255,6 @@ export default {
     },
     postPost () {
       axios.post('http://127.0.0.1:8081/createActivity', {
-        activityID: 'a3',
         title: this.actName,
         description: this.actName,
         member: ['u1', 'u2'],
@@ -269,7 +268,6 @@ export default {
         .catch(e => {
           this.error.push(e)
         })
-      this.getActivities()
     }
   }
 
