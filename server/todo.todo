@@ -17,8 +17,21 @@ API NEEDED ROUTES:
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
         ✔ Get All Projects @done(19-12-12 21:28)
-        ✔ Get single Project @done(19-12-12 21:28)
+        ✔ Get single Project @done(19-12-16 08:45)
         ✔ Update single project @done(19-12-12 21:28)
         ✔ Add member to project @done(19-12-12 21:28)
+        ✔ Add Activity to Project @done(19-12-16 08:19)
+        ☐ When creating project, create transactions for all members with splitted amount
     ☐ Misc
         ☐ *Middelware* between all routes!
+
+    ☐ Settings
+    ☐ Service Worker
+    ☐ Notifications
+
+CLIENT:
+    ☐ Components
+        ☐ Create "Dashboard" all projects activity
+        ☐ Create singleProject Component
+        ☐ Create Nav Bar Component
+        ☐ Create Footer Component
