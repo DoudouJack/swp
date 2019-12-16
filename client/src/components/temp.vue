@@ -115,7 +115,6 @@
                     <div class="row">
                         <div class="col">
                             <span>November 2018 | 500€</span>
-                            <p>{{ response }}</p>
                         </div>
                     </div>
                     <div class="row row-activities-headline">
@@ -153,7 +152,7 @@
                             <div class="col-6">
                                 <div class="activity-open-amount">
                                     <span class="amount-positive">
-                                        25€
+                                      25€
                                     </span>
                                 </div>
                             </div>
@@ -264,6 +263,7 @@ export default {
       })
         .then(response => {
           this.response = response
+          this.getActivities()
         })
         .catch(e => {
           this.error.push(e)
