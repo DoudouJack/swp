@@ -234,6 +234,12 @@ export default {
       })
   },
   methods: {
+    getActivities () {
+      axios.get('http://127.0.0.1:8081/activities')
+        .then(response => {
+          this.activitiesData = response.data.data
+        })
+    },
     convertDate (date) {
       let ret = date.format('dd.mm.YYYY hh:MM:ss')
       return ret
@@ -263,6 +269,7 @@ export default {
         .catch(e => {
           this.error.push(e)
         })
+      this.getActivities()
     }
   }
 
