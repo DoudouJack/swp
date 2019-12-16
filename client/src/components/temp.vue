@@ -167,7 +167,7 @@
                           <h4 class="activitiy-header">
                             {{adata.title}}
                           </h4>
-                          <span class="activity-desc" > {{adata.date}} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+                          <span class="activity-desc" > {{ convertDate(adata.date) }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
                         </div>
                         <div class="col-6">
                           <div class="activity-open-amount">
@@ -234,10 +234,10 @@ export default {
       })
   },
   methods: {
-    /*    convertDate (date) {
-      date.format('dd.mm.YYYY hh:MM:ss')
-      return date
-    }, */
+    convertDate (date) {
+      let ret = date.format('dd.mm.YYYY hh:MM:ss')
+      return ret
+    },
     splitAmount (amount) {
       var members
       members = this.activitiesData.member
