@@ -20,6 +20,7 @@ app.use(cors())
 // ROUTES
 app.get('/', authController.checkAuth)
 
+
 /* TRANSACTION */
 /* http://localhost:8081/transactions GET */
 app.get('/transactions', transactionController.transaction)
@@ -57,6 +58,9 @@ app.get('/getSingleProject', projectController.getSingleProject)
 
 /* http://localhost:8081/createProject  POST */
 app.post('/createProject', projectController.createProject)
+
+/* http://localhost:8081/updateProject  POST */
+app.post('/updateProject', projectController.updateProject)
 
 /* http://localhost:8081/addMember  POST */
 app.post('/addMember', projectController.addMember)

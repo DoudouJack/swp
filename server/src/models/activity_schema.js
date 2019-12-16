@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 
 var activity = mongoose.Schema({
-    activityID: {
-        type: String,
-        required: false
-    },
     title: {
         type: String,
         required: true
@@ -47,8 +43,7 @@ var activity = mongoose.Schema({
     }
 });
 
-activity.index({projectID: 1, activityID: 1}, {unique: true})
-activity.index({activityID: 1},{unique: true})
+activity.index({projectID: 1, _id: 1}, {unique: true})
 
 
 var Activity = module.exports = mongoose.model('activities', activity)
