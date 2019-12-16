@@ -140,24 +140,6 @@
 
                 <div class="container-fluid activities-container">
 
-                <!-- **************** START TRANSAKTION ELEMENT :: ZUM LOOPEN ****************  -->
-                <article class="activity">
-                        <div class="row row-activity">
-                            <div class="col-6">
-                                <h4 class="activitiy-header">
-                                    Restaurant Montag
-                                </h4>
-                                <span class="activity-desc">NOV 10 – Du hast 50€ gezahlt</span>
-                            </div>
-                            <div class="col-6">
-                                <div class="activity-open-amount">
-                                    <span class="amount-positive">
-                                      25€
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
                     <!-- **************** START TRANSAKTION ELEMENT :: ZUM LOOPEN ****************  -->
 
                     <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
@@ -171,8 +153,7 @@
                         <div class="col-6">
                           <div class="activity-open-amount">
                                       <span class="amount-positive">
-                                        <!-- Hier unten sollte zB die methode das tun was sie soll, wenn ich auskommentiere geht das komplett weg-->
-                                          25€ <!--{{ splitAmount(adata.amount) }}-->
+                                          {{ adata.splitAmount }} {{adata.currency}}
                                       </span>
                           </div>
                         </div>
