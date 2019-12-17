@@ -100,8 +100,16 @@ app.put('/changeUserState', userController.changeUserState)
 /* http://localhost:8081/deleteUser?userID=u1 DELETE*/
 app.delete('/deleteUser', userController.deleteUser)
 
-/*http://127.0.0.1:8081/getUserTransaction?userID=u4*/
-app.get('/getUserTransaction', userController.getUserTransactions)
+/*http://127.0.0.1:8081/getUserTransactions?userID=u4 GET */
+app.get('/getUserTransactions', userController.getUserTransactions)
+
+/*http://127.0.0.1:8081/getUserActivities?userID=u4 GET */
+app.get('/getUserActivities', userController.getUserActivities)
+
+/* http://127.0.0.1:8081/getUserProjects?userID=u4 GET */
+app.get('/getUserProjects', userController.getUserProjects)
+
+
 
 
 

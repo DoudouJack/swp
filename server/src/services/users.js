@@ -140,6 +140,38 @@ const getUserTransactions = async (reqUserID) => {
     
 }
 
+const getUserActivity = async (reqUserID) => {
+    try {
+        if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        
+        const user = await User.findOne({'userID' : reqUserID}).exec();
+
+        return user.activity;
+
+    }   catch (e) {
+        return false
+    }
+    
+}
+
+const getUserProject = async (reqUserID) => {
+    try {
+        if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        
+        const user = await User.findOne({'userID' : reqUserID}).exec();
+
+        return user.project;
+
+    }   catch (e) {
+        return false
+    }
+    
+}
+
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
@@ -147,5 +179,7 @@ module.exports = {
     userServiceUpdate: updateUser,
     userServiceChangeState: changeUserState,
     userServiceDeleteUser: deleteUser,
-    userServiceGetTransactions: getUserTransactions
+    userServiceGetTransactions: getUserTransactions,
+    userServiceGetActivities: getUserActivity,
+    userServiceGetProjects: getUserProject
 }
