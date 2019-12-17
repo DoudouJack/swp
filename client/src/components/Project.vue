@@ -171,7 +171,7 @@ export default {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
-        member: this.actMember.length,
+        member: this.actMember,
         amount: this.actAmount,
         currency: 'EUR',
         projectID: 'p1'
