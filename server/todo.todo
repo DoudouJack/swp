@@ -9,10 +9,12 @@ API NEEDED ROUTES:
     ☐ Acitvity
         ✔ Wenn eine Activity erstellt wird => Split() => createTransaction @done(19-12-11 19:09)
         ✔ Create Activity @done(19-12-11 19:09)
+            ☐ Check if given projectID is existing
         ✔ Get all Activities @done(19-12-11 19:09)
         ✔ Update single activity @done(19-12-12 18:55)
         ✔ Get single activity @done(19-12-12 19:31)
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
+        ☐ When creating project, create transactions for all members with splitted amount
     ☐ User
         ☐ show users activities
         ☐ show users projects
@@ -25,15 +27,17 @@ API NEEDED ROUTES:
         ✔ Update single project @done(19-12-12 21:28)
         ✔ Add member to project @done(19-12-12 21:28)
         ✔ Add Activity to Project @done(19-12-16 08:19)
-        ☐ When creating project, create transactions for all members with splitted amount
+        ☐ Gesamtbetrag Projekt add to model
+        ☐ Add date to model
     ☐ Misc
         ☐ *Middelware* between all routes!
-
+        ☐ Alle Date Felder automatisch konvertieren in lesbare Datum
+        ☐ API Doku machen (Route, Method POST/GET, DATA, RETURNED DATA)
     ☐ Settings
         ☐ Model
         ☐ Routes
     ☐ Service Worker
-    ☐ Notifications
+    ☐ Notifications Firebase Cloud Messaging
     ☐ 
 CLIENT:
     ☐ Components
