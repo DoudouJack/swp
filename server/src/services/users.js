@@ -1,4 +1,3 @@
-const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
 
 User = require('../models/user.model')

@@ -17,8 +17,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern</button>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
             <h2 class="data-row-title">{{pdata.title}}</h2>
           </div>
           <div class="col-3">
-            <span>2 Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
+            <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
           </div>
         </div>
         <div class="row">
@@ -142,7 +142,8 @@ export default {
       activitiesData: [],
       actName: '',
       actAmount: '',
-      response: ''
+      response: '',
+      actMember: ''
     }
   },
   mounted () {
@@ -170,7 +171,7 @@ export default {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
-        member: ['u1', 'u2'],
+        member: this.actMember.length,
         amount: this.actAmount,
         currency: 'EUR',
         projectID: 'p1'
