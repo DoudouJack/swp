@@ -39,7 +39,7 @@ const getUserBalanceByID = async (reqUserID) => {
     
 }
 
-const createUser = async (userID, name, fon, email) => {
+const createUser = async (userID, name, fon, email, project, activity, transaction) => {
     try {
 
         let user = new User()
@@ -48,6 +48,9 @@ const createUser = async (userID, name, fon, email) => {
         user.name = name
         user.fon = fon
         user.email = email
+        user.project = project
+        user.activity = activity
+        user.transaction = transaction
         
         console.log(user)
 
@@ -121,11 +124,28 @@ const deleteUser = async (reqUserID) => {
     
 }
 
+const getUserTransactions = async (reqUserID) => {
+    try {
+        if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        
+        const user = await User.findOne({'userID' : reqUserID}).exec();
+
+        return user.transaction;
+
+    }   catch (e) {
+        return false
+    }
+    
+}
+
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
     userServiceCreate: createUser,
     userServiceUpdate: updateUser,
     userServiceChangeState: changeUserState,
-    userServiceDeleteUser: deleteUser
+    userServiceDeleteUser: deleteUser,
+    userServiceGetTransactions: getUserTransactions
 }

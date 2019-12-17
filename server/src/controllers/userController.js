@@ -4,6 +4,7 @@ const { userServiceGetBalance } = require('../services/users')
 const { userServiceUpdate } = require('../services/users')
 const { userServiceChangeState } = require('../services/users')
 const { userServiceDeleteUser } = require('../services/users')
+const { userServiceGetTransactions} = require('../services/users')
 
 
 
@@ -12,16 +13,20 @@ const createUser = async (req, res, next) => {
     const name = req.body.name
     const fon = req.body.fon
     const email = req.body.email
+    const project = req.body.project
+    const activity = req.body.activity
+    const transaction = req.body.transaction
 
 
    try {
-      const internalresponse = await userServiceCreate(userID, name, fon, email)
+      const internalresponse = await userServiceCreate(userID, name, fon, email, 
+        project, activity, transaction)
       console.log("internal response user create")
       console.log(internalresponse)
       
       if (internalresponse !== false) {
         res.sendStatus(200).json({
-            "message" : "User saved succesfully"
+            "message" : "User created and saved succesfully"
         })
       } else {
         res.sendStatus(404).json({
@@ -222,6 +227,34 @@ const createUser = async (req, res, next) => {
     }
   }
 
+  const getUserTransactions = async (req, res, next) => {
+    let userID;
+    if(Object.keys(req.body).length === 0) {
+      userID = req.query.userID
+    } else {
+      userID = req.body.userID
+    }
+    // $_GET['userID']
+    try {
+      const internalresponse = await userServiceGetTransactions(userID)
+      console.log("internal response")
+      console.log(internalresponse)
+      if (internalresponse !== false) {
+        res.json({
+          "message" : "success",
+          "data": internalresponse
+        })
+      } else {
+        res.json({
+          "message" : "Error. Something went wrong."
+        })
+      }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+  }
+
 
 
   module.exports = {
@@ -230,6 +263,7 @@ const createUser = async (req, res, next) => {
     createUser,
     updateUser,
     changeUserState,
-    deleteUser
+    deleteUser,
+    getUserTransactions
   }
   

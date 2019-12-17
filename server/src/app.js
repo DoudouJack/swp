@@ -74,7 +74,10 @@ app.post('/addActivity', projectController.addActivity)
 Body: 	userID : "u1"
 		"name" : "User One",
 		"fon" : "99999999",
-		"email" : "userone@usermail.de"*/
+		"email" : "userone@usermail.de"
+		"project" : "p1",
+		"activity" : ["a1","a2"],
+		"transaction" : ["t1", "t2", "t3"]*/
 app.post('/createUser', userController.createUser)
 
 /* http://localhost:8081/getUserByID?userID=u1 GET*/
@@ -97,7 +100,8 @@ app.put('/changeUserState', userController.changeUserState)
 /* http://localhost:8081/deleteUser?userID=u1 DELETE*/
 app.delete('/deleteUser', userController.deleteUser)
 
-
+/*http://127.0.0.1:8081/getUserTransaction?userID=u4*/
+app.get('/getUserTransaction', userController.getUserTransactions)
 
 
 

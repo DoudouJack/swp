@@ -11,15 +11,17 @@ var userSchema = new Schema({
         required: true
     },
     fon: {
-        type: Number
+        type: Number,
+        default: null
     },
     email: {
-        type: String
+        type: String,
+        default: null
     },
     activity: {
         type: Array,
         required : false
-    },
+   },
     project: {
         type: Array,
         required : false
