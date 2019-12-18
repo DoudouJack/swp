@@ -1,8 +1,8 @@
 const { mongoose } = require('../con/dbcon')
-
+const { ObjectId } = mongoose.Types.ObjectId
 User = require('../models/user.model')
 
-
+/*
 const getUserByID = async (reqUserID) => {
     try {
         console.log("get")
@@ -21,14 +21,34 @@ const getUserByID = async (reqUserID) => {
     }
     
 }
+*/
+
+const getUserByID = async (reqUserID) => {
+    try {
+        console.log("get")
+        console.log(reqUserID)
+
+        if(reqUserID === undefined){
+            throw new Error('User not found :(')
+        }
+        const user = await User.findById({'_id' : ObjectId(reqUserID)}).exec();
+        return user;
+    
+    }   catch (e) {
+        return false
+    }
+}
+
 
 const getUserBalanceByID = async (reqUserID) => {
     try {
+        console.log(reqUserID)
         if(reqUserID === undefined){
             throw new Error('User not found :(')
         }
         
-        const user = await User.findOne({'userID' : reqUserID}).exec();
+        const user = await User.findById({'_id' : ObjectId(reqUserID)}).exec();
+       // const user = await User.findOne({'userID' : reqUserID}).exec();
 
         return user.balance;
 
@@ -38,12 +58,15 @@ const getUserBalanceByID = async (reqUserID) => {
     
 }
 
+
 const createUser = async (userID, name, fon, email, project, activity, transaction) => {
     try {
 
         let user = new User()
        
         user.userID = userID
+      //  user.userID = ObjectId
+
         user.name = name
         user.fon = fon
         user.email = email
@@ -61,6 +84,8 @@ const createUser = async (userID, name, fon, email, project, activity, transacti
         return false
     }
 }
+
+
 
 const updateUser = async ( userID, name, fon, email) => {
     try {
@@ -83,6 +108,7 @@ const updateUser = async ( userID, name, fon, email) => {
     }
 }
 
+
 const changeUserState = async ( userID, active) => {
     try {
 
@@ -103,6 +129,9 @@ const changeUserState = async ( userID, active) => {
         return false
     }
 }
+
+
+
 
 const deleteUser = async (reqUserID) => {
     try {
@@ -161,7 +190,8 @@ const getUserProject = async (reqUserID) => {
             throw new Error('User not found :(')
         }
         
-        const user = await User.findOne({'userID' : reqUserID}).exec();
+        
+       const user = await User.findOne({'userID' : reqUserID}).exec();
 
         return user.project;
 

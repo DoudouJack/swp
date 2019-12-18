@@ -16,10 +16,13 @@ API NEEDED ROUTES:
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
         ☐ When creating project, create transactions for all members with splitted amount
     ☐ User
-        ☐ show users activities
-        ☐ show users projects
-        ☐ show users transactions
+        ✔ show users activities @done(19-12-18 14:45)
+        ✔ show users projects @done(19-12-18 14:45)
+        ✔ show users transactions @done(19-12-18 14:45)
         ☐ change: userID --> dbID
+        ☐ update one attribute at user doesent change all attributes
+        ☐ change users default currency
+
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
         ✔ Get All Projects @done(19-12-12 21:28)

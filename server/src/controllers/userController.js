@@ -50,7 +50,7 @@ const createUser = async (req, res, next) => {
     } else {
       userID = req.body.userID
     }
-    // $_GET['userID']
+  
     try {
       const internalresponse = await userServiceGetBalance(userID)
       console.log("internal response")
@@ -73,48 +73,27 @@ const createUser = async (req, res, next) => {
 
 
   const getUserByID = async (req, res, next) => {
-   
-    console.log(req.query)
-    console.log(req.query.userID)
-    console.log(req.body)
-
     let userID;
-    
-  
     if(Object.keys(req.body).length === 0) {
       userID = req.query.userID
     } else {
       userID = req.body.userID
     }
-
-
-    // $_GET['userID']
     try {
       const internalresponse = await userServiceGet(userID)
-      console.log("internal response")
-      console.log(internalresponse)
-      
-
-
       if (internalresponse !== false) {
         res.json({
-          "message" : "success",
-          "data": internalresponse
+          "Data": internalresponse
         })
       } else {
         res.json({
-          "message" : "Error. Something went wrong."
+          "Message" : "Error. Something went wrong."
         })
       }
-      
-        
-      
-      
-    } catch (e) {
+     } catch (e) {
       console.log(e.message)
       res.sendStatus(500) && next(error)
-  
-    }
+     }
   }
 
   
@@ -184,6 +163,7 @@ const createUser = async (req, res, next) => {
 
   }
   
+  /*Delete a User*/
   const deleteUser = async (req, res, next) => {
    
     console.log(req.query)
@@ -199,8 +179,6 @@ const createUser = async (req, res, next) => {
       userID = req.body.userID
     }
 
-
-    // $_GET['userID']
     try {
       const internalresponse = await userServiceDeleteUser(userID)
       console.log("internal response")
@@ -229,6 +207,7 @@ const createUser = async (req, res, next) => {
     }
   }
 
+  /*Get Users transactions*/
   const getUserTransactions = async (req, res, next) => {
     let userID;
     if(Object.keys(req.body).length === 0) {
@@ -236,7 +215,7 @@ const createUser = async (req, res, next) => {
     } else {
       userID = req.body.userID
     }
-    // $_GET['userID']
+    
     try {
       const internalresponse = await userServiceGetTransactions(userID)
       console.log("internal response")
@@ -257,6 +236,7 @@ const createUser = async (req, res, next) => {
     }
   }
 
+  /*Get Users activities*/
   const getUserActivities = async (req, res, next) => {
     let userID;
     if(Object.keys(req.body).length === 0) {
@@ -285,6 +265,7 @@ const createUser = async (req, res, next) => {
     }
   }
 
+  /*Get Users projects*/
   const getUserProjects = async (req, res, next) => {
     let userID;
     if(Object.keys(req.body).length === 0) {
