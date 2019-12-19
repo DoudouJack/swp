@@ -44,7 +44,7 @@ const split = async(memberLength, amount) => {
     return ret
 }
 
-const updateActivity = async(activityID, title, description, member, amount, currency, projectID, id) => {
+const updateActivity = async(title, description, member, amount, currency, projectID, id) => {
     try {
         if(id === undefined){
             throw new Error('undefined id')
@@ -53,7 +53,7 @@ const updateActivity = async(activityID, title, description, member, amount, cur
         const splitAmount = await split(parseFloat(member.length), parseFloat(amount)) 
         
         const filter = {_id: ObjectId(id)}
-        const update = {activityID: activityID, title: title, description: description, member: member, amount: amount, splitAmount: splitAmount, currency: currency, projectID: projectID}
+        const update = {title: title, description: description, member: member, amount: amount, splitAmount: splitAmount, currency: currency, projectID: projectID}
         
         const activityUpdate = await Activity.findByIdAndUpdate(filter, update, {new: true}) // returns querys
         const ret = await activityUpdate.save()

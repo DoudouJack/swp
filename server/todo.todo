@@ -15,6 +15,7 @@ API NEEDED ROUTES:
         ✔ Get single activity @done(19-12-12 19:31)
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
         ☐ When creating project, create transactions for all members with splitted amount
+        ☐ Remove "member" from model
     ☐ User
         ✔ show users activities @done(19-12-18 14:45)
         ✔ show users projects @done(19-12-18 14:45)

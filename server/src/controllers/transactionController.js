@@ -40,14 +40,13 @@ const transaction = async (req, res, next) => {
 
 const createTransaction = async (req, res, next) => {
   const userID = req.body.userID
-  const transactionID = req.body.transactionID
   const activityID = req.body.activityID
   const amount = req.body.amount
   const currency = req.body.currency
-  const isPaid = req.body.isPaid
+  
 
   try {
-    const internalresponse = await transactionServiceCreate(userID, transactionID, activityID, amount, currency, isPaid)
+    const internalresponse = await transactionServiceCreate(userID, activityID, amount, currency)
     console.log("internal response create")
     console.log(internalresponse)
     

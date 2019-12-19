@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 
 var transaction = mongoose.Schema({
-    transactionID: {
-        type: String,
-        required: true
-    },
     dateOfPayment: {
         type: String,
         default: Date.now
