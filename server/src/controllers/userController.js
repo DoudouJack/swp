@@ -7,10 +7,11 @@ const { userServiceDeleteUser } = require('../services/users')
 const { userServiceGetTransactions} = require('../services/users')
 const { userServiceGetActivities} = require('../services/users')
 const { userServiceGetProjects} = require('../services/users')
+const { userServiceChangeBalance } = require('../services/users')
 
 
 
-const createUser = async (req, res, next) => {
+  const createUser = async (req, res, next) => {
     const userID = req.body.userID
     const name = req.body.name
     const fon = req.body.fon
@@ -71,7 +72,7 @@ const createUser = async (req, res, next) => {
     }
   }
 
-
+/*Get User by ID */
   const getUserByID = async (req, res, next) => {
     let id;
     if(Object.keys(req.body).length === 0) {
@@ -95,52 +96,17 @@ const createUser = async (req, res, next) => {
       res.sendStatus(500) && next(error)
      }
   }
-
-  
-  const updateUser = async(req, res, next) => {
-    let userID
-    
-    if (Object.keys(req.body).length === 0) {
-        userID = req.quiery.userID
-    }
-    else {
-        userID = req.body.userID
-    }
-
-    try {
-      const internalresponse = await userServiceUpdate(req.query.userID, req.body.name, req.body.fon, req.body.email)
-      console.log("internal response update")
-      console.log(internalresponse)
-    
-    if (internalresponse !== false) {
-      res.json({
-        "message" : "success",
-        "data": []
-      })
-    } else {
-      res.json({
-        "message" : "Error. Something went wrong."
-      })
-    }
-    } catch (e) {
-      console.log(e.message)
-      res.sendStatus(500) && next(error)
-    }
-
-
-  }
-
-
  
-const changeUserState = async(req, res, next) => {
+/* Update User Name, Email, fon */
+const updateUser = async(req, res, next) => {
   const id = req.query.id
-  const active = req.body.active
-
+  const name = req.body.name
+  const email = req.body.email
+  const fon = req.body.fon
   try {
-    const internalresponse = await userServiceChangeState(id, active)
+    const internalresponse = await userServiceUpdate(id, name, fon, email)
     console.log("internal response update")
     console.log(internalresponse)
-  
   if (internalresponse !== false) {
     res.json({
       "message" : "success",
@@ -155,27 +121,41 @@ const changeUserState = async(req, res, next) => {
     console.log(e.message)
     res.sendStatus(500) && next(error)
   }
+}
 
-
+/*Change user state active || false */
+const changeUserState = async(req, res, next) => {
+  const id = req.query.id
+  const active = req.body.active
+  try {
+    const internalresponse = await userServiceChangeState(id, active)
+    console.log("internal response update")
+    console.log(internalresponse)
+  if (internalresponse !== false) {
+    res.json({
+      "message" : "User state successfully changed."
+    })
+  } else {
+    res.json({
+      "message" : "Error. Something went wrong."
+    })
+  }
+  } catch (e) {
+    console.log(e.message)
+    res.sendStatus(500) && next(error)
+  }
 }
   /*Delete a User*/
   const deleteUser = async (req, res, next) => {
-   
-    console.log(req.query)
-    console.log(req.query.userID)
-    console.log(req.body)
-
-    let userID;
-    
-  
+    let id;
     if(Object.keys(req.body).length === 0) {
-      userID = req.query.userID
+      id = req.query.id
     } else {
-      userID = req.body.userID
+      id = req.body.id
     }
 
     try {
-      const internalresponse = await userServiceDeleteUser(userID)
+      const internalresponse = await userServiceDeleteUser(id)
       console.log("internal response")
       console.log(internalresponse)
       
@@ -183,7 +163,7 @@ const changeUserState = async(req, res, next) => {
 
       if (internalresponse !== false) {
         res.json({
-          "message" : "User: "+userID+" deleted"
+          "message" : "User: "+id+" deleted"
           
         })
       } else {
@@ -204,20 +184,19 @@ const changeUserState = async(req, res, next) => {
 
   /*Get Users transactions*/
   const getUserTransactions = async (req, res, next) => {
-    let userID;
+    let id;
     if(Object.keys(req.body).length === 0) {
-      userID = req.query.userID
+      id = req.query.id
     } else {
-      userID = req.body.userID
+      id = req.body.id
     }
     
     try {
-      const internalresponse = await userServiceGetTransactions(userID)
+      const internalresponse = await userServiceGetTransactions(id)
       console.log("internal response")
       console.log(internalresponse)
       if (internalresponse !== false) {
         res.json({
-          "message" : "success",
           "data": internalresponse
         })
       } else {
@@ -233,20 +212,19 @@ const changeUserState = async(req, res, next) => {
 
   /*Get Users activities*/
   const getUserActivities = async (req, res, next) => {
-    let userID;
+    let id;
     if(Object.keys(req.body).length === 0) {
-      userID = req.query.userID
+      id = req.query.id
     } else {
-      userID = req.body.userID
+      id = req.body.id
     }
     // $_GET['userID']
     try {
-      const internalresponse = await userServiceGetActivities(userID)
+      const internalresponse = await userServiceGetActivities(id)
       console.log("internal response")
       console.log(internalresponse)
       if (internalresponse !== false) {
         res.json({
-          "message" : "success",
           "data": internalresponse
         })
       } else {
@@ -262,20 +240,19 @@ const changeUserState = async(req, res, next) => {
 
   /*Get Users projects*/
   const getUserProjects = async (req, res, next) => {
-    let userID;
+    let id;
     if(Object.keys(req.body).length === 0) {
-      userID = req.query.userID
+      id = req.query.id
     } else {
-      userID = req.body.userID
+      id = req.body.id
     }
     // $_GET['userID']
     try {
-      const internalresponse = await userServiceGetProjects(userID)
+      const internalresponse = await userServiceGetProjects(id)
       console.log("internal response")
       console.log(internalresponse)
       if (internalresponse !== false) {
         res.json({
-          "message" : "success",
           "data": internalresponse
         })
       } else {
@@ -283,6 +260,28 @@ const changeUserState = async(req, res, next) => {
           "message" : "Error. Something went wrong."
         })
       }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+  }
+
+  const changeUserBalance = async(req, res, next) => {
+    const id = req.query.id
+    const balance = req.body.balance
+    try {
+      const internalresponse = await userServiceChangeBalance(id, balance)
+      console.log("internal response update")
+      console.log(internalresponse)
+    if (internalresponse !== false) {
+      res.json({
+        "message" : "Users balance successfully changed."
+      })
+    } else {
+      res.json({
+        "message" : "Error. Something went wrong."
+      })
+    }
     } catch (e) {
       console.log(e.message)
       res.sendStatus(500) && next(error)
@@ -300,6 +299,7 @@ const changeUserState = async(req, res, next) => {
     deleteUser,
     getUserTransactions,
     getUserProjects,
-    getUserActivities
+    getUserActivities,
+    changeUserBalance
   }
   

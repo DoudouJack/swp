@@ -66,16 +66,15 @@ const createUser = async (userID, name, fon, email, project, activity, transacti
 
 
 
-const updateUser = async ( userID, name, fon, email) => {
+const updateUser = async ( id, name, fon, email) => {
     try {
 
-        if(userID === undefined){
+        if(id === undefined){
             throw new Error('User not found :(')
         }
-        var query = {'userID' : userID};
-        const updatedUser = await User.findOneAndUpdate(query,
-            {'userID' : userID, 'name' : name, 'fon' : fon, 'email' : email}
-            ).exec();
+        const query = {_id : ObjectId(id)}
+        var update = {name : name, email : email, fon : fon }
+        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
         
         const ret = await updatedUser.save();
         
@@ -83,6 +82,7 @@ const updateUser = async ( userID, name, fon, email) => {
 
 
     }   catch (e) {
+        console.log(e)
         return false
     }
 }
@@ -111,33 +111,27 @@ const changeUserState = async ( id, active) => {
 }
 
 
-
-const deleteUser = async (reqUserID) => {
+/*Delete a User by ID*/
+const deleteUser = async (id) => {
     try {
-        console.log("get")
-        console.log(reqUserID)
-
-        if(reqUserID === undefined){
+        if(id === undefined){
             throw new Error('User not found :(')
         }
-        
-        const user = await User.findOneAndRemove({'userID' : reqUserID}).exec();
-
+        const user = await User.findByIdAndRemove({_id : ObjectId(id)}).exec();
         return user;
-
     }   catch (e) {
+        console.log(e)
         return false
     }
-    
 }
 
-const getUserTransactions = async (reqUserID) => {
+const getUserTransactions = async (id) => {
     try {
-        if(reqUserID === undefined){
+        if(id === undefined){
             throw new Error('User not found :(')
         }
         
-        const user = await User.findOne({'userID' : reqUserID}).exec();
+        const user = await User.findById({_id : ObjectId(id)}).exec();
 
         return user.transaction;
 
@@ -147,13 +141,13 @@ const getUserTransactions = async (reqUserID) => {
     
 }
 
-const getUserActivity = async (reqUserID) => {
+const getUserActivity = async (id) => {
     try {
-        if(reqUserID === undefined){
+        if(id === undefined){
             throw new Error('User not found :(')
         }
         
-        const user = await User.findOne({'userID' : reqUserID}).exec();
+        const user = await User.findById({_id : ObjectId(id)}).exec();
 
         return user.activity;
 
@@ -163,14 +157,14 @@ const getUserActivity = async (reqUserID) => {
     
 }
 
-const getUserProject = async (reqUserID) => {
+const getUserProject = async (id) => {
     try {
-        if(reqUserID === undefined){
+        if(id === undefined){
             throw new Error('User not found :(')
         }
         
         
-       const user = await User.findOne({'userID' : reqUserID}).exec();
+       const user = await User.findById({_id : ObjectId(id)}).exec();
 
         return user.project;
 
@@ -178,6 +172,28 @@ const getUserProject = async (reqUserID) => {
         return false
     }
     
+}
+
+const changeUserBalance = async ( id, balance) => {
+    try {
+
+        if(id === undefined){
+            throw new Error('User not found')
+        }
+        const query = {_id : ObjectId(id)}
+        const update = {balance : balance}
+
+        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+  
+        const ret = await updatedUser.save();
+        
+        return ret;
+
+
+    }   catch (e) {
+        console.log(e)
+        return false
+    }
 }
 
 module.exports = {
@@ -189,5 +205,6 @@ module.exports = {
     userServiceDeleteUser: deleteUser,
     userServiceGetTransactions: getUserTransactions,
     userServiceGetActivities: getUserActivity,
-    userServiceGetProjects: getUserProject
+    userServiceGetProjects: getUserProject,
+    userServiceChangeBalance: changeUserBalance
 }

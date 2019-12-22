@@ -80,36 +80,32 @@ Body: 	userID : "u1"
 		"transaction" : ["t1", "t2", "t3"]*/
 app.post('/createUser', userController.createUser)
 
-/* http://localhost:8081/getUserByID?userID=u1 GET*/
+/*GET http://localhost:8081/getUserByID?id= */
 app.get('/getUserbyID', userController.getUserByID)
 
-/* http://localhost:8081/getUserBalanceByID?userID=u1 GET*/
+/*GET http://localhost:8081/getUserBalanceByID?id */
 app.get('/getUserBalanceByID', userController.getUserBalanceByID)
 
-/*http://localhost:8081/updateUser?userID=u1 PUT 
-Body: 	"name" : "User One",
-		"fon" : "99999999",
-		"email" : "userone@usermail.de"*/
+/*PUT http://localhost:8081/updateUser?id=  */
 app.put('/updateUser', userController.updateUser)
 
-/*http://localhost:8081/changeUserState PUT  
-Body: "userID" : "u1",
-	  "active" : "false"*/
+/*PUT http://localhost:8081/changeUserState?id=  */
 app.put('/changeUserState', userController.changeUserState)
 
-/* http://localhost:8081/deleteUser?userID=u1 DELETE*/
+/*DELETE http://localhost:8081/deleteUser?id=  */
 app.delete('/deleteUser', userController.deleteUser)
 
-/*http://127.0.0.1:8081/getUserTransactions?userID=u4 GET */
+/*GET http://127.0.0.1:8081/getUserTransactions?id=  */
 app.get('/getUserTransactions', userController.getUserTransactions)
 
-/*http://127.0.0.1:8081/getUserActivities?userID=u4 GET */
+/*GET http://127.0.0.1:8081/getUserActivities?id= */
 app.get('/getUserActivities', userController.getUserActivities)
 
-/* http://127.0.0.1:8081/getUserProjects?userID=u4 GET */
+/*GET http://127.0.0.1:8081/getUserProjects?id= */
 app.get('/getUserProjects', userController.getUserProjects)
 
-
+/*PUT http://127.0.0.1:8081/changeUserBalance?id= */
+app.put('/changeUserBalance', userController.changeUserBalance)
 
 
 
