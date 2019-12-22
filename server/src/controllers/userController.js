@@ -44,15 +44,15 @@ const createUser = async (req, res, next) => {
   }
 
   const getUserBalanceByID = async (req, res, next) => {
-    let userID;
+    let id;
     if(Object.keys(req.body).length === 0) {
-      userID = req.query.userID
+      id = req.query.id
     } else {
-      userID = req.body.userID
+      id = req.body.id
     }
   
     try {
-      const internalresponse = await userServiceGetBalance(userID)
+      const internalresponse = await userServiceGetBalance(id)
       console.log("internal response")
       console.log(internalresponse)
       if (internalresponse !== false) {
@@ -73,14 +73,14 @@ const createUser = async (req, res, next) => {
 
 
   const getUserByID = async (req, res, next) => {
-    let userID;
+    let id;
     if(Object.keys(req.body).length === 0) {
-      userID = req.query.userID
+      id = req.query.id
     } else {
-      userID = req.body.userID
+      id = req.body.id
     }
     try {
-      const internalresponse = await userServiceGet(userID)
+      const internalresponse = await userServiceGet(id)
       if (internalresponse !== false) {
         res.json({
           "Data": internalresponse
@@ -130,39 +130,34 @@ const createUser = async (req, res, next) => {
 
   }
 
-  const changeUserState = async(req, res, next) => {
-    let userID
-    
-    if (Object.keys(req.body).length === 0) {
-        userID = req.query.userID
-    }
-    else {
-        userID = req.body.userID
-    }
 
-    try {
-      const internalresponse = await userServiceChangeState(req.query.userID, req.body.active)
-      console.log("internal response update")
-      console.log(internalresponse)
-    
-    if (internalresponse !== false) {
-      res.json({
-        "message" : "success",
-        "data": []
-      })
-    } else {
-      res.json({
-        "message" : "Error. Something went wrong."
-      })
-    }
-    } catch (e) {
-      console.log(e.message)
-      res.sendStatus(500) && next(error)
-    }
+ 
+const changeUserState = async(req, res, next) => {
+  const id = req.query.id
+  const active = req.body.active
 
-
-  }
+  try {
+    const internalresponse = await userServiceChangeState(id, active)
+    console.log("internal response update")
+    console.log(internalresponse)
   
+  if (internalresponse !== false) {
+    res.json({
+      "message" : "success",
+      "data": []
+    })
+  } else {
+    res.json({
+      "message" : "Error. Something went wrong."
+    })
+  }
+  } catch (e) {
+    console.log(e.message)
+    res.sendStatus(500) && next(error)
+  }
+
+
+}
   /*Delete a User*/
   const deleteUser = async (req, res, next) => {
    

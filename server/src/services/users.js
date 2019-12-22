@@ -1,37 +1,16 @@
+const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 User = require('../models/user.model')
 
-/*
-const getUserByID = async (reqUserID) => {
+const getUserByID = async (id) => {
     try {
-        console.log("get")
-        console.log(reqUserID)
+        console.log(id)
 
-        if(reqUserID === undefined){
+        if(id === undefined){
             throw new Error('User not found :(')
         }
-        
-        const user = await User.findOne({'userID' : reqUserID}).exec();
-
-        return user;
-
-    }   catch (e) {
-        return false
-    }
-    
-}
-*/
-
-const getUserByID = async (reqUserID) => {
-    try {
-        console.log("get")
-        console.log(reqUserID)
-
-        if(reqUserID === undefined){
-            throw new Error('User not found :(')
-        }
-        const user = await User.findById({'_id' : ObjectId(reqUserID)}).exec();
+        const user = await User.findById({'_id' : ObjectId(id)}).exec();
         return user;
     
     }   catch (e) {
@@ -40,14 +19,14 @@ const getUserByID = async (reqUserID) => {
 }
 
 
-const getUserBalanceByID = async (reqUserID) => {
+const getUserBalanceByID = async (id) => {
     try {
-        console.log(reqUserID)
-        if(reqUserID === undefined){
+        console.log(id)
+        if(id === undefined){
             throw new Error('User not found :(')
         }
         
-        const user = await User.findById({'_id' : ObjectId(reqUserID)}).exec();
+        const user = await User.findById({'_id' : ObjectId(id)}).exec();
        // const user = await User.findOne({'userID' : reqUserID}).exec();
 
         return user.balance;
@@ -109,27 +88,27 @@ const updateUser = async ( userID, name, fon, email) => {
 }
 
 
-const changeUserState = async ( userID, active) => {
+const changeUserState = async ( id, active) => {
     try {
 
-        if(userID === undefined){
-            throw new Error('User not found :(')
+        if(id === undefined){
+            throw new Error('User not found')
         }
-        var query = {'userID' : userID};
-        const updatedUser = await User.findOneAndUpdate(query,
-            {'userID' : userID, 'active' : active}
-            ).exec();
-        
+        const query = {_id : ObjectId(id)}
+        const update = {active : active}
+
+        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+  
         const ret = await updatedUser.save();
         
         return ret;
 
 
     }   catch (e) {
+        console.log(e)
         return false
     }
 }
-
 
 
 

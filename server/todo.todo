@@ -23,6 +23,8 @@ API NEEDED ROUTES:
         ☐ change: userID --> dbID
         ☐ update one attribute at user doesent change all attributes
         ☐ change users default currency
+        ☐ change users balance
+        
 
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)

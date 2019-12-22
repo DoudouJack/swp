@@ -41,6 +41,9 @@ var userSchema = new Schema({
     currency: {
         type: String,
         default: 'EUR'
+    },
+    id: {
+        type: String
     }
 });
 
