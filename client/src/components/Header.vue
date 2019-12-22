@@ -11,7 +11,9 @@
           </button>
         </div>
         <div class="modal-body">
-
+          <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>
+          <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="darkTheme">Delete Account? </label></div>
+            <div class="form-check"><input type="checkbox" class="form-check-input" id="other"><label class="form-check-label" for="other">Sonstiges? </label></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
@@ -21,8 +23,29 @@
     </div>
   </div>
   <!-- **** END SETTINGS MODAL -->
+    <!-- **** START ADD PROJECT MODAL -->
+    <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Projekt Hinzufügen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input placeholder="Projektname" type="text" name="projectName"><br>
+            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers"><br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- **** END ADD PROJECT MODAL -->
   <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
-  <!-- TODO: Auslagern in eigenes Template -->
   <section id="header" class="visible-container">
     <div class="header-container dark container-fluid">
       <div id="account-nav" class="trigger limit">
@@ -39,7 +62,14 @@
           </div>
         </div>
       </div>
-    </div>
+        <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
+          <div class="icon-heading">
+            <div>
+              <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
   </section>
   <!-- **************** ENDE HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
   </div>
@@ -68,6 +98,12 @@ export default {
   $border-style: solid;
   $shadow: 0 0 30px -5px #4a3939;
 
+  /*MIXINS*/
+  @mixin iconAnimation() {
+    transform: rotate(180deg);
+  }
+
+  /*RULES*/
   body{
     padding: 15px;
     background: $background;
@@ -119,14 +155,17 @@ export default {
   i{
     display: inline-block;
   }
-  .clickable{
+  .clickable, .clickable i, i.clickable{
     cursor: pointer;
+    transition: transform .6s ease-in-out;
   }
   i.clickable{
-    transition: transform .6s ease-in-out;
     &:hover{
-      transform: rotate(180deg);
+      @include iconAnimation();
     }
+  }
+  .clickable:hover i{
+    @include iconAnimation();
   }
   a{
     &:hover{
@@ -269,10 +308,18 @@ export default {
       display: inline-block;
       ~i{
         font-size: 24px;
+        &.white{
+          color: $white;
+        }
       }
     }
     i{
 
     }
+  }
+  .row-add-project {
+    display: inline-block;
+    margin-left: 25px;
+    vertical-align: sub;
   }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- **** START ADD PERSON MODAL -->
-  <!-- TODO: Wie machen: In Projekt Template auslagen und ID Dynamisch generieren? Oder mittels gloabler Variable dynamisch Inhalt generieren? -->
   <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -27,27 +26,6 @@
   <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
   <section id="body">
 
-    <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
-    <article class="data-row">
-      <div class="container-fluid data-row-container">
-        <div class="row">
-          <div class="col-9">
-            <h2 class="data-row-title">Urlaub Mallorca</h2>
-          </div>
-          <div class="col-3">
-            <span>2 Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <span>November 2018 | 500€</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
-    </article>
-
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     <article class="data-row">
@@ -66,36 +44,36 @@
             <span></span>
           </div>
         </div>
+        <div class="container-fluid p-0 activities-container" id="#activity">
+          <div class="row row-activities-headline">
+            <div class="col icon-heading">
+              <div class="headline-wrapper">
+                <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
+              </div>
+            </div>
+          </div>
+          <article class="activity indented" v-for="adata in activitiesData" v-bind:key="adata">
+            <div class="row">
+              <div class="col-6">
+                <h4 class="activitiy-header">
+                  {{adata.title}}
+                </h4>
+                <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+              </div>
+              <div class="col-6">
+                <div class="activity-open-amount">
+                                      <span class="amount-positive">
+                                          {{ adata.splitAmount }} {{adata.currency}}
+                                      </span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
 
       <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     </article>
-    <div class="container-fluid activities-container" id="#activity">
-    <div class="row row-activities-headline">
-      <div class="col icon-heading">
-        <div class="headline-wrapper">
-          <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
-        </div>
-      </div>
-    </div>
-    <article class="activity" v-for="adata in activitiesData" v-bind:key="adata">
-      <div class="row">
-        <div class="col-6">
-          <h4 class="activitiy-header">
-            {{adata.title}}
-          </h4>
-          <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
-        </div>
-        <div class="col-6">
-          <div class="activity-open-amount">
-                                      <span class="amount-positive">
-                                          {{ adata.splitAmount }} {{adata.currency}}
-                                      </span>
-          </div>
-        </div>
-      </div>
-    </article>
-    </div>
 
     <section class="off-screen-elements">
 
@@ -411,5 +389,9 @@ export default {
     i{
 
     }
+  }
+
+  .indented{
+    padding-left: $innergap;
   }
 </style>
