@@ -2,6 +2,7 @@ const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 Activity = require('../models/activity_schema')
+Project = require('../models/project_schema')
 
 const getActivities = async () => {
     try {
@@ -18,19 +19,36 @@ const getActivities = async () => {
 const createActivity = async(title, description, member, amount, currency, projectID) => {
     try {
         const splitAmount = await split(parseFloat(member.length), parseFloat(amount)) 
-        let activity = new Activity()
+        
+        // check if projectID is existing
+        
+        const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
+        console.log(projects)
+        console.log(projects.length)
+        
+        if(projects.length > 0 ){
+            let activity = new Activity()
 
-        activity.title = title
-        activity.description = description
-        activity.member = member
-        activity.amount = amount
-        activity.splitAmount = splitAmount.toString()
-        activity.currency = currency
-        activity.projectID = projectID
+            activity.title = title
+            activity.description = description
+            activity.member = member
+            activity.amount = amount
+            activity.splitAmount = splitAmount.toString()
+            activity.currency = currency
+            activity.projectID = projectID
         
-        const ret = await activity.save();
+            const ret = await activity.save();
         
-        return ret;
+            return ret;
+        }
+        else {
+            console.log("no project ID found")
+            return false
+        }
+        
+
+
+        
 
     } catch (error) {
         console.log(error)

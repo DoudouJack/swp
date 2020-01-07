@@ -9,7 +9,7 @@ API NEEDED ROUTES:
     ☐ Acitvity
         ✔ Wenn eine Activity erstellt wird => Split() => createTransaction @done(19-12-11 19:09)
         ✔ Create Activity @done(19-12-11 19:09)
-            ☐ Check if given projectID is existing
+            ✔ Check if given projectID is existing @done(20-01-07 18:01)
         ✔ Get all Activities @done(19-12-11 19:09)
         ✔ Update single activity @done(19-12-12 18:55)
         ✔ Get single activity @done(19-12-12 19:31)
