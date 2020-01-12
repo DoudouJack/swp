@@ -185,7 +185,7 @@ export default {
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
-        member: this.projectMember,
+        member: this.projectMember.split(','),
         activity: '',
         projectPayType: true
       })
