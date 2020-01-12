@@ -23,28 +23,7 @@
     </div>
   </div>
   <!-- **** END SETTINGS MODAL -->
-    <!-- **** START ADD PROJECT MODAL -->
-    <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Projekt Hinzufügen</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input placeholder="Projektname" type="text" name="projectName"><br>
-            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers"><br>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- **** END ADD PROJECT MODAL -->
+
   <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
   <section id="header" class="visible-container">
     <div class="header-container dark container-fluid">
@@ -62,13 +41,13 @@
           </div>
         </div>
       </div>
-        <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
+<!--        <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
           <div class="icon-heading">
             <div>
               <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
   </section>
   <!-- **************** ENDE HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
@@ -76,6 +55,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Header'
 }

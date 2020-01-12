@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app-container">
     <!-- **** START ADD PERSON MODAL -->
   <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -25,14 +25,45 @@
   <!-- **** END ADD PERSON MODAL -->
   <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
   <section id="body">
+    <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
+      <div class="icon-heading">
+        <div>
+          <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
+        </div>
+      </div>
+    </div>
+    <!-- **** START ADD PROJECT MODAL -->
+    <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Projekt Hinzufügen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input placeholder="Projektname" type="text" name="projectName" v-model="projectName"><br>
+            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember"><br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Speichern & Schließen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- **** END ADD PROJECT MODAL -->
 
+    <span>{{activityResponse}}</span>
+    <span>{{projectResponse}}</span>
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     <article class="data-row">
       <div class="container-fluid data-row-container">
         <div class="row">
           <div class="col-9">
-            <h2 class="data-row-title">{{pdata.title}}</h2>
+            <h2 class="data-row-title">{{pdata.title}} {{pdata._id}}</h2>
           </div>
           <div class="col-3">
             <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
@@ -48,15 +79,16 @@
           <div class="row row-activities-headline">
             <div class="col icon-heading">
               <div class="headline-wrapper">
-                <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity"></i>
+                <h3>Activities</h3><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addActivity" @click="activityClick=pdata._id"></i>
               </div>
             </div>
           </div>
+          <!-- BLOCK FOR ACTIVITIES TO BE LOOPED -->
           <article class="activity indented" v-for="adata in activitiesData" v-bind:key="adata">
-            <div class="row">
+            <div v-if="pdata._id == adata.projectID" class="row">
               <div class="col-6">
                 <h4 class="activitiy-header">
-                  {{adata.title}}
+                  {{adata.title}} {{adata.projectID}}
                 </h4>
                 <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
               </div>
@@ -69,6 +101,7 @@
               </div>
             </div>
           </article>
+          <!-- END BLOCK FOR ACTIVITIES TO BE LOOPED -->
         </div>
       </div>
 
@@ -95,7 +128,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-              <button type="submit" class="btn btn-primary" @click="postPost()" data-dismiss="modal">Speichern & Schließen</button>
+              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Speichern & Schließen</button>
             </div>
           </div>
         </div>
@@ -120,39 +153,57 @@ export default {
       activitiesData: [],
       actName: '',
       actAmount: '',
+      activityResponse: '',
+      projectResponse: '',
+      actMember: '',
+      projectName: '',
+      projectAmount: '',
       response: '',
-      actMember: ''
+      projectMember: '',
+      activityClick: ''
     }
   },
   mounted () {
-    axios.get('http://127.0.0.1:8081/projects')
-      .then(response => {
-        this.projectData = response.data.data
-      })
-    axios.get('http://127.0.0.1:8081/activities')
-      .then(response => {
-        this.activitiesData = response.data.data
-      })
+    this.getActivities()
+    this.getProjects()
   },
   methods: {
     getActivities () {
       axios.get('http://127.0.0.1:8081/activities')
-        .then(response => {
-          this.activitiesData = response.data.data
+        .then(activityResponse => {
+          this.activitiesData = activityResponse.data.data
         })
     },
-    convertDate (date) {
-      let ret = date.format('dd.mm.YYYY hh:MM:ss')
-      return ret
+    getProjects () {
+      axios.get('http://127.0.0.1:8081/projects')
+        .then(projectResponse => {
+          this.projectData = projectResponse.data.data
+        })
     },
-    postPost () {
+    postProject () {
+      axios.post('http://127.0.0.1:8081/createProject', {
+        title: this.projectName,
+        description: this.projectName,
+        member: this.projectMember,
+        activity: '',
+        projectPayType: true
+      })
+        .then(response => {
+          this.response = response
+          this.getProjects()
+        })
+        .catch(e => {
+          this.error.push(e)
+        })
+    },
+    postActivity () {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
-        member: this.actMember,
+        member: ['u1'],
         amount: this.actAmount,
         currency: 'EUR',
-        projectID: 'p1'
+        projectID: this.activityClick
       })
         .then(response => {
           this.response = response
