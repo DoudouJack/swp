@@ -160,7 +160,8 @@ export default {
       projectAmount: '',
       response: '',
       projectMember: '',
-      activityClick: ''
+      activityClick: '',
+      activitiesByProject: ''
     }
   },
   mounted () {
@@ -208,10 +209,28 @@ export default {
         .then(response => {
           this.response = response
           this.getActivities()
+          this.getActivitiesByProject(this.activityClick)
+          this.addActivityToProject()
         })
         .catch(e => {
           this.error.push(e)
         })
+    },
+    getActivitiesByProject (id) {
+      var act
+      var activitiesByProject
+      for (act in this.activitiesData) {
+        if (act.projectID === id) {
+          activitiesByProject.push(act._id)
+        }
+      }
+      this.activitiesByProject = activitiesByProject
+    },
+    addActivityToProject () {
+      axios.post('http://127.0.0.1:8081/updateProject', {
+        _id: this.activityClick,
+        activity: this.activitiesByProject
+      })
     }
   }
 }
