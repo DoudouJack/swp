@@ -235,13 +235,17 @@ export default {
       })
     },
     addMember () {
-      axios.post('http://127.0.0.1:8081/addMember', {
-        member: this.usersToBeAdded.split(','),
-        id: this.projectClick
-      })
-        .then(response => {
-          this.getProjects()
+      var user
+      var users = this.usersToBeAdded.split(',')
+      for (user in users) {
+        axios.post('http://127.0.0.1:8081/addMember', {
+          member: user,
+          id: this.projectClick
         })
+          .then(response => {
+            this.getProjects()
+          })
+      }
     }
   }
 }
