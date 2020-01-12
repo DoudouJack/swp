@@ -12,12 +12,12 @@
         </div>
         <div class="modal-body">
           <form action="">
-            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName"><br>
+            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName" v-model="usersToBeAdded"><br>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Speichern</button>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
             <h2 class="data-row-title">{{pdata.title}} {{pdata._id}}</h2>
           </div>
           <div class="col-3">
-            <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson"></i>
+            <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
           </div>
         </div>
         <div class="row">
@@ -161,7 +161,9 @@ export default {
       response: '',
       projectMember: '',
       activityClick: '',
-      activitiesByProject: ''
+      activitiesByProject: '',
+      usersToBeAdded: '',
+      projectClick: ''
     }
   },
   mounted () {
@@ -231,6 +233,15 @@ export default {
         _id: this.activityClick,
         activity: this.activitiesByProject
       })
+    },
+    addMember () {
+      axios.post('http://127.0.0.1:8081/addMember', {
+        member: this.usersToBeAdded.split(','),
+        id: this.projectClick
+      })
+        .then(response => {
+          this.getProjects()
+        })
     }
   }
 }
