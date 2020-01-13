@@ -63,7 +63,9 @@
       <div class="container-fluid data-row-container">
         <div class="row">
           <div class="col-9">
-            <h2 class="data-row-title">{{pdata.title}} {{pdata._id}}</h2>
+            <h2 class="data-row-title">{{pdata.title}}
+<!--              {{pdata._id}}-->
+            </h2>
           </div>
           <div class="col-3">
             <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
@@ -88,7 +90,8 @@
             <div v-if="pdata._id == adata.projectID" class="row">
               <div class="col-6">
                 <h4 class="activitiy-header">
-                  {{adata.title}} {{adata.projectID}}
+                  {{adata.title}}
+<!--                  {{adata.projectID}}-->
                 </h4>
                 <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
               </div>
