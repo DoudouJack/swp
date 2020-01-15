@@ -8,6 +8,8 @@ const getActivities = async () => {
     try {
         const activies = await Activity.find({}).exec();
 
+
+
         return activies;
        
     } catch (e) {
@@ -16,10 +18,8 @@ const getActivities = async () => {
 }
 
 
-const createActivity = async(title, description, member, amount, currency, projectID) => {
+const createActivity = async(title, description, amount, currency, projectID) => {
     try {
-        const splitAmount = await split(parseFloat(member.length), parseFloat(amount)) 
-        
         // check if projectID is existing
         
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
@@ -31,9 +31,7 @@ const createActivity = async(title, description, member, amount, currency, proje
 
             activity.title = title
             activity.description = description
-            activity.member = member
             activity.amount = amount
-            activity.splitAmount = splitAmount.toString()
             activity.currency = currency
             activity.projectID = projectID
         
@@ -45,11 +43,6 @@ const createActivity = async(title, description, member, amount, currency, proje
             console.log("no project ID found")
             return false
         }
-        
-
-
-        
-
     } catch (error) {
         console.log(error)
         return false;

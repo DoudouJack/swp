@@ -9,15 +9,7 @@ var activity = mongoose.Schema({
         type: String,
         required: true
     },
-    member: {
-        type: Array,
-        required: true
-    },
     amount: {
-        type: String,
-        required: true
-    },
-    splitAmount: {
         type: String,
         required: true
     },
@@ -27,7 +19,7 @@ var activity = mongoose.Schema({
     },
     date: {
         type: String,
-        default: Date.now
+        default: new Date().toUTCString()
     },
     projectID: {
         type: String,
