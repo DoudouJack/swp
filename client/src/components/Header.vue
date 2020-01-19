@@ -56,7 +56,7 @@
 
 <script>
 
-import * as firebase from 'firebase"'
+import * as firebase from 'firebase'
 import { api } from '../helpers/api'
 import { mapGetters } from 'vuex'
 
@@ -81,7 +81,7 @@ export default {
           console.log(response)
         })
     })
-  },
+  }
 }
 </script>
 
