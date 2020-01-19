@@ -12,7 +12,7 @@
         </div>
         <div class="modal-body">
           <form action="">
-            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+            <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
           </form>
         </div>
         <div class="modal-footer">
@@ -38,8 +38,10 @@
             </button>
           </div>
           <div class="modal-body">
-            <input placeholder="Projektname" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+            <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+            <input type="checkbox" name="projectType" value="false" v-model="projectType"> Fixed Amount?<br>
+            <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
+            <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -120,8 +122,9 @@
             </div>
             <div class="modal-body">
               <form action="">
-                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
-                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount" required pattern="+{1,}$"><br>
+                <input placeholder="Activity" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
+                <input placeholder="Date" type="date" name="activityDate" v-model="actDate"><br>
+                <input placeholder="Amount Paid" type="number" name="activityAmount" v-model="actAmount" required pattern="+{1,}$"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -213,7 +216,8 @@ export default {
       activityClick: '',
       activitiesByProject: '',
       usersToBeAdded: '',
-      projectClick: ''
+      projectClick: '',
+      projectType: 'true'
     }
   },
   mounted () {
@@ -256,7 +260,7 @@ export default {
         description: this.projectName,
         member: this.projectMember.split(','),
         activity: '',
-        projectPayType: true,
+        projectPayType: this.projectType,
         date: this.projectDate
       })
         .then(response => {
