@@ -28,7 +28,7 @@
     <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
       <div class="icon-heading">
         <div>
-          <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
+          <h3>Add Project</h3><i class="fas fa-plus-circle icon-right white"></i>
         </div>
       </div>
     </div>
@@ -44,6 +44,7 @@
           </div>
           <div class="modal-body">
             <input placeholder="Projektname" type="text" name="projectName" v-model="projectName"><br>
+            <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
             <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember"><br>
           </div>
           <div class="modal-footer">
@@ -73,7 +74,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <span>November 2018 | 500€</span>
+            <span> {{ pdata.date }} | 500€</span>
             <span></span>
           </div>
         </div>
@@ -125,8 +126,9 @@
             </div>
             <div class="modal-body">
               <form action="">
-                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName"><br>
-                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount"><br>
+                <input placeholder="Activity" type="text" name="activityName" v-model="actName"><br>
+                <input placeholder="Date" type="date" name="activityDate" v-model="actDate"><br>
+                <input placeholder="Amount Paid" type="number" name="activityAmount" v-model="actAmount"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -166,11 +168,13 @@ export default {
       activitiesData: [],
       actName: '',
       actAmount: '',
+      actDate: '',
       activityResponse: '',
       projectResponse: '',
       actMember: '',
       projectName: '',
       projectAmount: '',
+      projectDate: '',
       response: '',
       projectMember: '',
       activityClick: '',
@@ -219,7 +223,8 @@ export default {
         description: this.projectName,
         member: this.projectMember.split(','),
         activity: '',
-        projectPayType: true
+        projectPayType: true,
+        date: this.projectDate
       })
         .then(response => {
           this.response = response
@@ -236,7 +241,8 @@ export default {
         member: ['u1'],
         amount: this.actAmount,
         currency: 'EUR',
-        projectID: this.activityClick
+        projectID: this.activityClick,
+        date: this.actDate
       })
         .then(response => {
           this.response = response
