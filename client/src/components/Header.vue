@@ -1,5 +1,5 @@
 <template>
-  <div id="app-container">
+  <div v-if="user" id="app-container">
   <!-- **** START SETTINGS MODAL -->
   <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -25,70 +25,190 @@
   <!-- **** END SETTINGS MODAL -->
 
   <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
-  <section id="header" class="visible-container">
-    <div class="header-container dark container-fluid">
-      <div id="account-nav" class="trigger limit">
-        <div class="avatar-container limit">
-          <img class="avatar" src="../../public/img/noimg.jpeg">
-        </div>
-        <div class="dropdown account-dropdown">
-          <div class="dropdown-inner account-dropdown-inner dark">
-            <ul class="menu-list vertical">
-              <li><a href="/">Mein Account</a></li>
-              <li><a href="/">Log out</a></li>
-              <li class="clickable" data-toggle="modal" data-target="#settings">Einstellungen</li>
-            </ul>
+    <section id="header" class="visible-container">
+      <div class="header-container dark container-fluid">
+        <div class="row">
+          <div class="col-6 header-left">
+            <h1 class="logo">WHO OWS WHO</h1>
+          <!--  <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
+              <div class="icon-heading">
+                <div>
+                  <h3>Add Project</h3><img class="icon-right" src="../../public/img/icons/plus.png">
+                </div>
+              </div>
+            </div> -->
           </div>
-        </div>
-      </div>
-<!--        <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
-          <div class="icon-heading">
-            <div>
-              <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
+
+          <div class="col-6 header-right">
+
+            <!--<div id="status" class="trigger limit">
+                <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>
+            </div>-->
+
+            <div id="add-project" class="trigger limit">
+              <div class="avatar-container limit">
+                <div class="limit clickable"  data-toggle="modal" data-target="#addProject">
+                  <a><img class="avatar" src="../../public/img/icons/plus.png"></a>
+                </div>
+              </div>
             </div>
+
+            <div id="notifications" class="trigger limit">
+              <div class="avatar-container limit">
+                <img class="avatar" src="../../public/img/icons/alert.png">
+              </div>
+              <div class="dropdown notification-dropdown">
+                <div class="dropdown-inner account-dropdown-inner dark">
+                  <ul class="menu-list vertical">
+
+                    <article class="notification">
+                      <p class="notification-content-container">
+                        <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
+                      </p>
+                      <p class="notification-date-container">
+                        <span class="date">12.02.2020</span>
+                      </p>
+                    </article>
+                    <!-- ENDE NOTIFICATION ELEMENT -->
+                    <article class="notification">
+                      <p class="notification-content-container">
+                        <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
+                      </p>
+                      <p class="notification-date-container">
+                        <span class="date">12.02.2020</span>
+                      </p>
+                    </article>
+                    <!-- <li class="clickable" data-toggle="modal" data-target="#notification-modal">Alle ansehen</li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div id="account-nav" class="trigger limit">
+              <div class="avatar-container limit">
+                <img class="avatar" src="../../public/img/icons/user.png">
+              </div>
+              <div class="dropdown account-dropdown">
+                <div class="dropdown-inner account-dropdown-inner dark">
+                  <ul class="menu-list vertical">
+                    <li><a href="/">Mein Account</a></li>
+                    <li><a href="/">Log out</a></li>
+                    <li class="clickable" data-toggle="modal" data-target="#settings">Einstellungen</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div id="logout-nav" class="trigger limit">
+              <div class="avatar-container limit">
+                <a href="/logout">
+                  <img class="avatar" src="../../public/img/icons/exit.png">
+                </a>
+              </div>
+            </div>
+
           </div>
-        </div>-->
+
+          <!--        <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
+                    <div class="icon-heading">
+                      <div>
+                        <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
+                      </div>
+                    </div>
+                  </div>-->
+        </div>
       </div>
-  </section>
+    </section>
   <!-- **************** ENDE HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
   </div>
 </template>
 
 <script>
 
+import * as firebase from 'firebase'
+import { api } from '../helpers/api'
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  computed: {
+    // map `this.user` to `this.$store.getters.user`
+    ...mapGetters({
+      user: 'user'
+    })
+  },
+  data: function () {
+    return {
+      token: ''
+    }
+  },
+  created () {
+    firebase.auth().currentUser.getIdToken(true).then(data => {
+      this.token = data
+      api.getTransactions(this.token)
+        .then(response => {
+          console.log(response)
+        })
+    })
+  }
 }
 </script>
 
 <style lang="scss">
 
   /*VARIABLES*/
-  $color1: #6495E3;
+  $color1: #2a71c1;
+  $background: #f0f4f9;
+  $background-dark: #364458;
+  $background-alt: $color1;
+  $color-success: #05b69f;
+  $color-error: #e24a46;
   $text-light: #f9f9f9;
+  $text-muted: #36445861;
   $innergap: 20px;
   $outergap: 20px;
-  $background: #ececec;
   $white: #fbfbfb;
-  $background-dark: #343944;
-  $background-alt: $color1;
-  $border-radius: 7px;
+  $border-radius: 0px;
   $bordercolor: #cacaca;
   $border-width: 3px;
   $border-style: solid;
-  $shadow: 0 0 30px -5px #4a3939;
+  $shadow: 0 0 20px #36445859;
+  $transition-time: .3s;
 
   /*MIXINS*/
   @mixin iconAnimation() {
     transform: rotate(180deg);
   }
 
+  /*FORMS*/
+  input {
+    margin-bottom: 10px;
+    border-width: 0 0 3px 0;
+    outline: none;
+    border-color: $color-error;
+    transition: border .3s ease-in-out;
+  }
+  input:valid {
+    border-color: $color-success;
+  }
+  input:invalid:after {
+    content: "*";
+    color: red;
+    position: absolute;
+    left: 0;
+    z-index:100;
+    border-color: $color-error;
+  }
   /*RULES*/
   body{
-    padding: 15px;
     background: $background;
   }
-
+  #body{
+    padding: 0 5%;
+  }
+  div{
+    max-height: 100%;
+  }
   div.limit{
     height: 100%;
   }
@@ -108,7 +228,9 @@ export default {
     padding-bottom: $innergap;
     margin-bottom: $outergap;
   }
-
+  .row{
+    height: 100%;
+  }
   img{
     max-height:100%;
     width: auto;
@@ -120,9 +242,10 @@ export default {
 
   h2{
     text-transform: uppercase;
+    font-size: 1.8em;
   }
   h3{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
   }
@@ -134,6 +257,7 @@ export default {
 
   i{
     display: inline-block;
+    color: $color-success;
   }
   .clickable, .clickable i, i.clickable{
     cursor: pointer;
@@ -167,24 +291,62 @@ export default {
   }
 
   /*HEADER STYLING*/
+  h1.logo {
+    font-weight: 900;
+    font-size: 31px;
+    position: relative;
+    top: 4px;
+    color: #00ddc1;
+    display: inline;
+    text-shadow: -1px 2px 1px hsl(2, 73%, 58%), -2px 3px 1px #F44336;
+  }
 
   #header .header-container{
     height:80px;
     background: $background-dark;
+    padding-left: 5%;
+    padding-right: 5%;
   }
-  #account-nav{
+  #account-nav, #notifications, #logout-nav, #add-project, #status{
     display: inline-block;
+    position: relative;
+  }
+  .header-left{
+    text-align: left;
+  }
+  .header-right{
+    text-align: right;
+  }
+  #notifications, #account-nav, #add-project, #status{
+    margin-right: $outergap;
+  }
+  span.status-amount {
+    vertical-align: middle;
+    font-size: 22px;
+    font-family: montserrat;
+  }
+  #status .amount-you-owe{
+    color: $color-error;
+    padding-left: 10px;
+  }
+  #status .amount-you-get{
+    color: $color-success;
+    padding-right:  10px;
+    border-right: $border-width $border-style $bordercolor;
   }
 
   /*DROPDOWNS*/
 
   .dropdown {
     position: absolute;
-    width: 250px;
-    width: fit-content;
+    width: 200px;
     height: auto;
     padding-top: 15px;
     z-index: 9999;
+    right: -5px;
+    &.notification-dropdown{
+      width: 300px;
+    }
   }
   .dropdown-inner{
     position: relative;
@@ -199,13 +361,12 @@ export default {
       content: '';
       position: absolute;
       top: 0;
-      left: 0%;
+      right: 15px;
       width: 0;
       height: 0;
       border: 10px solid transparent;
       border-bottom-color: $background-alt;
       border-top: 0;
-      margin-left: 10px;
       margin-top: -10px;
     }
   }
@@ -243,6 +404,25 @@ export default {
     border-radius: 50%;
   }
 
+  /*NOTIFICATIONS*/
+  .notification-content-container{
+    margin: 0;
+  }
+  .notification-date-container{
+    margin-top: -5px;
+    color: $text-muted;
+  }
+  .notification {
+    border-bottom: 1px solid $text-muted;
+    padding-top: 10px;
+  }
+  .notification:last-of-type{
+    border-bottom: none;
+  }
+  .notification-heading{
+    margin-bottom: $outergap;
+  }
+
   /*MAIN DATA*/
 
   .data-row{
@@ -253,6 +433,9 @@ export default {
     -webkit-border-radius: $border-radius;
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
     .data-row-container{
     }
   }
@@ -261,8 +444,13 @@ export default {
   }
 
   /*FOOTER*/
+  #footer{
+    margin-top: $outergap;
+  }
   #footer .footer-container{
     background: $background-dark;
+    padding-right: 5%;
+    padding-left: 5%;
   }
   #footer-nav ul{
     font-size: 12px;
@@ -299,7 +487,12 @@ export default {
   }
   .row-add-project {
     display: inline-block;
-    margin-left: 25px;
     vertical-align: sub;
+  }
+
+  /*BALANCE*/
+  .balance-heading{
+    top: 6px;
+    position: relative;
   }
 </style>
