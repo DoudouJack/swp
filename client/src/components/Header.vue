@@ -1,5 +1,5 @@
 <template>
-  <div id="app-container">
+  <div v-if="user" id="app-container">
   <!-- **** START SETTINGS MODAL -->
   <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -125,8 +125,32 @@
 
 <script>
 
+import * as firebase from 'firebase'
+import { api } from '../helpers/api'
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  computed: {
+    // map `this.user` to `this.$store.getters.user`
+    ...mapGetters({
+      user: 'user'
+    })
+  },
+  data: function () {
+    return {
+      token: ''
+    }
+  },
+  created () {
+    firebase.auth().currentUser.getIdToken(true).then(data => {
+      this.token = data
+      api.getTransactions(this.token)
+        .then(response => {
+          console.log(response)
+        })
+    })
+  }
 }
 </script>
 
