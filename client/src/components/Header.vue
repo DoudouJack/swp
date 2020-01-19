@@ -23,102 +23,24 @@
     </div>
   </div>
   <!-- **** END SETTINGS MODAL -->
-  <!-- **** START ADD PROJECT MODAL -->
-    <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Projekt Hinzufügen</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input placeholder="Projektname" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-            <input placeholder="E-Mail Adresse(n) oder Telefonnummer(n) mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-            <input placeholder="E-Mail Adresse(n) oder Telefonnummer(n) mit Komma getrennt" type="email" class="form-control" aria-describedby="emailHelp" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-          </div>
-          <div class="modal-footer">
-            <button type="cancle" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid" data-dismiss="modal" @click="postProject()">Speichern & Schließen</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- **** END ADD PROJECT MODAL -->
 
   <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
   <section id="header" class="visible-container">
     <div class="header-container dark container-fluid">
-      <div class="row">
-        <div class="col-6 header-left">
-      <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
-        <div class="icon-heading">
-          <div>
-            <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
-          </div>
-        </div>
-      </div>
-        </div>
-
-        <div class="col-6 header-right">
-
-      <div id="notifications" class="trigger limit">
+      <div id="account-nav" class="trigger limit">
         <div class="avatar-container limit">
-          <img class="avatar" src="../../public/img/icons/alert.png">
+          <img class="avatar" src="../../public/img/noimg.jpeg">
         </div>
-        <div class="dropdown notification-dropdown">
+        <div class="dropdown account-dropdown">
           <div class="dropdown-inner account-dropdown-inner dark">
             <ul class="menu-list vertical">
-
-              <article class="notification">
-                <p class="notification-content-container">
-                  <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
-                </p>
-                <p class="notification-date-container">
-                  <span class="date">12.02.2020</span>
-                </p>
-              </article>
-              <!-- ENDE NOTIFICATION ELEMENT -->
-              <article class="notification">
-                <p class="notification-content-container">
-                  <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
-                </p>
-                <p class="notification-date-container">
-                  <span class="date">12.02.2020</span>
-                </p>
-              </article>
-              <!-- <li class="clickable" data-toggle="modal" data-target="#notification-modal">Alle ansehen</li> -->
+              <li><a href="/">Mein Account</a></li>
+              <li><a href="/">Log out</a></li>
+              <li class="clickable" data-toggle="modal" data-target="#settings">Einstellungen</li>
             </ul>
           </div>
         </div>
       </div>
-
-          <div id="account-nav" class="trigger limit">
-          <div class="avatar-container limit">
-            <img class="avatar" src="../../public/img/icons/user.png">
-          </div>
-          <div class="dropdown account-dropdown">
-            <div class="dropdown-inner account-dropdown-inner dark">
-              <ul class="menu-list vertical">
-                <li><a href="/">Mein Account</a></li>
-                <li><a href="/">Log out</a></li>
-                <li class="clickable" data-toggle="modal" data-target="#settings">Einstellungen</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-          <div id="logout-nav" class="trigger limit">
-            <div class="avatar-container limit">
-              <a href="/logout">
-              <img class="avatar" src="../../public/img/icons/exit.png">
-              </a>
-            </div>
-          </div>
-
-      </div>
-
 <!--        <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
           <div class="icon-heading">
             <div>
@@ -126,8 +48,7 @@
             </div>
           </div>
         </div>-->
-    </div>
-    </div>
+      </div>
   </section>
   <!-- **************** ENDE HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
   </div>
@@ -143,58 +64,31 @@ export default {
 <style lang="scss">
 
   /*VARIABLES*/
-  $color1: #2a71c1;
-  $background: #f0f4f9;
-  $background-dark: #364458;
-  $background-alt: $color1;
-  $color-success: #05b69f;
-  $color-error: #e24a46;
+  $color1: #6495E3;
   $text-light: #f9f9f9;
-  $text-muted: #36445861;
   $innergap: 20px;
   $outergap: 20px;
+  $background: #ececec;
   $white: #fbfbfb;
-  $border-radius: 0px;
+  $background-dark: #343944;
+  $background-alt: $color1;
+  $border-radius: 7px;
   $bordercolor: #cacaca;
   $border-width: 3px;
   $border-style: solid;
-  $shadow: 0 0 20px #36445859;
-  $transition-time: .3s;
+  $shadow: 0 0 30px -5px #4a3939;
 
   /*MIXINS*/
   @mixin iconAnimation() {
     transform: rotate(180deg);
   }
 
-  /*FORMS*/
-  input {
-    margin-bottom: 10px;
-    border-width: 0 0 3px 0;
-    outline: none;
-    border-color: $color-error;
-    transition: border .3s ease-in-out;
-  }
-  input:valid {
-    border-color: $color-success;
-  }
-  input:invalid:after {
-    content: "*";
-    color: red;
-    position: absolute;
-    left: 0;
-    z-index:100;
-    border-color: $color-error;
-  }
   /*RULES*/
   body{
+    padding: 15px;
     background: $background;
   }
-  #body{
-    padding: 0 5%;
-  }
-  div{
-    max-height: 100%;
-  }
+
   div.limit{
     height: 100%;
   }
@@ -214,9 +108,7 @@ export default {
     padding-bottom: $innergap;
     margin-bottom: $outergap;
   }
-  .row{
-    height: 100%;
-  }
+
   img{
     max-height:100%;
     width: auto;
@@ -228,10 +120,9 @@ export default {
 
   h2{
     text-transform: uppercase;
-    font-size: 1.8em;
   }
   h3{
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     text-transform: uppercase;
   }
@@ -280,35 +171,20 @@ export default {
   #header .header-container{
     height:80px;
     background: $background-dark;
-    padding-left: 5%;
-    padding-right: 5%;
   }
-  #account-nav, #notifications, #logout-nav{
+  #account-nav{
     display: inline-block;
-    position: relative;
-  }
-  .header-left{
-    text-align: left;
-  }
-  .header-right{
-    text-align: right;
-  }
-  #notifications, #account-nav{
-    margin-right: $outergap;
   }
 
   /*DROPDOWNS*/
 
   .dropdown {
     position: absolute;
-    width: 200px;
+    width: 250px;
+    width: fit-content;
     height: auto;
     padding-top: 15px;
     z-index: 9999;
-    right: -5px;
-    &.notification-dropdown{
-      width: 300px;
-    }
   }
   .dropdown-inner{
     position: relative;
@@ -323,12 +199,13 @@ export default {
       content: '';
       position: absolute;
       top: 0;
-      right: 15px;
+      left: 0%;
       width: 0;
       height: 0;
       border: 10px solid transparent;
       border-bottom-color: $background-alt;
       border-top: 0;
+      margin-left: 10px;
       margin-top: -10px;
     }
   }
@@ -366,25 +243,6 @@ export default {
     border-radius: 50%;
   }
 
-  /*NOTIFICATIONS*/
-  .notification-content-container{
-    margin: 0;
-  }
-  .notification-date-container{
-    margin-top: -5px;
-    color: $text-muted;
-  }
-  .notification {
-    border-bottom: 1px solid $text-muted;
-    padding-top: 10px;
-  }
-  .notification:last-of-type{
-    border-bottom: none;
-  }
-  .notification-heading{
-    margin-bottom: $outergap;
-  }
-
   /*MAIN DATA*/
 
   .data-row{
@@ -395,9 +253,6 @@ export default {
     -webkit-border-radius: $border-radius;
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
-    -webkit-box-shadow: $shadow;
-    -moz-box-shadow: $shadow;
-    box-shadow: $shadow;
     .data-row-container{
     }
   }
@@ -406,9 +261,6 @@ export default {
   }
 
   /*FOOTER*/
-  #footer{
-    margin-top: $outergap;
-  }
   #footer .footer-container{
     background: $background-dark;
   }
@@ -447,6 +299,7 @@ export default {
   }
   .row-add-project {
     display: inline-block;
+    margin-left: 25px;
     vertical-align: sub;
   }
 </style>
