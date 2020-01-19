@@ -193,23 +193,28 @@ export default {
     })
   },
   methods: {
+    /*    TEMPLATE TO FOLLOW WHEN TOKEN USE IS IMPLEMENTED IN BACKEND
     getActivities (token) {
       axios.get('http://127.0.0.1:8081/activities', { headers:
           { authorization: `${token}` } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
         })
+    }, */
+    getActivities () {
+      axios.get('http://127.0.0.1:8081/activities')
+        .then(activityResponse => {
+          this.activitiesData = activityResponse.data.data
+        })
     },
-    getProjects (token) {
-      axios.get('http://127.0.0.1:8081/projects', { headers:
-          { authorization: `${token}` } })
+    getProjects () {
+      axios.get('http://127.0.0.1:8081/projects')
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
         })
     },
-    postProject (token) {
-      axios.post('http://127.0.0.1:8081/createProject', { headers:
-          { authorization: `${token}` } }, {
+    postProject () {
+      axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
         member: this.projectMember.split(','),
@@ -224,9 +229,8 @@ export default {
           this.error.push(e)
         })
     },
-    postActivity (token) {
-      axios.post('http://127.0.0.1:8081/createActivity', { headers:
-          { authorization: `${token}` } }, {
+    postActivity () {
+      axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
         member: ['u1'],
@@ -236,7 +240,7 @@ export default {
       })
         .then(response => {
           this.response = response
-          this.getActivities(token)
+          this.getActivities()
           this.getActivitiesByProject(this.activityClick)
           this.addActivityToProject()
         })
