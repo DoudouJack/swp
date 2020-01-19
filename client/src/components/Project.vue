@@ -186,27 +186,30 @@ export default {
   created () {
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
-      api.getTransactions(this.token)
+      api.getActivities(this.token)
         .then(response => {
           console.log(response)
         })
     })
   },
   methods: {
-    getActivities () {
-      axios.get('http://127.0.0.1:8081/activities')
+    getActivities (token) {
+      axios.get('http://127.0.0.1:8081/activities', { headers:
+          { authorization: `${token}` } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
         })
     },
-    getProjects () {
-      axios.get('http://127.0.0.1:8081/projects')
+    getProjects (token) {
+      axios.get('http://127.0.0.1:8081/projects', { headers:
+          { authorization: `${token}` } })
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
         })
     },
-    postProject () {
-      axios.post('http://127.0.0.1:8081/createProject', {
+    postProject (token) {
+      axios.post('http://127.0.0.1:8081/createProject', { headers:
+          { authorization: `${token}` } }, {
         title: this.projectName,
         description: this.projectName,
         member: this.projectMember.split(','),
@@ -221,8 +224,9 @@ export default {
           this.error.push(e)
         })
     },
-    postActivity () {
-      axios.post('http://127.0.0.1:8081/createActivity', {
+    postActivity (token) {
+      axios.post('http://127.0.0.1:8081/createActivity', { headers:
+          { authorization: `${token}` } }, {
         title: this.actName,
         description: this.actName,
         member: ['u1'],
@@ -232,7 +236,7 @@ export default {
       })
         .then(response => {
           this.response = response
-          this.getActivities()
+          this.getActivities(token)
           this.getActivitiesByProject(this.activityClick)
           this.addActivityToProject()
         })
