@@ -5,19 +5,19 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Person hinzufügen</h5>
+          <h5 class="modal-title">Add a member</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form action="">
-            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName" v-model="usersToBeAdded"><br>
+            <input placeholder="Email or phone" type="text" name="users" v-model="usersToBeAdded"><br>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Speichern</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
         </div>
       </div>
     </div>
@@ -37,27 +37,27 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Projekt Hinzufügen</h5>
+            <h5 class="modal-title">Add Project</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <input placeholder="Projektname" type="text" name="projectName" v-model="projectName"><br>
+            <input placeholder="Project" type="text" name="projectName" v-model="projectName"><br>
             <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
-            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember"><br>
+            <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember"><br>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Speichern & Schließen</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
           </div>
         </div>
       </div>
     </div>
     <!-- **** END ADD PROJECT MODAL -->
-
+<!--
     <span>{{activityResponse}}</span>
-    <span>{{projectResponse}}</span>
+    <span>{{projectResponse}}</span>-->
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     <article class="data-row">
@@ -69,7 +69,7 @@
             </h2>
           </div>
           <div class="col-3">
-            <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
+            <span>{{pdata.member.length}} member(s)</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
           </div>
         </div>
         <div class="row">
@@ -94,7 +94,7 @@
                   {{adata.title}}
 <!--                  {{adata.projectID}}-->
                 </h4>
-                <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+                <span class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-6">
                 <div class="activity-open-amount">
@@ -119,7 +119,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Aktivität hinzufügen</h5>
+              <h5 class="modal-title">Add Activity</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -132,8 +132,8 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Speichern & Schließen</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Add</button>
             </div>
           </div>
         </div>
