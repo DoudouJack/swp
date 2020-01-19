@@ -186,7 +186,7 @@ export default {
   created () {
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
-      api.getActivities(this.token)
+      api.getTransactions(this.token)
         .then(response => {
           console.log(response)
         })
