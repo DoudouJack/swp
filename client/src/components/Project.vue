@@ -74,7 +74,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <span> {{ pdata.date }} | 500€</span>
+            <span> {{ pdata.date }} #placeholder| {{ pdata.amount}} #placeholder</span>
             <span></span>
           </div>
         </div>
@@ -99,7 +99,7 @@
               <div class="col-6">
                 <div class="activity-open-amount">
                                       <span class="amount-positive">
-                                          {{ adata.splitAmount }} {{adata.currency}}
+                                          {{ adata.splitAmount }} #placeholder {{adata.currency}}
                                       </span>
                 </div>
               </div>
