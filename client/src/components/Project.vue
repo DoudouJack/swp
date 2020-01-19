@@ -12,7 +12,7 @@
         </div>
         <div class="modal-body">
           <form action="">
-            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName" v-model="usersToBeAdded"><br>
+            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
           </form>
         </div>
         <div class="modal-footer">
@@ -25,41 +25,14 @@
   <!-- **** END ADD PERSON MODAL -->
   <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
   <section id="body">
-    <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
-      <div class="icon-heading">
-        <div>
-          <h3>Projekt hinzufügen</h3><i class="fas fa-plus-circle icon-right white"></i>
-        </div>
-      </div>
-    </div>
-    <!-- **** START ADD PROJECT MODAL -->
-    <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Projekt Hinzufügen</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input placeholder="Projektname" type="text" name="projectName" v-model="projectName"><br>
-            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember"><br>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Speichern & Schließen</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- **** END ADD PROJECT MODAL -->
-
+    <div class="row">
+    <div class="projects col-8">
     <span>{{activityResponse}}</span>
     <span>{{projectResponse}}</span>
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
-    <article class="data-row">
+
+    <article class="container-fluid data-row">
       <div class="container-fluid data-row-container">
         <div class="row">
           <div class="col-9">
@@ -77,7 +50,7 @@
             <span></span>
           </div>
         </div>
-        <div class="container-fluid p-0 activities-container" id="#activity">
+        <div class="container-fluid p-0 activities-container" id="activity">
           <div class="row row-activities-headline">
             <div class="col icon-heading">
               <div class="headline-wrapper">
@@ -108,8 +81,8 @@
         </div>
       </div>
 
-      <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     </article>
+      <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
 
     <section class="off-screen-elements">
 
@@ -125,8 +98,8 @@
             </div>
             <div class="modal-body">
               <form action="">
-                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName"><br>
-                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount"><br>
+                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
+                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount" required pattern=".{1,}$"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -141,7 +114,35 @@
   </div>
 
   <!-- **************** ENDE BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
+    </div>
+    <sections class="activities col-4">
+      <div class="activities-inner-container data-row col-12">
+        <h3 class="notification-heading">Letzte Transaktionen</h3>
+      <div class="sidebar-notifications-container">
+        <!-- START: NOTOFICATION ELEMENT - TODO: mit Transaktionen füllen -->
+        <article class="notification">
+          <p class="notification-content-container">
+          <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
+          </p>
+          <p class="notification-date-container">
+            <span class="date">12.02.2020</span>
+          </p>
+        </article>
+        <!-- ENDE NOTIFICATION ELEMENT -->
+        <article class="notification">
+          <p class="notification-content-container">
+            <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
+          </p>
+          <p class="notification-date-container">
+            <span class="date">12.02.2020</span>
+          </p>
+        </article>
+      </div>
+      </div>
+    </sections>
+    </div>
   </section>
+
   </div>
 </template>
 
@@ -256,230 +257,4 @@ export default {
 
 <style lang="scss">
 
-  /*VARIABLES*/
-  $color1: #6495E3;
-  $text-light: #f9f9f9;
-  $innergap: 20px;
-  $outergap: 20px;
-  $background: #ececec;
-  $white: #fbfbfb;
-  $background-dark: #343944;
-  $background-alt: $color1;
-  $border-radius: 7px;
-  $bordercolor: #cacaca;
-  $border-width: 3px;
-  $border-style: solid;
-  $shadow: 0 0 30px -5px #4a3939;
-
-  body{
-    padding: 15px;
-    background: $background;
-  }
-
-  div.limit{
-    height: 100%;
-  }
-  .fa, .fas, .fab{
-    font-family: FontAwesome;
-    font-style: normal;
-  }
-  .icon-right{
-    margin-left: 5px;
-  }
-  .visible-container>.container-fluid{
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
-    background: $white;
-    padding: $innergap;
-    padding-bottom: $innergap;
-    margin-bottom: $outergap;
-  }
-
-  img{
-    max-height:100%;
-    width: auto;
-  }
-  input{
-    width: 100%;
-    mac-width: 500px;
-  }
-
-  h2{
-    text-transform: uppercase;
-  }
-  h3{
-    font-size: 22px;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  .headline-wrapper{
-    border-bottom: $border-width solid $bordercolor;
-  }
-
-  /*LINKS & BUTTONS*/
-
-  i{
-    display: inline-block;
-  }
-  .clickable{
-    cursor: pointer;
-  }
-  i.clickable{
-    transition: transform .6s ease-in-out;
-    &:hover{
-      transform: rotate(180deg);
-    }
-  }
-  a{
-    &:hover{
-      text-decoration: none;
-    }
-  }
-  .dark{
-    h1,h2,h3,h4,h5,h6,p,span,a,li{
-      color: $text-light;
-    }
-  }
-  article.activity{
-    padding-top: 20px;
-  }
-  .activitiy-header{
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  /*HEADER STYLING*/
-
-  #header .header-container{
-    height:80px;
-    background: $background-dark;
-  }
-  #account-nav{
-    display: inline-block;
-  }
-
-  /*DROPDOWNS*/
-
-  .dropdown {
-    position: absolute;
-    width: 250px;
-    width: fit-content;
-    height: auto;
-    padding-top: 15px;
-    z-index: 9999;
-  }
-  .dropdown-inner{
-    position: relative;
-    background: #629c4f;
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
-    padding: 15px;
-    box-shadow: $shadow;
-    background: $background-alt;
-    &:after{
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0%;
-      width: 0;
-      height: 0;
-      border: 10px solid transparent;
-      border-bottom-color: $background-alt;
-      border-top: 0;
-      margin-left: 10px;
-      margin-top: -10px;
-    }
-  }
-  .dropdown .menu-list{
-    font-size: 14px;
-    list-style-type: none;
-    list-style-position: outside;
-    padding: 0;
-    text-align: left;
-    margin-bottom: 0;
-    li{
-      border-bottom: 1px solid $background;
-      padding: 5px 0;
-      &:last-of-type{
-        border: none;
-      }
-    }
-
-  }
-  .trigger .dropdown{
-    visibility: hidden;
-    opacity: 0;
-    transform: translatey(-20px);
-    transition: .3s ease-in-out, opacity .25s ease-in-out;
-  }
-  .trigger:hover .dropdown{
-    visibility: visible;
-    opacity: 1;
-    transform: translatey(0);
-  }
-
-  img.avatar{
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-  }
-
-  /*MAIN DATA*/
-
-  .data-row{
-    padding-top: $innergap;
-    padding-bottom: $innergap;
-    background: $white;
-    margin: $outergap auto;
-    -webkit-border-radius: $border-radius;
-    -moz-border-radius: $border-radius;
-    border-radius: $border-radius;
-    .data-row-container{
-    }
-  }
-  .row-activities-headline{
-    margin-top: $innergap;
-  }
-
-  /*FOOTER*/
-  #footer .footer-container{
-    background: $background-dark;
-  }
-  #footer-nav ul{
-    font-size: 12px;
-  }
-  .menu-list.horizontal{
-    list-style-type: none;
-    padding:0;
-    margin: 0;
-    li{
-      display: inline-block;
-      &::after{
-        content:"·";
-        padding: 0 5px;
-      }
-    }
-    li:last-of-type::after{
-      content: none;
-    }
-  }
-
-  .icon-heading{
-    h3{
-      display: inline-block;
-      ~i{
-        font-size: 24px;
-      }
-    }
-    i{
-
-    }
-  }
-
-  .indented{
-    padding-left: $innergap;
-  }
 </style>
