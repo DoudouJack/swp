@@ -1,9 +1,6 @@
 <template>
 
-
-
         <!-- **** END ADD ACTIVITIY MODAL -->
-
 
 </template>
 

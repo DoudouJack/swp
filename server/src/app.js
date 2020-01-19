@@ -10,6 +10,7 @@ const transactionController = require("./controllers/transactionController")
 const userController = require("./controllers/userController")
 const activityController = require("./controllers/activityController")
 const projectController = require("./controllers/projectController")
+const notificationController = require("./controllers/notificationController")
 
 
 app.use(morgan('combined'))
@@ -19,6 +20,13 @@ app.use(cors())
 
 // ROUTES
 app.get('/', authController.checkAuth)
+
+
+/* CLOUD MESSAGING TEST */
+/* http://localhost:8081/transactions GET */
+
+app.get('/sendMessage', notificationController.sendMessage)
+
 
 
 /* TRANSACTION */
@@ -47,6 +55,7 @@ app.post('/updateActivity', activityController.updateActivity)
 
 /* http://localhost:8081/getSingleActivity?id=5df12e80a5155f02f34dd850*/
 app.get('/getSingleActivity', activityController.getSingleActivity)
+
 
 
 /* PROJECT */

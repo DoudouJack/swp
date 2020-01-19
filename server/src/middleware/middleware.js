@@ -1,5 +1,6 @@
 const admin = require('../con/middlewareDB')
 
+
 const createAuth = async (idToken) => {
     try {
         const decodedToken = await admin.auth().verifyIdToken(idToken)

@@ -16,9 +16,9 @@ API NEEDED ROUTES:
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
         ☐ When creating activity, create transactions for all members with splitted amount
         ✔ Remove "member" from model @done(20-01-15 10:19)
-        ☐ Format date in /getActivities
+        ✔ Format date in /getActivities @done(20-01-15 10:34)
         ☐ Get All Activity for a project 
-        ☐ remove split from members
+        ✔ remove split from members @done(20-01-15 10:34)
     ☐ User
         ✔ show users activities @done(19-12-18 14:45)
         ✔ show users projects @done(19-12-18 14:45)
@@ -36,9 +36,10 @@ API NEEDED ROUTES:
         ✔ Update single project @done(19-12-12 21:28)
         ✔ Add member to project @done(19-12-12 21:28)
         ✔ Add Activity to Project @done(19-12-16 08:19)
-        ☐ Gesamtbetrag Projekt add to model (with splitting function)
+        ☐ Gesamtbetrag Projekt add to model
         ☐ Add date to model
         ☐ Remove Activity from project creation
+        ☐ Add split method here
     ☐ Misc
         ☐ *Middelware* between all routes!
         ☐ Alle Date Felder automatisch konvertieren in lesbare Datum
@@ -46,8 +47,11 @@ API NEEDED ROUTES:
     ☐ Settings
         ☐ Model
         ☐ Routes
-    ☐ Service Worker
+    ✔ Service Worker @done(20-01-19 13:50)
+    ☐ Offline pwa features
     ☐ Notifications Firebase Cloud Messaging
+        ☐ Dont assign token when not logged in
+        ☐ When logged in save user + token inside DB
     ☐ 
 CLIENT:
     ☐ Components
@@ -55,3 +59,4 @@ CLIENT:
         ☐ Create singleProject Component
         ☐ Create Nav Bar Component
         ☐ Create Footer Component
+        ☐
