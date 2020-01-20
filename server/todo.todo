@@ -27,8 +27,6 @@ API NEEDED ROUTES:
         ☐ update one attribute at user doesent change all attributes
         ☐ change users default currency
         ☐ change users balance
-        
-
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
         ✔ Get All Projects @done(19-12-12 21:28)
@@ -40,6 +38,7 @@ API NEEDED ROUTES:
         ☐ Add date to model
         ☐ Remove Activity from project creation
         ☐ Add split method here
+        ☐ Format Date 
     ☐ Misc
         ☐ *Middelware* between all routes!
         ☐ Alle Date Felder automatisch konvertieren in lesbare Datum

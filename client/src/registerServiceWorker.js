@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker'
-console.log('in here registering')
-register('/service-worker.js', {
+
+register('/service-worker-dev.js', {
   ready () {
     console.log(
       'App is being served from cache by a service worker.\n' +
