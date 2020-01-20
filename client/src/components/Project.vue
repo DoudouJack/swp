@@ -5,19 +5,19 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Person hinzufügen</h5>
+          <h5 class="modal-title">Add a member</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form action="">
-            <input placeholder="E-Mail Adresse oder Telefonnummer" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+            <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Speichern</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
         </div>
       </div>
     </div>
@@ -32,26 +32,28 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Projekt Hinzufügen</h5>
+            <h5 class="modal-title">Add Project</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <input placeholder="Projektname" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-            <input placeholder="E-Mail Adresse oder Telefonnummer mit Komma getrennt" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+            <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+            <input type="checkbox" name="projectType" value="false" v-model="projectType"> Fixed Amount?<br>
+            <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
+            <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Speichern & Schließen</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
           </div>
         </div>
       </div>
     </div>
     <!-- **** END ADD PROJECT MODAL -->
-
+<!--
     <span>{{activityResponse}}</span>
-    <span>{{projectResponse}}</span>
+    <span>{{projectResponse}}</span>-->
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     <article class="data-row">
@@ -63,12 +65,12 @@
             </h2>
           </div>
           <div class="col-3">
-            <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
+            <span>{{pdata.member.length}} member(s)</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <span>November 2018 | 500€</span>
+            <span> {{ pdata.date }} #placeholder| {{ pdata.amount}} #placeholder</span>
             <span></span>
           </div>
         </div>
@@ -88,12 +90,12 @@
                   {{adata.title}}
 <!--                  {{adata.projectID}}-->
                 </h4>
-                <span class="activity-desc" > {{ adata.date }} – Du hast {{adata.amount}} {{adata.currency}} gezahlt</span>
+                <span class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-6">
                 <div class="activity-open-amount">
                                       <span class="amount-positive">
-                                          {{ adata.splitAmount }} {{adata.currency}}
+                                          {{ adata.splitAmount }} #placeholder {{adata.currency}}
                                       </span>
                 </div>
               </div>
@@ -113,20 +115,21 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Aktivität hinzufügen</h5>
+              <h5 class="modal-title">Add Activity</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form action="">
-                <input placeholder="Name der Aktivität" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
-                <input placeholder="Betrag in Euro" type="number" name="activityAmount" v-model="actAmount" required pattern="+{1,}$"><br>
+                <input placeholder="Activity" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
+                <input placeholder="Date" type="date" name="activityDate" v-model="actDate"><br>
+                <input placeholder="Amount Paid" type="number" name="activityAmount" v-model="actAmount" required pattern="+{1,}$"><br>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Speichern & Schließen</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Add</button>
             </div>
           </div>
         </div>
@@ -201,17 +204,20 @@ export default {
       activitiesData: [],
       actName: '',
       actAmount: '',
+      actDate: '',
       activityResponse: '',
       projectResponse: '',
       actMember: '',
       projectName: '',
       projectAmount: '',
+      projectDate: '',
       response: '',
       projectMember: '',
       activityClick: '',
       activitiesByProject: '',
       usersToBeAdded: '',
-      projectClick: ''
+      projectClick: '',
+      projectType: 'true'
     }
   },
   mounted () {
@@ -254,7 +260,8 @@ export default {
         description: this.projectName,
         member: this.projectMember.split(','),
         activity: '',
-        projectPayType: true
+        projectPayType: this.projectType,
+        date: this.projectDate
       })
         .then(response => {
           this.response = response
@@ -271,7 +278,8 @@ export default {
         member: ['u1'],
         amount: this.actAmount,
         currency: 'EUR',
-        projectID: this.activityClick
+        projectID: this.activityClick,
+        date: this.actDate
       })
         .then(response => {
           this.response = response
