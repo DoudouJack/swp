@@ -63,7 +63,7 @@
             </h2>
           </div>
           <div class="col-3">
-            <span>{{pdata.member.length}} Personen</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
+            <span>{{pdata.member.length}} Persons</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
           </div>
         </div>
         <div class="row">
@@ -152,7 +152,7 @@
 
           </div>
           <div class="activities-inner-container data-row col-12">
-            <h3 class="notification-heading">Letzte Transaktionen</h3>
+            <h3 class="notification-heading">Last Transactions</h3>
             <div class="sidebar-notifications-container">
               <!-- START: NOTOFICATION ELEMENT - TODO: mit Transaktionen füllen -->
               <article class="notification">

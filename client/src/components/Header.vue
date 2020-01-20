@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Einstellungen</h5>
+          <h5 class="modal-title">Settings</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -29,7 +29,7 @@
       <div class="header-container dark container-fluid">
         <div class="row">
           <div class="col-6 header-left">
-            <h1 class="logo">WHO OWS WHO</h1>
+            <h1 class="logo">WHO OWES WHO</h1>
           <!--  <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
               <div class="icon-heading">
                 <div>
@@ -91,9 +91,9 @@
               <div class="dropdown account-dropdown">
                 <div class="dropdown-inner account-dropdown-inner dark">
                   <ul class="menu-list vertical">
-                    <li><a href="/">Mein Account</a></li>
+                    <li><a href="/">My Account</a></li>
                     <li><a href="/">Log out</a></li>
-                    <li class="clickable" data-toggle="modal" data-target="#settings">Einstellungen</li>
+                    <li class="clickable" data-toggle="modal" data-target="#settings">Settings</li>
                   </ul>
                 </div>
               </div>
