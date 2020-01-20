@@ -24,7 +24,7 @@
   </div>
   <!-- **** END SETTINGS MODAL -->
 
-  <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN ****************  -->
+  <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN *****************  -->
     <section id="header" class="visible-container">
       <div class="header-container dark container-fluid">
         <div class="row">

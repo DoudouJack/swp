@@ -157,7 +157,7 @@
           <div class="activities-inner-container data-row col-12">
             <h3 class="notification-heading">Last Transactions</h3>
             <div class="sidebar-notifications-container">
-              <!-- START: NOTOFICATION ELEMENT - TODO: mit Transaktionen füllen -->
+              <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
               <article class="notification">
                 <p class="notification-content-container">
                   <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
