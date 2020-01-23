@@ -18,6 +18,7 @@ API NEEDED ROUTES:
         ✔ Remove "member" from model @done(20-01-15 10:19)
         ✔ Format date in /getActivities @done(20-01-15 10:34)
         ☐ Get All Activity for a project 
+        ☐ Amount anpassen nach formel (edouard)
         ✔ remove split from members @done(20-01-15 10:34)
     ☐ User
         ✔ show users activities @done(19-12-18 14:45)
@@ -34,23 +35,27 @@ API NEEDED ROUTES:
         ✔ Update single project @done(19-12-12 21:28)
         ✔ Add member to project @done(19-12-12 21:28)
         ✔ Add Activity to Project @done(19-12-16 08:19)
-        ☐ Gesamtbetrag Projekt add to model
+        ☐ Gesamtbetrag Projekt add to model (mit berechnung formel edouard)
         ☐ Add date to model
         ☐ Remove Activity from project creation
         ☐ Add split method here
         ☐ Format Date 
     ☐ Misc
         ☐ *Middelware* between all routes!
-        ☐ Alle Date Felder automatisch konvertieren in lesbare Datum
+        ☐ Alle Date Felder automatisch konvertieren in lesbare Datum (LESBAR GMTN ENTFERNEN)
         ☐ API Doku machen (Route, Method POST/GET, DATA, RETURNED DATA)
     ☐ Settings
         ☐ Model
         ☐ Routes
     ✔ Service Worker @done(20-01-19 13:50)
-    ☐ Offline pwa features
+    ✔ Offline pwa features @done(20-01-20 08:17)
     ☐ Notifications Firebase Cloud Messaging
-        ☐ Dont assign token when not logged in
-        ☐ When logged in save user + token inside DB
+        ✔ Dont assign token when not logged in @done(20-01-23 20:01)
+        ✔ When logged in save user + token inside DB @done(20-01-23 20:02)
+        ☐ notifcation bekommen per user an/aus machen
+        ☐ save notifications inside db table (new table)
+        ☐ standard events notifications (messages)
+        ☐ sendMessage dynamisch machen (userID + event)
     ☐ 
 CLIENT:
     ☐ Components

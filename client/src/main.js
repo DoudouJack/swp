@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 import * as firebase from 'firebase'
+import { api } from './helpers/api.js'
 
 const configOptions = {
   apiKey: 'AIzaSyDcOHnZTrCMPx-3kcwk140NaywVGzIKqlM',
@@ -22,13 +23,14 @@ firebase.initializeApp(configOptions)
 const messaging = firebase.messaging()
 messaging.usePublicVapidKey('BHo53akU7BDm4ZE0JavJ6ZbPAUtFF7rfRNnn_WeVevidoTx8aZpC-aoanKCm7UnE4roUgY67MNhsuyixOO97vSI')
 
+let permissionGranted = false
+let messagingToken = ''
+let userToken = ''
+
 messaging.requestPermission().then(() => {
   console.log('Notification permission granted!')
-
-  // GET TOKEN
-  messaging.getToken().then((token) => {
-    console.log(token)
-  })
+  permissionGranted = true
+  console.log('permission granted: ' + permissionGranted)
 }).catch((err) => {
   console.log('Unable to get permission to notify.', err)
 })
@@ -49,7 +51,6 @@ messaging.onTokenRefresh(() => {
   })
 })
 
-/* get the currently signed-in user. */
 firebase.auth().signOut().then(function () {
   // Sign-out successful.
   console.log('success')
@@ -58,13 +59,32 @@ firebase.auth().signOut().then(function () {
   console.log(error)
 })
 
+/* get the currently signed-in user. */
 firebase.auth().onAuthStateChanged(user => {
-  firebase.auth().currentUser.getIdToken(true).then(token => {
-    console.log(token)
-  })
-  console.log(firebase.auth().currentUser.uid)
-  // store.dispatch('fetchUser', user)
+  if (user) {
+    userToken = user.uid
+    firebase.auth().currentUser.getIdToken(true).then(token => {
+      // GET TOKEN
+      messaging.getToken().then((token) => {
+        messagingToken = token
+        saveUserMessagingToken(userToken, messagingToken)
+      })
+    })
+    console.log(firebase.auth().currentUser.uid)
+    // store.dispatch('fetchUser', user)
+  }
 })
+
+function saveUserMessagingToken (userToken, messagingToken) {
+  console.log('==method==')
+  console.log(userToken)
+  console.log(messagingToken)
+
+  api.sendTokens(userToken, messagingToken)
+    .then(response => {
+      console.log(response)
+    })
+}
 
 Vue.config.productionTip = false
 

@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var transaction = mongoose.Schema({
     dateOfPayment: {
         type: String,
-        default: Date.now
+        default: new Date().toUTCString()
     },
     activityID: {
         type: String,

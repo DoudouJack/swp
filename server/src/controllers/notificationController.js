@@ -1,11 +1,12 @@
 const { notificationService } = require('../services/notification')
+const { saveUserToken } = require('../services/notification')
 
 
 /*
  * call other imported services, or same service but different functions here if you need to
 */
 const sendMessage = async (req, res, next) => {
-    const receiver = "ek6RAzItv58ep-MmZWhjCD:APA91bF2q9_8w5QbYFp1G-kFOMtUh82yAPERgoDlEtdVl7rml6e0Ud10y2CDyOhZmH-4PeZ3z3c0vZI4FKj4GV8-2LIBG0tomNJ2Rw7SEUPERubUDU8vmwKkVX9cQ8vuPMzxkULX79DS"
+    const receiver = "dYzMdkFBvk1SsYN-A_-kqD:APA91bHY7IgkR-PmqfF1koUyAXJZFJZnEimHmiM72FrAJ7NDILvChkrpdlegoSZO554IFKZfTTWa7tUIi_89Gm-7VMAe6Qm7kEctnH3YQ8-PLQu97uf6BZr0yHR_RTF48Hb_K1NhUZfv"
     const title = "Das hier ist der Titel"
     const description = "Body von der Nachricht"
     // const icon
@@ -15,9 +16,12 @@ const sendMessage = async (req, res, next) => {
         console.log(internalresponse)
         // other service call (or same service, different function can go here)
         // i.e. - await generateBlogpostPreview()
-        if (internalresponse.length > 0) {
+        if (internalresponse) {
             res.json({
-                message: 'success',
+                message: 'success. Message sent.',
+                title: title,
+                description: description,
+                receiver: receiver,
                 data: internalresponse
             })
 
@@ -31,11 +35,43 @@ const sendMessage = async (req, res, next) => {
 
     } catch (e) {
         console.log(e.message)
-        res.sendStatus(500) && next(error)
+        res.sendStatus(500) && next(e)
+
+    }
+}
+
+const saveUserRelatedTokens = async (req, res, next) => {
+    const userToken = req.body.userToken
+    const messageToken = req.body.messageToken
+
+    try {
+        const internalresponse = await saveUserToken(userToken, messageToken)
+        console.log("internal response")
+        console.log(internalresponse)
+        // other service call (or same service, different function can go here)
+        // i.e. - await generateBlogpostPreview()
+        if (internalresponse) {
+            res.json({
+                message: 'success. Message sent.',
+                data: internalresponse
+            })
+
+        } else {
+            // return empty json
+            res.json({
+                message: 'Error.',
+                data: []
+            })
+        }
+
+    } catch (e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
 
     }
 }
 
 module.exports = {
-    sendMessage
+    sendMessage,
+    saveUserRelatedTokens
 }

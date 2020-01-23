@@ -10,7 +10,6 @@ const checkAuth = async (req, res, next) => {
   
   try {
     const internalresponse = await middelwareService(idToken)
-    
     // other service call (or same service, different function can go here)
     // i.e. - await generateBlogpostPreview()
     if(internalresponse){
