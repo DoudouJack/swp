@@ -8,7 +8,8 @@ const { userServiceGetTransactions} = require('../services/users')
 const { userServiceGetActivities} = require('../services/users')
 const { userServiceGetProjects} = require('../services/users')
 const { userServiceChangeBalance } = require('../services/users')
-
+const { userServiceAddProjectToUser } = require('../services/users')
+const { userServiceChangeDefaultCurrency } = require('../services/users')
 
 
   const createUser = async (req, res, next) => {
@@ -288,6 +289,58 @@ const changeUserState = async(req, res, next) => {
     }
   }
 
+  const addProjectToUser = async(req, res, next) => {
+    const userID = req.body.userID
+    const projectID = req.body.projectID
+    
+    try {
+        const internalresponse = await userServiceAddProjectToUser(projectID, userID)
+        console.log("internal response")
+        console.log(internalresponse)
+
+        if (internalresponse !== undefined && internalresponse !== false) {
+            res.json({
+                message: 'Added project successfully.',
+                data: internalresponse
+            })
+
+        } else {
+            // return empty json
+            res.json({
+                message: 'Error while adding project.',
+                data: []
+            })
+        }
+    } catch (error) {
+        console.log(error.message)
+        res.sendStatus(500) && next(error)
+    }
+
+
+  }
+
+  const changeDefaultCurrency = async(req, res, next) => {
+    const id = req.query.id
+    const currency = req.body.currency
+    try {
+      const internalresponse = await userServiceChangeDefaultCurrency(id, currency)
+      console.log("internal response update")
+      console.log(internalresponse)
+    if (internalresponse !== false) {
+      res.json({
+        "message" : "Users currency successfully changed."
+      })
+    } else {
+      res.json({
+        "message" : "Error. Something went wrong."
+      })
+    }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+  }
+
 
 
   module.exports = {
@@ -300,6 +353,8 @@ const changeUserState = async(req, res, next) => {
     getUserTransactions,
     getUserProjects,
     getUserActivities,
-    changeUserBalance
+    changeUserBalance,
+    addProjectToUser,
+    changeDefaultCurrency
   }
   
