@@ -110,8 +110,12 @@ app.get('/getUserProjects', userController.getUserProjects)
 /*PUT http://127.0.0.1:8081/changeUserBalance?id= */
 app.put('/changeUserBalance', userController.changeUserBalance)
 
+/*PUT http://localhost:8081/changeUsersDefaultCurrency?id=  */
+app.put('/changeUsersDefaultCurrency', userController.changeDefaultCurrency)
+
 /* http://localhost:8081/addProjectToUser  POST */
 app.post('/addProjectToUser', userController.addProjectToUser)
+
 
 
 /*Add Activity to user*/

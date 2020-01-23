@@ -219,6 +219,28 @@ const addProjectToUser = async(project, userID) => {
 
 }
 
+const changeDefaultCurrency = async ( id, currency) => {
+    try {
+
+        if(id === undefined){
+            throw new Error('User not found')
+        }
+        const query = {_id : ObjectId(id)}
+        const update = {currency : currency}
+
+        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+  
+        const ret = await updatedUser.save();
+        
+        return ret;
+
+
+    }   catch (e) {
+        console.log(e)
+        return false
+    }
+}
+
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
@@ -230,5 +252,6 @@ module.exports = {
     userServiceGetActivities: getUserActivity,
     userServiceGetProjects: getUserProject,
     userServiceChangeBalance: changeUserBalance,
-    userServiceAddProjectToUser: addProjectToUser
+    userServiceAddProjectToUser: addProjectToUser,
+    userServiceChangeDefaultCurrency: changeDefaultCurrency
 }

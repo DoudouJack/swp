@@ -30,8 +30,9 @@ var project = mongoose.Schema({
         required: true
     },
     projectAmount: {
-        type: double,
-        default: 0.00
+        type: Number,
+        default: 0.00,
+        required: true
     }
 });
 
