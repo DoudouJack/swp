@@ -196,6 +196,29 @@ const changeUserBalance = async ( id, balance) => {
     }
 }
 
+const addProjectToUser = async(project, userID) => {
+
+    try {
+        if(userID === undefined){
+            throw new Error('undefined id')
+        }
+
+        let newProject = project[0]
+        
+        const filter = {_id: ObjectId(id)}
+        const update = {$push: {project: newProject}}
+        
+        const userUpdate = await Project.findByIdAndUpdate(filter, update, {new: true}) // returns querys
+        const ret = await userUpdate.save()
+
+        return ret
+        
+    } catch (error) {
+        
+    }
+
+}
+
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
@@ -206,5 +229,6 @@ module.exports = {
     userServiceGetTransactions: getUserTransactions,
     userServiceGetActivities: getUserActivity,
     userServiceGetProjects: getUserProject,
-    userServiceChangeBalance: changeUserBalance
+    userServiceChangeBalance: changeUserBalance,
+    userServiceAddProjectToUser: addProjectToUser
 }

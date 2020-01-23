@@ -79,14 +79,8 @@ app.post('/addActivity', projectController.addActivity)
 
 
 /* USER */
-/*  http://localhost:8081/createUser POST 
-Body: 	userID : "u1"
-		"name" : "User One",
-		"fon" : "99999999",
-		"email" : "userone@usermail.de"
-		"project" : "p1",
-		"activity" : ["a1","a2"],
-		"transaction" : ["t1", "t2", "t3"]*/
+
+/*POST http://localhost:8081/createUser */
 app.post('/createUser', userController.createUser)
 
 /*GET http://localhost:8081/getUserByID?id= */
@@ -115,6 +109,16 @@ app.get('/getUserProjects', userController.getUserProjects)
 
 /*PUT http://127.0.0.1:8081/changeUserBalance?id= */
 app.put('/changeUserBalance', userController.changeUserBalance)
+
+/* http://localhost:8081/addProjectToUser  POST */
+app.post('/addProjectToUser', userController.addProjectToUser)
+
+
+/*Add Activity to user*/
+
+
+
+/*Add Transaction to user*/
 
 
 

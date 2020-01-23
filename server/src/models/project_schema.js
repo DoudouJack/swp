@@ -28,6 +28,10 @@ var project = mongoose.Schema({
     projectPayType: {
         type: Boolean,
         required: true
+    },
+    projectAmount: {
+        type: double,
+        default: 0.00
     }
 });
 
