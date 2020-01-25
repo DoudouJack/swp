@@ -199,6 +199,7 @@ export default {
   },
   data: function () {
     return {
+      user: '',
       token: '',
       projectData: [],
       activitiesData: [],
@@ -227,11 +228,16 @@ export default {
   created () {
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
+      console.log(this.token)
       api.getTransactions(this.token)
         .then(response => {
           console.log(response)
         })
     })
+    this.user = firebase.auth().currentUser
+    console.log(this.user.uid)
+    console.log(this.user)
+    console.log(this.user.displayName)
   },
   methods: {
     /*    TEMPLATE TO FOLLOW WHEN TOKEN USE IS IMPLEMENTED IN BACKEND
@@ -242,30 +248,31 @@ export default {
           this.activitiesData = activityResponse.data.data
         })
     }, */
-    getActivities (token) {
+    getActivities () {
       axios.get('http://127.0.0.1:8081/activities', { headers:
-          { authorization: `${token}` } })
+          { authorization: `${this.user.uid}` } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
         })
     },
-    getProjects (token) {
+    getProjects () {
       axios.get('http://127.0.0.1:8081/projects', { headers:
-          { authorization: `${token}` } })
+          { authorization: `${this.user.uid}` } })
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
         })
     },
-    postProject (token) {
+    postProject () {
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
-        member: this.projectMember.split(','),
+        // member: this.projectMember.split(','),
+        member: this.user.uid,
         activity: '',
         projectPayType: this.projectType,
         date: this.projectDate
       }, { headers:
-          { authorization: `${token}` } })
+          { authorization: `${this.user.uid}` } })
         .then(response => {
           this.response = response
           this.getProjects()
@@ -274,7 +281,7 @@ export default {
           this.error.push(e)
         })
     },
-    postActivity (token) {
+    postActivity () {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
@@ -284,7 +291,7 @@ export default {
         projectID: this.activityClick,
         date: this.actDate
       }, { headers:
-      { authorization: `${token}` } })
+      { authorization: `${this.user.uid}` } })
         .then(response => {
           this.response = response
           this.getActivities()

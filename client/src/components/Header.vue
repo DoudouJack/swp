@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" id="app-container">
+  <div id="app-container">
   <!-- **** START SETTINGS MODAL -->
   <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -35,7 +35,7 @@
       <div class="header-container dark container-fluid">
         <div class="row">
           <div class="col-6 header-left">
-            <h1 class="logo">WHO OWES WHO</h1>
+            <h1 class="logo">WHO OWES WHO {{user.uid}} </h1>
           <!--  <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
               <div class="icon-heading">
                 <div>
@@ -45,7 +45,7 @@
             </div> -->
           </div>
 
-          <div class="col-6 header-right">
+          <div v-if="user" class="col-6 header-right">
 
             <!--<div id="status" class="trigger limit">
                 <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>
@@ -145,17 +145,24 @@ export default {
   },
   data: function () {
     return {
-      token: ''
+      token: '',
+      user: ''
     }
   },
   created () {
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
+      console.log(this.token)
       api.getTransactions(this.token)
         .then(response => {
-          console.log(response)
+          console.log('created: ' + response)
         })
     })
+    this.user = firebase.auth().currentUser
+    console.log('user')
+    console.log('nix')
+    console.log(this.user)
+    console.log(this.user.displayName)
   }
 }
 </script>

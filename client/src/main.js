@@ -51,13 +51,13 @@ messaging.onTokenRefresh(() => {
   })
 })
 
-firebase.auth().signOut().then(function () {
+/* firebase.auth().signOut().then(function () {
   // Sign-out successful.
   console.log('success')
 }, function (error) {
   // An error happened.
   console.log(error)
-})
+}) */
 
 /* get the currently signed-in user. */
 firebase.auth().onAuthStateChanged(user => {
