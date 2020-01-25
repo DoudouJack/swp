@@ -4,12 +4,13 @@ const { userServiceGetBalance } = require('../services/users')
 const { userServiceUpdate } = require('../services/users')
 const { userServiceChangeState } = require('../services/users')
 const { userServiceDeleteUser } = require('../services/users')
-const { userServiceGetTransactions} = require('../services/users')
 const { userServiceGetActivities} = require('../services/users')
-const { userServiceGetProjects} = require('../services/users')
 const { userServiceChangeBalance } = require('../services/users')
 const { userServiceAddProjectToUser } = require('../services/users')
 const { userServiceChangeDefaultCurrency } = require('../services/users')
+const { userServiceGetUserTransactions } = require('../services/users')
+const { userServiceGetUserProjects } = require('../services/users')
+
 
 
   const createUser = async (req, res, next) => {
@@ -183,7 +184,7 @@ const changeUserState = async(req, res, next) => {
     }
   }
 
-  /*Get Users transactions*/
+  /*Get Users transactions
   const getUserTransactions = async (req, res, next) => {
     let id;
     if(Object.keys(req.body).length === 0) {
@@ -210,6 +211,9 @@ const changeUserState = async(req, res, next) => {
       res.sendStatus(500) && next(error)
     }
   }
+*/
+
+
 
   /*Get Users activities*/
   const getUserActivities = async (req, res, next) => {
@@ -239,33 +243,6 @@ const changeUserState = async(req, res, next) => {
     }
   }
 
-  /*Get Users projects*/
-  const getUserProjects = async (req, res, next) => {
-    let id;
-    if(Object.keys(req.body).length === 0) {
-      id = req.query.id
-    } else {
-      id = req.body.id
-    }
-    // $_GET['userID']
-    try {
-      const internalresponse = await userServiceGetProjects(id)
-      console.log("internal response")
-      console.log(internalresponse)
-      if (internalresponse !== false) {
-        res.json({
-          "data": internalresponse
-        })
-      } else {
-        res.json({
-          "message" : "Error. Something went wrong."
-        })
-      }
-    } catch (e) {
-      console.log(e.message)
-      res.sendStatus(500) && next(error)
-    }
-  }
 
   const changeUserBalance = async(req, res, next) => {
     const id = req.query.id
@@ -341,7 +318,54 @@ const changeUserState = async(req, res, next) => {
     }
   }
 
+  const getUserTransactions = async (req, res, next) => {
+    let id;
+    if(Object.keys(req.body).length === 0) {
+      id = req.query.id
+    } else {
+      id = req.body.id
+    }
+    try {
+      const internalresponse = await userServiceGetUserTransactions(id)
+      if (internalresponse !== false) {
+        res.json({
+          "Data": internalresponse
+        })
+      } else {
+        res.json({
+          "Message" : "Transaction Error. Something went wrong."
+        })
+      }
+     } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+     }
+  }
 
+
+  const getUserProjects = async (req, res, next) => {
+    let id;
+    if(Object.keys(req.body).length === 0) {
+      id = req.query.id
+    } else {
+      id = req.body.id
+    }
+    try {
+      const internalresponse = await userServiceGetUserProjects(id)
+      if (internalresponse !== false) {
+        res.json({
+          "Data": internalresponse
+        })
+      } else {
+        res.json({
+          "Message" : "Project Error. Something went wrong."
+        })
+      }
+     } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+     }
+  }
 
   module.exports = {
     getUserByID,
@@ -350,11 +374,13 @@ const changeUserState = async(req, res, next) => {
     updateUser,
     changeUserState,
     deleteUser,
-    getUserTransactions,
-    getUserProjects,
     getUserActivities,
     changeUserBalance,
     addProjectToUser,
-    changeDefaultCurrency
+    changeDefaultCurrency,
+    getUserTransactions,
+    getUserProjects
+
+    
   }
   

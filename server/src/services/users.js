@@ -10,7 +10,7 @@ const getUserByID = async (id) => {
         if(id === undefined){
             throw new Error('User not found :(')
         }
-        const user = await User.findById({'_id' : ObjectId(id)}).exec();
+        const user = await User.findOne({'_id' : ObjectId(id)}).exec();
         return user;
     
     }   catch (e) {
@@ -26,9 +26,8 @@ const getUserBalanceByID = async (id) => {
             throw new Error('User not found :(')
         }
         
-        const user = await User.findById({'_id' : ObjectId(id)}).exec();
-       // const user = await User.findOne({'userID' : reqUserID}).exec();
-
+        const user = await User.findOne({'_id' : ObjectId(id)}).exec();
+      
         return user.balance;
 
     }   catch (e) {
@@ -44,8 +43,7 @@ const createUser = async (userID, name, fon, email, project, activity, transacti
         let user = new User()
        
         user.userID = userID
-      //  user.userID = ObjectId
-
+    
         user.name = name
         user.fon = fon
         user.email = email
@@ -74,7 +72,7 @@ const updateUser = async ( id, name, fon, email) => {
         }
         const query = {_id : ObjectId(id)}
         var update = {name : name, email : email, fon : fon }
-        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+        const updatedUser = await User.findOneAndUpdate(query, update, {new: true})
         
         const ret = await updatedUser.save();
         
@@ -97,7 +95,7 @@ const changeUserState = async ( id, active) => {
         const query = {_id : ObjectId(id)}
         const update = {active : active}
 
-        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+        const updatedUser = await User.findOneAndUpdate(query, update, {new: true})
   
         const ret = await updatedUser.save();
         
@@ -117,28 +115,12 @@ const deleteUser = async (id) => {
         if(id === undefined){
             throw new Error('User not found :(')
         }
-        const user = await User.findByIdAndRemove({_id : ObjectId(id)}).exec();
+        const user = await User.findOneAndRemove({_id : ObjectId(id)}).exec();
         return user;
     }   catch (e) {
         console.log(e)
         return false
     }
-}
-
-const getUserTransactions = async (id) => {
-    try {
-        if(id === undefined){
-            throw new Error('User not found :(')
-        }
-        
-        const user = await User.findById({_id : ObjectId(id)}).exec();
-
-        return user.transaction;
-
-    }   catch (e) {
-        return false
-    }
-    
 }
 
 const getUserActivity = async (id) => {
@@ -147,7 +129,7 @@ const getUserActivity = async (id) => {
             throw new Error('User not found :(')
         }
         
-        const user = await User.findById({_id : ObjectId(id)}).exec();
+        const user = await User.findOne({_id : ObjectId(id)}).exec();
 
         return user.activity;
 
@@ -157,22 +139,7 @@ const getUserActivity = async (id) => {
     
 }
 
-const getUserProject = async (id) => {
-    try {
-        if(id === undefined){
-            throw new Error('User not found :(')
-        }
-        
-        
-       const user = await User.findById({_id : ObjectId(id)}).exec();
 
-        return user.project;
-
-    }   catch (e) {
-        return false
-    }
-    
-}
 
 const changeUserBalance = async ( id, balance) => {
     try {
@@ -183,7 +150,7 @@ const changeUserBalance = async ( id, balance) => {
         const query = {_id : ObjectId(id)}
         const update = {balance : balance}
 
-        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+        const updatedUser = await User.findOneAndUpdate(query, update, {new: true})
   
         const ret = await updatedUser.save();
         
@@ -228,7 +195,7 @@ const changeDefaultCurrency = async ( id, currency) => {
         const query = {_id : ObjectId(id)}
         const update = {currency : currency}
 
-        const updatedUser = await User.findByIdAndUpdate(query, update, {new: true})
+        const updatedUser = await User.findOneAndUpdate(query, update, {new: true})
   
         const ret = await updatedUser.save();
         
@@ -241,6 +208,38 @@ const changeDefaultCurrency = async ( id, currency) => {
     }
 }
 
+const getUserTransactions = async (id) => {
+    try {
+        console.log(id)
+
+        if(id === undefined){
+            throw new Error('User not found :(')
+        }
+        const user = await User.findOne({'_id' : ObjectId(id)}).exec();
+        return user.transaction;
+    
+    }   catch (e) {
+        return false
+    }
+}
+
+const getUserProjects = async (id) => {
+    try {
+        console.log(id)
+
+        if(id === undefined){
+            throw new Error('User not found :(')
+        }
+        const user = await User.findOne({'_id' : ObjectId(id)}).exec();
+        return user.project;
+    
+    }   catch (e) {
+        return false
+    }
+}
+
+
+
 module.exports = {
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
@@ -248,10 +247,10 @@ module.exports = {
     userServiceUpdate: updateUser,
     userServiceChangeState: changeUserState,
     userServiceDeleteUser: deleteUser,
-    userServiceGetTransactions: getUserTransactions,
     userServiceGetActivities: getUserActivity,
-    userServiceGetProjects: getUserProject,
     userServiceChangeBalance: changeUserBalance,
     userServiceAddProjectToUser: addProjectToUser,
-    userServiceChangeDefaultCurrency: changeDefaultCurrency
+    userServiceChangeDefaultCurrency: changeDefaultCurrency,
+    userServiceGetUserTransactions: getUserTransactions,
+    userServiceGetUserProjects: getUserProjects
 }
