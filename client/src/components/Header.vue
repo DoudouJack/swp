@@ -45,7 +45,7 @@
             </div> -->
           </div>
 
-          <div v-if="user" class="col-6 header-right">
+          <div class="col-6 header-right">
 
             <!--<div id="status" class="trigger limit">
                 <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>

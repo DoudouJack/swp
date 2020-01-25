@@ -1,24 +1,18 @@
 <template>
   <div>
     <!-- <navbar></navbar> -->
-    <Header></Header>
     <Project></Project>
-    <Footer></Footer>
     <main class="py-4">
       <router-view></router-view>
     </main>
   </div>
 </template>
 <script>
-import Footer from './components/Footer'
-import Header from './components/Header'
 import Project from './components/Project'
 
 export default {
   components: {
-    Header,
-    Project,
-    Footer
+    Project
   }
 }
 /**
