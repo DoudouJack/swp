@@ -114,6 +114,9 @@ app.put('/changeUserBalance', userController.changeUserBalance)
 /*PUT http://localhost:8081/changeUsersDefaultCurrency?id=  */
 app.put('/changeUsersDefaultCurrency', userController.changeDefaultCurrency)
 
+/*GET  */
+app.get('/getUser', userController.getUser)
+
 
 
 
