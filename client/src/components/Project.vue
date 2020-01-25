@@ -242,19 +242,21 @@ export default {
           this.activitiesData = activityResponse.data.data
         })
     }, */
-    getActivities () {
-      axios.get('http://127.0.0.1:8081/activities')
+    getActivities (token) {
+      axios.get('http://127.0.0.1:8081/activities', { headers:
+          { authorization: `${token}` } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
         })
     },
-    getProjects () {
-      axios.get('http://127.0.0.1:8081/projects')
+    getProjects (token) {
+      axios.get('http://127.0.0.1:8081/projects', { headers:
+          { authorization: `${token}` } })
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
         })
     },
-    postProject () {
+    postProject (token) {
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
@@ -262,7 +264,8 @@ export default {
         activity: '',
         projectPayType: this.projectType,
         date: this.projectDate
-      })
+      }, { headers:
+          { authorization: `${token}` } })
         .then(response => {
           this.response = response
           this.getProjects()
@@ -271,7 +274,7 @@ export default {
           this.error.push(e)
         })
     },
-    postActivity () {
+    postActivity (token) {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
@@ -280,7 +283,8 @@ export default {
         currency: 'EUR',
         projectID: this.activityClick,
         date: this.actDate
-      })
+      }, { headers:
+      { authorization: `${token}` } })
         .then(response => {
           this.response = response
           this.getActivities()
