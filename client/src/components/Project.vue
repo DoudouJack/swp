@@ -39,9 +39,9 @@
           </div>
           <div class="modal-body">
             <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-            <input type="checkbox" name="projectType" value="false" v-model="projectType"> Fixed Amount?<br>
             <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
             <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+            <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType"><label>Fixed amount project?</label><input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -123,8 +123,8 @@
             <div class="modal-body">
               <form action="">
                 <input placeholder="Activity" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
-                <input placeholder="Date" type="date" name="activityDate" v-model="actDate"><br>
-                <input placeholder="Amount Paid" type="number" name="activityAmount" v-model="actAmount" required pattern="+{1,}$"><br>
+                <input placeholder="Date" type="date" name="activityDate" v-model="actDate" required><br>
+                <input placeholder="Amount Paid" type="number" step="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -144,7 +144,7 @@
           <div class="balance inner container data-row col-12">
             <div class="row">
               <div class="col-6">
-            <h3 class="balance-heading">Balance: </h3>
+            <h3 class="balance-heading">Balance:</h3>
               </div>
               <div class="col-6">
             <div id="status" class="trigger limit">
