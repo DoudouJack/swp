@@ -99,7 +99,7 @@ app.put('/changeUserState', userController.changeUserState)
 /*DELETE http://localhost:8081/deleteUser?id=  */
 app.delete('/deleteUser', userController.deleteUser)
 
-/*GET http://127.0.0.1:8081/getUserTransactions?id=  */
+/*GET http://127.0.0.1:8081/getUserTransactions?id= */
 app.get('/getUserTransactions', userController.getUserTransactions)
 
 /*GET http://127.0.0.1:8081/getUserActivities?id= */
@@ -113,6 +113,12 @@ app.put('/changeUserBalance', userController.changeUserBalance)
 
 /*PUT http://localhost:8081/changeUsersDefaultCurrency?id=  */
 app.put('/changeUsersDefaultCurrency', userController.changeDefaultCurrency)
+
+
+
+
+
+
 
 /* http://localhost:8081/addProjectToUser  POST */
 app.post('/addProjectToUser', userController.addProjectToUser)
