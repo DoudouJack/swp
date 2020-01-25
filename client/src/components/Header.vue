@@ -13,7 +13,13 @@
         <div class="modal-body">
           <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>
           <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="darkTheme">Delete Account? </label></div>
-            <div class="form-check"><input type="checkbox" class="form-check-input" id="other"><label class="form-check-label" for="other">Sonstiges? </label></div>
+          <div class="form-check">
+            Preferred Currency
+            <select>
+              <option value="euro">EURO</option>
+              <option value="dollar">DOLLAR</option>
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
