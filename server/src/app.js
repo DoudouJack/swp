@@ -29,7 +29,7 @@ app.get('/', authController.checkAuth)
 app.get('/sendMessage', notificationController.sendMessage)
 app.post('/saveUserRelatedTokens', notificationController.saveUserRelatedTokens)
 app.post('/notificationsTurnOn', notificationController.saveNotificationsSetting)
-
+app.get('/getNotificationSetting', notificationController.getNotificationSettings)
 
 /* TRANSACTION */
 /* http://localhost:8081/transactions GET */
