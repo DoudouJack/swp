@@ -1,33 +1,108 @@
 <template>
   <div id="app-container">
-    <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Settings</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>
-            <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="darkTheme">Delete Account? </label></div>
-            <div class="form-check">
-              Preferred Currency
-              <select>
-                <option value="euro">EURO</option>
-                <option value="dollar">DOLLAR</option>
-              </select>
+
+    <section class="off-screen-elements">
+      <!-- **** START SETTINGS MODAL -->
+      <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Settings</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+            <div class="modal-body">
+              <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>
+              <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="darkTheme">Delete Account? </label></div>
+              <div class="form-check">
+                Preferred Currency
+                <select>
+                  <option value="euro">EURO</option>
+                  <option value="dollar">DOLLAR</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- **** END SETTINGS MODAL -->
+      <!-- **** END SETTINGS MODAL -->
+      <!-- **** START ADD PERSON MODAL -->
+      <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add a member</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- **** END ADD PERSON MODAL -->
+      <!-- **** START ADD PROJECT MODAL -->
+      <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+              <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
+              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType"><label>Fixed amount project?</label><input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- **** END ADD PROJECT MODAL -->
+      <!-- **** START ADD ACTIVITIY MODAL -->
+      <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Activity</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <input placeholder="Activity" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
+                <input placeholder="Date" type="date" name="activityDate" v-model="actDate" required><br>
+                <input placeholder="Amount Paid" type="number" step="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN *****************  -->
     <section id="header" class="visible-container">
@@ -273,79 +348,6 @@
       <!-- **************** ENDE PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     </article>
 
-    <section class="off-screen-elements">
-      <!-- **** START ADD PERSON MODAL -->
-      <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add a member</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="">
-                <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- **** END ADD PERSON MODAL -->
-      <!-- **** START ADD PROJECT MODAL -->
-      <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add Project</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-              <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
-              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType"><label>Fixed amount project?</label><input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- **** END ADD PROJECT MODAL -->
-      <!-- **** START ADD ACTIVITIY MODAL -->
-      <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add Activity</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="">
-                <input placeholder="Activity" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
-                <input placeholder="Date" type="date" name="activityDate" v-model="actDate" required><br>
-                <input placeholder="Amount Paid" type="number" step="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Add</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- **** END ADD ACTIVITIY MODAL -->
   </div>
         </div>
