@@ -36,8 +36,8 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.amount = amount
             activity.currency = currency
             activity.projectID = projectID
-            activity.greenAmount = amount/1*(1-1)
-            activity.redAmount = amount/1
+            activity.greenAmount = amount/3*(3-1)
+            activity.redAmount = amount/3
        //     activity.greenAmount = amount/projects.member.length*(projects.member.length-1)
        //     activity.redAmount = amount/projects.member.length
         
