@@ -694,6 +694,9 @@ export default {
     font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
+    @media(max-width: 1000px){
+      font-size: 17px;
+    }
   }
   .headline-wrapper{
     border-bottom: $border-width solid $bordercolor;
@@ -770,6 +773,9 @@ export default {
     vertical-align: middle;
     font-size: 22px;
     font-family: montserrat;
+    @media(max-width: 1000px){
+      font-size: 17px !important;
+    }
   }
   #status .amount-you-owe{
     color: $color-error;
@@ -948,5 +954,14 @@ export default {
   }
   .login-container{
     width: 100%;
+  }
+  .overlay-login {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: $background-dark;
+    opacity: .6;
+    width: 100%;
+    height: 100%;
   }
 </style>
