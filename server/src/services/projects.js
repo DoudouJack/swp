@@ -16,7 +16,7 @@ const getProjects = async (userID) => {
     }
 }
 
-const createProject = async(title, description, member, activity, projectPayType) => {
+const createProject = async(title, description, member, activity, projectPayType, creator) => {
     try {
         let link = await createLink()
         let project = new Project()
@@ -27,6 +27,7 @@ const createProject = async(title, description, member, activity, projectPayType
         project.activity = activity
         project.link = link
         project.projectPayType = projectPayType
+        project.creator = creator
 
         const ret = await project.save()
 

@@ -33,6 +33,10 @@ var project = mongoose.Schema({
         type: Number,
         default: 0.00,
         required: true
+    },
+    creator: {
+        type: String,
+        required: true
     }
 });
 
