@@ -10,6 +10,7 @@ const { userServiceAddProjectToUser } = require('../services/users')
 const { userServiceChangeDefaultCurrency } = require('../services/users')
 const { userServiceGetUserTransactions } = require('../services/users')
 const { userServiceGetUserProjects } = require('../services/users')
+const { userServiceGetUser } = require('../services/users')
 
 
 
@@ -367,6 +368,33 @@ const changeUserState = async(req, res, next) => {
      }
   }
 
+  const getUser = async (req, res, next) => {
+    try {
+        const internalresponse = await userServiceGetUser()
+        console.log("internal response")
+        console.log(internalresponse)
+        
+        if (internalresponse.length > 0) {
+            res.json({
+                message: 'success',
+                data: internalresponse
+            })
+
+        } else {
+            // return empty json
+            res.json({
+                message: 'No data entries available. Please create some in /createUser before.',
+                data: []
+            })
+        }
+
+    } catch (e) {
+        console.log(e.message)
+        res.sendStatus(500) && next(error)
+
+    }
+}
+
   module.exports = {
     getUserByID,
     getUserBalanceByID,
@@ -379,7 +407,8 @@ const changeUserState = async(req, res, next) => {
     addProjectToUser,
     changeDefaultCurrency,
     getUserTransactions,
-    getUserProjects
+    getUserProjects,
+    getUser
 
     
   }

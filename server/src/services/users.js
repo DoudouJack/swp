@@ -3,6 +3,20 @@ const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 User = require('../models/user.model')
 
+const getUser = async () => {
+    try {
+        const user = await User.find({}).exec();
+
+
+
+        return user;
+       
+    } catch (e) {
+        return false
+    }
+}
+
+
 const getUserByID = async (id) => {
     try {
         console.log(id)
@@ -241,6 +255,7 @@ const getUserProjects = async (id) => {
 
 
 module.exports = {
+    userServiceGetUser: getUser,
     userServiceGet: getUserByID, 
     userServiceGetBalance: getUserBalanceByID,
     userServiceCreate: createUser,
@@ -253,4 +268,5 @@ module.exports = {
     userServiceChangeDefaultCurrency: changeDefaultCurrency,
     userServiceGetUserTransactions: getUserTransactions,
     userServiceGetUserProjects: getUserProjects
+    
 }
