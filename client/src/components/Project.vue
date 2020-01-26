@@ -445,6 +445,7 @@ export default {
           { userID: this.user.uid } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
+          console.log(activityResponse)
         })
     },
     getProjects () {

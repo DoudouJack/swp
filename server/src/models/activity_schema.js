@@ -32,6 +32,14 @@ var activity = mongoose.Schema({
     activityType: {
         type: Boolean,
         default: false
+    },
+    greenAmount: {
+        type: String,
+        required: false
+    },
+    redAmount: {
+        type: String,
+        required: false
     }
 });
 

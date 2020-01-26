@@ -6,11 +6,10 @@ Project = require('../models/project_schema')
 
 const getActivities = async () => {
     try {
-        const activies = await Activity.find({}).exec();
+        const activities = await Activity.find({}).exec();
 
 
-
-        return activies;
+        return activities;
        
     } catch (e) {
         return false
@@ -34,6 +33,8 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.amount = amount
             activity.currency = currency
             activity.projectID = projectID
+            activity.greenAmount = amount/projects.member.length*(projects.member.length-1)
+            activity.redAmount = amount/projects.member.length
         
             const ret = await activity.save();
         
