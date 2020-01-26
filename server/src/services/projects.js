@@ -28,6 +28,7 @@ const createProject = async(title, description, member, activity, projectPayType
         project.link = link
         project.projectPayType = projectPayType
         project.creator = creator
+        project.memberLength = member.length
 
         const ret = await project.save()
 

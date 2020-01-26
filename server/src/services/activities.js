@@ -24,6 +24,9 @@ const createActivity = async(title, description, amount, currency, projectID) =>
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
         console.log(projects)
         console.log(projects.length)
+        console.log('Length:')
+        console.log(projects.memberLength)
+        //var memberLength = projects.memberLength
         
         if(projects.length > 0 ){
             let activity = new Activity()
@@ -33,8 +36,10 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.amount = amount
             activity.currency = currency
             activity.projectID = projectID
-            activity.greenAmount = amount/projects.member.length*(projects.member.length-1)
-            activity.redAmount = amount/projects.member.length
+            activity.greenAmount = amount/1*(1-1)
+            activity.redAmount = amount/1
+       //     activity.greenAmount = amount/projects.member.length*(projects.member.length-1)
+       //     activity.redAmount = amount/projects.member.length
         
             const ret = await activity.save();
         
