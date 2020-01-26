@@ -457,6 +457,7 @@ export default {
           { userID: this.user.uid } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
+          console.log(activityResponse)
         })
     },
     getProjects () {
@@ -542,6 +543,8 @@ export default {
         .then(data => {
           // this.$router.replace({ name: 'home' })
           this.checkAuth()
+          this.getActivities()
+          this.getProjects()
         })
         .catch(err => {
           this.error = err.message

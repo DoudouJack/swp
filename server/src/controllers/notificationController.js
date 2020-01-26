@@ -2,15 +2,17 @@ const { notificationService } = require('../services/notification')
 const { saveUserToken } = require('../services/notification')
 const { turnOnNotfications } = require('../services/notification')
 const { getNotificationSetting } = require('../services/notification')
+const { getNotificationUser } = require('../services/notification')
 
 
 /*
  * call other imported services, or same service but different functions here if you need to
 */
 const sendMessage = async (req, res, next) => {
-    const receiver = "dYzMdkFBvk1SsYN-A_-kqD:APA91bHY7IgkR-PmqfF1koUyAXJZFJZnEimHmiM72FrAJ7NDILvChkrpdlegoSZO554IFKZfTTWa7tUIi_89Gm-7VMAe6Qm7kEctnH3YQ8-PLQu97uf6BZr0yHR_RTF48Hb_K1NhUZfv"
-    const title = "Das hier ist der Titel"
-    const description = "Body von der Nachricht"
+    const receiver = req.body.receiver // userID
+    const title = req.body.title
+    const description = req.body.description
+
     // const icon
     try {
         const internalresponse = await notificationService(receiver, title, description)
@@ -128,9 +130,37 @@ const getNotificationSettings = async (req, res, next) => {
     }
 }
 
+const getNotificationForUser = async (req, res, next) => {
+    const userID = req.body.userID
+
+    try {
+        const internalresponse = await getNotificationUser(userID)
+        console.log("internal response")
+        console.log(internalresponse)
+
+        if(internalresponse) {
+            res.json({
+                message: 'Success.',
+                user: userID,
+                data: internalresponse
+            })
+        } else {
+            // return empty json
+            res.json({
+                message: 'Error.',
+                data: []
+            })
+        }
+    } catch (error) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 module.exports = {
     sendMessage,
     saveUserRelatedTokens,
     saveNotificationsSetting,
-    getNotificationSettings
+    getNotificationSettings,
+    getNotificationForUser
 }

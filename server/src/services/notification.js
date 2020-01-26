@@ -4,24 +4,37 @@ const { ObjectId } = mongoose.Types.ObjectId
 const admin = require('firebase-admin')
 Userproperties = require('../models/userproperties_schema')
 NotificationSetting = require('../models/notificationsetting_schema')
+Message = require('../models/message_schema')
 
 const sendMessage = async (receiver, title, description) => {
     try {
-        const message = {
-            token: receiver,
-            webpush: {
-                notification: {
-                    title: title,
-                    body: description
-                    // icon: url
+        // get message token for userID (token)
+        console.log('in here')
+        const retMessageToken = await Userproperties.find({'userToken': receiver}).exec()
+     
+        retMessageToken.forEach(function(value, key){
+            console.log(value.toObject().messageToken)
+
+            const message = {
+                token: value.toObject().messageToken,
+                webpush: {
+                    notification: {
+                        title: title,
+                        body: description
+                        // icon: url
+                    }
                 }
             }
-        }
-
-        admin.messaging().send(message)
-            .then( () => {
+            
+            admin.messaging().send(message)
+            .then( async () => {
                 console.log("MESSAGE SENT SUCCESFULLY")
-                return true
+                let message = new Message()
+                message.receiver = receiver
+                message.message = description,
+                message.title = title
+
+                const ret = await message.save()
             })
             .catch( error => {
                 console.log(error.errorInfo.code)
@@ -29,10 +42,14 @@ const sendMessage = async (receiver, title, description) => {
                 // error happends if token is expired or null or undefined
                 // if(error.errorInfo.code === 'messaging/registration-token-not-registered' || receiver === 'null' || receiver === 'undefined')
             })
+            
+        })
 
-            return true
-        
+        return true
+
+        // and check if he has notifications turned on
     } catch (e) {
+        console.log(e.message)
         return false
     }
 }
@@ -85,9 +102,20 @@ const getNotificationSetting = async (userID) => {
     }
 }
 
+const getNotificationUser = async (userID) => {
+    try {
+        const ret = await Message.find({'receiver': userID}).exec();
+        return ret
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
 module.exports = {
     notificationService: sendMessage,
     saveUserToken: saveUserToken,
     turnOnNotfications: notificationSetting,
-    getNotificationSetting: getNotificationSetting
+    getNotificationSetting: getNotificationSetting,
+    getNotificationUser: getNotificationUser
 }
