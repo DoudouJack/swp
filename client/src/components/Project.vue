@@ -530,6 +530,8 @@ export default {
         .then(data => {
           // this.$router.replace({ name: 'home' })
           this.checkAuth()
+          this.getActivities()
+          this.getProjects()
         })
         .catch(err => {
           this.error = err.message
