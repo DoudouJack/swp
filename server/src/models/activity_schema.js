@@ -34,13 +34,14 @@ var activity = mongoose.Schema({
         default: false
     },
     greenAmount: {
-        type: String,
+        type: Number,
         required: false
     },
     redAmount: {
-        type: String,
+        type: Number,
         required: false
     }
+    
 });
 
 activity.index({projectID: 1, _id: 1}, {unique: true})

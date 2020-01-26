@@ -37,6 +37,9 @@ var project = mongoose.Schema({
     creator: {
         type: String,
         required: true
+    },
+    memberLength: {
+        type: String
     }
 });
 

@@ -147,7 +147,7 @@
                 <div class="dropdown-inner account-dropdown-inner dark">
                   <div class="notification-switch-container">
                     <label class="switch">
-                      <input id="notifications-switch" type="checkbox" checked>
+                      <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings()">
                       <span class="slider"></span>
                     </label>
                     <span class="notification-switch-label">Push notifications?</span>
@@ -156,6 +156,7 @@
                     <article class="notification">
                       <p class="notification-content-container">
                         <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
+                        <span>{{ notifications }}</span>
                       </p>
                       <p class="notification-date-container">
                         <span class="date">12.02.2020</span>
@@ -347,7 +348,7 @@
               <div class="col-md-6 col-sm-12">
                 <div class="activity-open-amount">
                                       <span class="amount-positive">
-                                          {{ adata.splitAmount }} #placeholder {{adata.currency}}
+                                          Green: {{ adata.greenAmount }} Red: {{ adata.redAmount }} {{adata.currency}}
                                       </span>
                 </div>
               </div>
@@ -408,12 +409,15 @@ export default {
       activitiesByProject: '',
       usersToBeAdded: '',
       projectClick: '',
-      projectType: 'true'
+      projectType: 'true',
+      notifications: [],
+      notificationSettings: true
     }
   },
   mounted () {
     this.getActivities()
     this.getProjects()
+    this.getNotifications()
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
       console.log(this.token)
@@ -467,6 +471,13 @@ export default {
           this.projectData = projectResponse.data.data
         })
     },
+    getNotifications () {
+      axios.get('http://127.0.0.1:8081/getNotificationsForUser', { params:
+          { userID: this.user.uid } })
+        .then(notificationResponse => {
+          this.notifications = notificationResponse.data
+        })
+    },
     postProject () {
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
@@ -490,7 +501,7 @@ export default {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
-        member: ['u1'],
+        member: this.user.uid,
         amount: this.actAmount,
         currency: 'EUR',
         projectID: this.activityClick,
@@ -545,6 +556,7 @@ export default {
           this.checkAuth()
           this.getActivities()
           this.getProjects()
+          this.getNotifications()
         })
         .catch(err => {
           this.error = err.message
@@ -564,6 +576,12 @@ export default {
       console.log(this.user)
       console.log(this.user.displayName)
       console.log('test')
+    },
+    updateSettings () {
+      axios.post('127.0.0.1:8081/notificationsTurnOn', {
+        userID: this.user.uid,
+        on: this.notificationSettings
+      })
     }
   }
 }
