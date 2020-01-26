@@ -25,9 +25,10 @@ app.get('/', authController.checkAuth)
 /* CLOUD MESSAGING TEST */
 /* http://localhost:8081/transactions GET */
 
-
+/* NOTIFICATIONS */
 app.get('/sendMessage', notificationController.sendMessage)
 app.post('/saveUserRelatedTokens', notificationController.saveUserRelatedTokens)
+app.post('/notificationsTurnOn', notificationController.saveNotificationsSetting)
 
 
 /* TRANSACTION */

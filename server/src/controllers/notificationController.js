@@ -1,5 +1,6 @@
 const { notificationService } = require('../services/notification')
 const { saveUserToken } = require('../services/notification')
+const { turnOnNotfications } = require('../services/notification')
 
 
 /*
@@ -71,7 +72,36 @@ const saveUserRelatedTokens = async (req, res, next) => {
     }
 }
 
+const saveNotificationsSetting = async (req, res, next) => {
+    const userID = req.body.userID
+    const on = req.body.on
+
+    try {
+        const internalresponse = await turnOnNotfications(userID, on)
+        console.log("internal response")
+        console.log(internalresponse)
+
+        if (internalresponse) {
+            res.json({
+                message: 'Success. Saved Notification setting.',
+                user: userID,
+                data: internalresponse
+            })
+        } else {
+            // return empty json
+            res.json({
+                message: 'Error.',
+                data: []
+            })
+        }
+    } catch (error) {
+        console.log(e.message)
+        res.sendStatus(500) && next(e)
+    }
+}
+
 module.exports = {
     sendMessage,
-    saveUserRelatedTokens
+    saveUserRelatedTokens,
+    saveNotificationsSetting
 }
