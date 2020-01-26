@@ -149,6 +149,22 @@ export default {
       user: ''
     }
   },
+  mounted () {
+    firebase.auth().currentUser.getIdToken(true).then(data => {
+      this.token = data
+      console.log(this.token)
+      api.getTransactions(this.token)
+        .then(response => {
+          console.log('created: ' + response)
+        })
+    })
+    this.user = firebase.auth().currentUser
+    console.log('user')
+    console.log('nix')
+    console.log(this.user)
+    console.log(this.user.displayName)
+    console.log('nicht')
+  },
   created () {
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
@@ -163,6 +179,7 @@ export default {
     console.log('nix')
     console.log(this.user)
     console.log(this.user.displayName)
+    console.log('nicht')
   }
 }
 </script>
