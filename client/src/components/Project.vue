@@ -590,6 +590,15 @@ export default {
   $shadow: 0 0 20px #36445859;
   $transition-time: .3s;
 
+  /*DARK THEME VARIABLES*/
+  /* IF DARK THEME ENABLED
+  $background: lighten($background-dark, 10%);
+  $white: $background-dark;
+  p, h1, h2, h3, h4, span{
+    color: $text-light;
+  }
+  */
+
   /*MIXINS*/
   @mixin iconAnimation() {
     transform: rotate(180deg);
@@ -632,7 +641,7 @@ export default {
   .modal-backdrop {
     background: white;
     &.show {
-      opacity: .6;
+      opacity: .7;
     }
   }
   .modal input{
@@ -660,7 +669,7 @@ export default {
   }
   .fixed-amount-checkbox:checked ~ .fixed-amount-input {
     opacity: 1;
-    width: 100px;
+    width: 53px;
   }
 
   /*RULES*/
@@ -669,6 +678,9 @@ export default {
   }
   #body{
     padding: 0 5%;
+  }
+  div#app-container {
+    min-height: calc(100vh - 122px);
   }
   div{
     max-height: 100%;
@@ -847,7 +859,7 @@ export default {
       content: '';
       position: absolute;
       top: 0;
-      right: 15px;
+      right: 110px;
       @media(max-width: 1000px) {
         right: 110px;
       }
@@ -860,6 +872,7 @@ export default {
     }
   }
   #account-nav .dropdown-inner:after{
+    right: 15px;
     @media(max-width: 1000px) {
       right: 70px;
     }
@@ -1008,7 +1021,7 @@ export default {
     left: 0;
     top: 0;
     background-color: white;
-    opacity: .6;
+    opacity: .7;
     width: 100%;
     height: 100%;
   }
