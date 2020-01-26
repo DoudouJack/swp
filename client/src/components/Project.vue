@@ -439,14 +439,14 @@ export default {
         })
     }, */
     getActivities () {
-      axios.get('http://127.0.0.1:8081/activities', { data:
+      axios.get('http://127.0.0.1:8081/activities', { params:
           { userID: this.user.uid } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
         })
     },
     getProjects () {
-      axios.get('http://127.0.0.1:8081/projects', { data:
+      axios.get('http://127.0.0.1:8081/projects', { params:
           { userID: this.user.uid } })
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
