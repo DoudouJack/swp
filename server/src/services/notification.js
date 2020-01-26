@@ -75,8 +75,19 @@ const notificationSetting = async (userID, on) => {
     }
 }
 
+const getNotificationSetting = async (userID) => {
+    try {
+        const ret = await NotificationSetting.find({'userID': userID}).exec();
+        return ret
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
 module.exports = {
     notificationService: sendMessage,
     saveUserToken: saveUserToken,
-    turnOnNotfications: notificationSetting
+    turnOnNotfications: notificationSetting,
+    getNotificationSetting: getNotificationSetting
 }
