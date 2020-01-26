@@ -53,12 +53,13 @@ API NEEDED ROUTES:
         ✔ Dont assign token when not logged in @done(20-01-23 20:01)
         ✔ When logged in save user + token inside DB @done(20-01-23 20:02)
         ✔ notifcation bekommen per user an/aus machen => new db table @done(20-01-26 16:26)
-        ☐ Get Notification Setting for User
+        ✔ Get Notification Setting for User @done(20-01-26 16:59)
         ☐ standard events notifications (messages)
         ☐ sendMessage dynamisch machen (userID + event)
-            ☐ an jeden schicken der in der table ist
-            ☐ save notifications inside db table (new table)
-            ☐ get notifications for user
+            ✔ an jeden schicken der in der table ist @done(20-01-26 18:59)
+            ✔ save notifications inside db table (new table) @done(20-01-26 19:04)
+            ✔ get notifications for user @done(20-01-26 19:09)
+            ☐ if notifications turned on then send (optional when FE is ready)
     ☐ 
 CLIENT:
     ☐ Components
