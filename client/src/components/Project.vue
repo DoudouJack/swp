@@ -156,6 +156,7 @@
                     <article class="notification">
                       <p class="notification-content-container">
                         <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
+                        <span>{{ notifications }}</span>
                       </p>
                       <p class="notification-date-container">
                         <span class="date">12.02.2020</span>
@@ -408,12 +409,14 @@ export default {
       activitiesByProject: '',
       usersToBeAdded: '',
       projectClick: '',
-      projectType: 'true'
+      projectType: 'true',
+      notifications: []
     }
   },
   mounted () {
     this.getActivities()
     this.getProjects()
+    this.getNotifications()
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
       console.log(this.token)
@@ -467,6 +470,13 @@ export default {
           this.projectData = projectResponse.data.data
         })
     },
+    getNotifications () {
+      axios.get('http://127.0.0.1:8081/getNotificationsForUser', { params:
+          { userID: this.user.uid } })
+        .then(notificationResponse => {
+          this.notifications = notificationResponse.data
+        })
+    },
     postProject () {
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
@@ -490,7 +500,7 @@ export default {
       axios.post('http://127.0.0.1:8081/createActivity', {
         title: this.actName,
         description: this.actName,
-        member: ['u1'],
+        member: this.user.uid,
         amount: this.actAmount,
         currency: 'EUR',
         projectID: this.activityClick,
@@ -545,6 +555,7 @@ export default {
           this.checkAuth()
           this.getActivities()
           this.getProjects()
+          this.getNotifications()
         })
         .catch(err => {
           this.error = err.message
