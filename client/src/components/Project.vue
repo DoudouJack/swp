@@ -33,8 +33,8 @@
     <section id="header" class="visible-container">
       <div class="header-container dark container-fluid">
         <div class="row">
-          <div class="col-6 header-left">
-            <h1 class="logo">WHO OWES WHO {{user.uid}} </h1>
+          <div class="col-6 header-left hidden-sm">
+            <h1 class="logo">WHO OWES WHO</h1>
             <!--  <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
                 <div class="icon-heading">
                   <div>
@@ -44,7 +44,7 @@
               </div> -->
           </div>
 
-          <div class="col-6 header-right">
+          <div class="col-md-6 col-sm-12 header-right">
 
             <!--<div id="status" class="trigger limit">
                 <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>
@@ -124,106 +124,98 @@
         </div>
       </div>
     </section>
-    <!-- **** START ADD PERSON MODAL -->
-  <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Add a member</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form action="">
-            <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- **** END ADD PERSON MODAL -->
-  <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
+
     <section id="body">
       <div class="row">
-        <div class="projects col-8">
-    <!-- **** START ADD PROJECT MODAL -->
-    <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Project</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-            <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
-            <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-            <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType"><label>Fixed amount project?</label><input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
-          </div>
+        <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
+        <div v-if="!user" class="login-container">
+          <div class="overlay-login"></div>
+            <div class="card">
+              <div class="card-header">Login</div>
+              <div class="card-body">
+                <div v-if="error" class="alert alert-danger">{{error}}</div>
+                <form action="#" @submit.prevent="submit">
+                  <div class="form-group row">
+                    <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+
+                    <div class="col-md-6">
+                      <input
+                              id="email"
+                              type="email"
+                              class="form-control"
+                              name="email"
+                              value
+                              required
+                              autofocus
+                              v-model="form.email"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+
+                    <div class="col-md-6">
+                      <input
+                              id="password"
+                              type="password"
+                              class="form-control"
+                              name="password"
+                              required
+                              v-model="form.password"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row mb-0">
+                    <div class="col-md-8 offset-md-4">
+                      <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- **** END ADD PROJECT MODAL -->
-          <div v-if="!user" class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header">Login</div>
-                <div class="card-body">
-                  <div v-if="error" class="alert alert-danger">{{error}}</div>
-                  <form action="#" @submit.prevent="submit">
-                    <div class="form-group row">
-                      <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
-
-                      <div class="col-md-6">
-                        <input
-                          id="email"
-                          type="email"
-                          class="form-control"
-                          name="email"
-                          value
-                          required
-                          autofocus
-                          v-model="form.email"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                      <div class="col-md-6">
-                        <input
-                          id="password"
-                          type="password"
-                          class="form-control"
-                          name="password"
-                          required
-                          v-model="form.password"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                      <div class="col-md-8 offset-md-4">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                      </div>
-                    </div>
-                  </form>
+        <sections class="activities col-md-4 col-sm-12">
+          <div v-if="user" class="balance inner container data-row col-12">
+            <div class="row">
+              <div class="col-md-6 col-sm-auto">
+                <h3 class="balance-heading">Balance:</h3>
+              </div>
+              <div class="col-6">
+                <div id="status" class="trigger limit">
+                  <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>
                 </div>
               </div>
             </div>
+
           </div>
+          <div v-if="user" class="activities-inner-container data-row col-12 hidden-sm">
+            <h3 class="notification-heading">Last Transactions</h3>
+            <div class="sidebar-notifications-container">
+              <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
+              <article class="notification">
+                <p class="notification-content-container">
+                  <span class="actor-a">Victor</span> send <span class="actor-b">you</span> <span class="amount">10€</span>
+                </p>
+                <p class="notification-date-container">
+                  <span class="date">12.02.2020</span>
+                </p>
+              </article>
+              <!-- ENDE NOTIFICATION ELEMENT -->
+              <article class="notification">
+                <p class="notification-content-container">
+                  <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
+                </p>
+                <p class="notification-date-container">
+                  <span class="date">12.02.2020</span>
+                </p>
+              </article>
+            </div>
+          </div>
+        </sections>
+        <!-- **************** ENDE BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
+        <div class="projects col-md-8 col-sm-12 order-md-first">
 <!--
     <span>{{activityResponse}}</span>
     <span>{{projectResponse}}</span>-->
@@ -232,12 +224,12 @@
     <article v-if="user" class="data-row">
       <div class="container-fluid data-row-container">
         <div class="row">
-          <div class="col-9">
+          <div class="col-lg-9 col-md-8 col-sm-12">
             <h2 class="data-row-title">{{pdata.title}}
 <!--              {{pdata._id}}-->
             </h2>
           </div>
-          <div class="col-3">
+          <div class="col-md-4 col-lg-3 col-sm-12">
             <span>{{pdata.member.length}} member(s)</span><i class="fas fa-plus-circle icon-right clickable" data-toggle="modal" data-target="#addPerson" @click="projectClick=pdata._id"></i>
           </div>
         </div>
@@ -258,14 +250,14 @@
           <!-- BLOCK FOR ACTIVITIES TO BE LOOPED -->
           <article class="activity indented" v-for="adata in activitiesData" v-bind:key="adata">
             <div v-if="pdata._id == adata.projectID" class="row">
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <h4 class="activitiy-header">
                   {{adata.title}}
 <!--                  {{adata.projectID}}-->
                 </h4>
                 <span class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
               </div>
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="activity-open-amount">
                                       <span class="amount-positive">
                                           {{ adata.splitAmount }} #placeholder {{adata.currency}}
@@ -282,7 +274,53 @@
     </article>
 
     <section class="off-screen-elements">
-
+      <!-- **** START ADD PERSON MODAL -->
+      <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="Add Person" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add a member</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- **** END ADD PERSON MODAL -->
+      <!-- **** START ADD PROJECT MODAL -->
+      <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+              <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
+              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType"><label>Fixed amount project?</label><input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- **** END ADD PROJECT MODAL -->
       <!-- **** START ADD ACTIVITIY MODAL -->
       <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -310,47 +348,7 @@
     </section>
     <!-- **** END ADD ACTIVITIY MODAL -->
   </div>
-
-  <!-- **************** ENDE BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
         </div>
-        <sections class="activities col-4">
-          <div v-if="user" class="balance inner container data-row col-12">
-            <div class="row">
-              <div class="col-6">
-            <h3 class="balance-heading">Balance:</h3>
-              </div>
-              <div class="col-6">
-            <div id="status" class="trigger limit">
-            <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>
-          </div>
-              </div>
-            </div>
-
-          </div>
-          <div v-if="user" class="activities-inner-container data-row col-12">
-            <h3 class="notification-heading">Last Transactions</h3>
-            <div class="sidebar-notifications-container">
-              <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
-              <article class="notification">
-                <p class="notification-content-container">
-                  <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
-                </p>
-                <p class="notification-date-container">
-                  <span class="date">12.02.2020</span>
-                </p>
-              </article>
-              <!-- ENDE NOTIFICATION ELEMENT -->
-              <article class="notification">
-                <p class="notification-content-container">
-                  <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
-                </p>
-                <p class="notification-date-container">
-                  <span class="date">12.02.2020</span>
-                </p>
-              </article>
-            </div>
-          </div>
-        </sections>
       </div>
     </section>
   </div>
@@ -675,6 +673,11 @@ export default {
   .row{
     height: 100%;
   }
+  .hidden-sm{
+    @media(max-width: 767px){
+      display: none;
+    }
+  }
   img{
     max-height:100%;
     width: auto;
@@ -938,5 +941,13 @@ export default {
   .balance-heading{
     top: 6px;
     position: relative;
+  }
+  /*LOGIN*/
+  .login-container .card {
+    max-width: 490px;
+    margin: auto;
+  }
+  .login-container{
+    width: 100%;
   }
 </style>
