@@ -147,7 +147,7 @@
                 <div class="dropdown-inner account-dropdown-inner dark">
                   <div class="notification-switch-container">
                     <label class="switch">
-                      <input id="notifications-switch" type="checkbox" checked>
+                      <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings()">
                       <span class="slider"></span>
                     </label>
                     <span class="notification-switch-label">Push notifications?</span>
@@ -410,7 +410,8 @@ export default {
       usersToBeAdded: '',
       projectClick: '',
       projectType: 'true',
-      notifications: []
+      notifications: [],
+      notificationSettings: true
     }
   },
   mounted () {
@@ -575,6 +576,12 @@ export default {
       console.log(this.user)
       console.log(this.user.displayName)
       console.log('test')
+    },
+    updateSettings () {
+      axios.post('127.0.0.1:8081/notificationsTurnOn', {
+        userID: this.user.uid,
+        on: this.notificationSettings
+      })
     }
   }
 }
