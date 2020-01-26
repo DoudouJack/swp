@@ -11,8 +11,18 @@ const { projectServiceAddActivity } = require('../services/projects')
 */
 
 const project = async(req, res, next) => {
+    let userID;
+
+    if (Object.keys(req.body).length === 0) {
+        userID = req.query.userID
+    }
+    else {
+        userID = req.body.userID
+    }
+    console.log(userID)
+
     try {
-        const internalresponse = await projectServiceGetAll()
+        const internalresponse = await projectServiceGetAll(userID)
         console.log("internal response")
         console.log(internalresponse)
         // other service call (or same service, different function can go here)
@@ -44,9 +54,10 @@ const createProject = async(req, res, next) => {
     const member = req.body.member
     const activity = req.body.activity
     const projectPayType = req.body.projectPayType
+    const creator = req.body.creator
 
     try {
-        const internalresponse = await projectServiceCreateProject(title, description, member, activity, projectPayType)
+        const internalresponse = await projectServiceCreateProject(title, description, member, activity, projectPayType, creator)
         console.log("internal response")
         console.log(internalresponse)
 

@@ -4,9 +4,10 @@ const { ObjectId } = mongoose.Types.ObjectId
 Project = require('../models/project_schema')
 
 
-const getProjects = async () => {
+const getProjects = async (userID) => {
     try {
-        const projects = await Project.find({}).exec();
+        const projects = await Project.find({ member: { "$in" : [userID] } }).exec();
+        console.log(projects)
 
         return projects;
        
@@ -15,7 +16,7 @@ const getProjects = async () => {
     }
 }
 
-const createProject = async(title, description, member, activity, projectPayType) => {
+const createProject = async(title, description, member, activity, projectPayType, creator) => {
     try {
         let link = await createLink()
         let project = new Project()
@@ -26,6 +27,7 @@ const createProject = async(title, description, member, activity, projectPayType
         project.activity = activity
         project.link = link
         project.projectPayType = projectPayType
+        project.creator = creator
 
         const ret = await project.save()
 

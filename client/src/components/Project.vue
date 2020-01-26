@@ -439,15 +439,15 @@ export default {
         })
     }, */
     getActivities () {
-      axios.get('http://127.0.0.1:8081/activities', { headers:
-          { authorization: `${this.user.uid}` } })
+      axios.get('http://127.0.0.1:8081/activities', { params:
+          { userID: this.user.uid } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
         })
     },
     getProjects () {
-      axios.get('http://127.0.0.1:8081/projects', { headers:
-          { authorization: `${this.user.uid}` } })
+      axios.get('http://127.0.0.1:8081/projects', { params:
+          { userID: this.user.uid } })
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
         })
@@ -460,7 +460,7 @@ export default {
         activity: '',
         projectPayType: this.projectType,
         date: this.projectDate,
-        userID: this.user.uid
+        creator: this.user.uid
       })
         .then(response => {
           this.response = response
@@ -480,7 +480,7 @@ export default {
         currency: 'EUR',
         projectID: this.activityClick,
         date: this.actDate,
-        userID: this.user.uid
+        creator: this.user.uid
       })
         .then(response => {
           this.response = response
