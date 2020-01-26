@@ -11,8 +11,9 @@ const { projectServiceAddActivity } = require('../services/projects')
 */
 
 const project = async(req, res, next) => {
+    const userID = req.body.userID
     try {
-        const internalresponse = await projectServiceGetAll()
+        const internalresponse = await projectServiceGetAll(userID)
         console.log("internal response")
         console.log(internalresponse)
         // other service call (or same service, different function can go here)
