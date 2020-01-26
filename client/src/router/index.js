@@ -4,6 +4,8 @@ import Login from '../components/Login'
 import Register from '../components/Register'
 import Dashboard from '../components/Dashboard'
 import Project from '../components/Project'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 Vue.use(VueRouter)
 
@@ -29,7 +31,11 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: Project
+      components: {
+        Project,
+        Header,
+        Footer
+      }
     }
   ]
 })
