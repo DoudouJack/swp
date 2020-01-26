@@ -4,6 +4,7 @@ const { ObjectId } = mongoose.Types.ObjectId
 const admin = require('firebase-admin')
 Userproperties = require('../models/userproperties_schema')
 NotificationSetting = require('../models/notificationsetting_schema')
+Message = require('../models/message_schema')
 
 const sendMessage = async (receiver, title, description) => {
     try {
@@ -26,8 +27,14 @@ const sendMessage = async (receiver, title, description) => {
             }
             
             admin.messaging().send(message)
-            .then( () => {
+            .then( async () => {
                 console.log("MESSAGE SENT SUCCESFULLY")
+                let message = new Message()
+                message.receiver = receiver
+                message.message = description,
+                message.title = title
+
+                const ret = await message.save()
             })
             .catch( error => {
                 console.log(error.errorInfo.code)
