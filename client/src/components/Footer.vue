@@ -7,7 +7,7 @@
           <li><a href="/">Hilfe erhalten</a></li>
           <li><a href="/">Datenschutz</a></li>
           <li><a href="/">Impressum</a></li>
-          <li><a href="/">Allgemeine Geschäftsbedingungen</a></li>
+          <li><a href="/">AGBs</a></li>
         </ul>
       </nav>
     </div>

@@ -43,7 +43,7 @@
             </div>
             <div class="modal-body">
               <form action="">
-                <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+                <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -67,8 +67,14 @@
             <div class="modal-body">
               <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
               <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
-              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType"><label>Fixed amount project?</label><input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
+              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType">
+
+              <div class="tooltip"><span>Fixed amount project?</span>
+                <span class="tooltiptext">For projects that have a fixed volumen, e.g. a birthday gift</span>
+              </div>
+
+              <input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -139,8 +145,14 @@
               </div>
               <div class="dropdown notification-dropdown">
                 <div class="dropdown-inner account-dropdown-inner dark">
+                  <div class="notification-switch-container">
+                    <label class="switch">
+                      <input id="notifications-switch" type="checkbox" checked>
+                      <span class="slider"></span>
+                    </label>
+                    <span class="notification-switch-label">Push notifications?</span>
+                  </div>
                   <ul class="menu-list vertical">
-
                     <article class="notification">
                       <p class="notification-content-container">
                         <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
@@ -557,7 +569,7 @@ export default {
 <style lang="scss">
 
   /*VARIABLES*/
-  $color1: #2a71c1;
+  $color1: #3e5f8e;
   $background: #f0f4f9;
   $background-dark: #364458;
   $background-alt: $color1;
@@ -597,6 +609,10 @@ export default {
   input ~ label{
     padding-left: 10px;
   }
+  select {
+    color: $color-success;
+    background: $text-light;
+  }
 
   /*MODAL*/
   .modal-content {
@@ -634,12 +650,14 @@ export default {
     background: $color-success;
   }
   .fixed-amount-input{
-    display: none;
-    width: 100px;
+    opacity: 0;
+    width: 0px;
     margin-left: 20px;
+    transition: $transition-time;
   }
   .fixed-amount-checkbox:checked ~ .fixed-amount-input {
-    display: inline-block;
+    opacity: 1;
+    width: 100px;
   }
 
   /*RULES*/
@@ -691,6 +709,9 @@ export default {
   h2{
     text-transform: uppercase;
     font-size: 1.8em;
+    @media(max-width: 1000px){
+      font-size: 1.5em !important;
+    }
   }
   h3{
     font-size: 20px;
@@ -732,7 +753,7 @@ export default {
       color: $text-light;
     }
   }
-  article.activity{
+  article.activity>.row{
     padding-top: 20px;
   }
   .activitiy-header{
@@ -798,8 +819,16 @@ export default {
     padding-top: 15px;
     z-index: 9999;
     right: -5px;
+    @media(max-width:1000px){
+      right: -60px;
+      width: 150px;
+    }
     &.notification-dropdown{
       width: 300px;
+      right: -100px;
+      @media(max-width: 1000px){
+        width: 250px;
+      }
     }
   }
   .dropdown-inner{
@@ -816,12 +845,20 @@ export default {
       position: absolute;
       top: 0;
       right: 15px;
+      @media(max-width: 1000px) {
+        right: 110px;
+      }
       width: 0;
       height: 0;
       border: 10px solid transparent;
       border-bottom-color: $background-alt;
       border-top: 0;
       margin-top: -10px;
+    }
+  }
+  #account-nav .dropdown-inner:after{
+    @media(max-width: 1000px) {
+      right: 70px;
     }
   }
   .dropdown .menu-list{
@@ -953,6 +990,12 @@ export default {
   .login-container .card {
     max-width: 490px;
     margin: auto;
+    background: $background-dark;
+    color: $text-light;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    margin: 10vh auto;
   }
   .login-container{
     width: 100%;
@@ -961,9 +1004,123 @@ export default {
     position: absolute;
     left: 0;
     top: 0;
-    background-color: $background-dark;
+    background-color: white;
     opacity: .6;
     width: 100%;
     height: 100%;
+  }
+
+  /* SWITCHES / NOTIFICATION SWITCH */
+  /*SWITCH*/
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    float: left;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $color-error;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: $color-success;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .notification-switch-container {
+    height: 50px;
+    border-bottom: 3px solid $text-light;
+  }
+
+  span.notification-switch-label {
+    top: 6px;
+    position: relative;
+    padding-left: 15px;
+    font-size: 15px;
+  }
+  /*TOOLTIPS*/
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    padding-left: 10px;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: $color1;
+    color: $text-light;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -90px;
+    transition: opacity 0.3s;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: $color1 transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
   }
 </style>
