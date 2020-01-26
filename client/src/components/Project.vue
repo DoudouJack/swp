@@ -456,13 +456,12 @@ export default {
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
-        // member: this.projectMember.split(','),
-        member: this.user.uid,
+        member: this.projectMember.split(','),
         activity: '',
         projectPayType: this.projectType,
-        date: this.projectDate
-      }, { headers:
-          { authorization: `${this.user.uid}` } })
+        date: this.projectDate,
+        userID: this.user.uid
+      })
         .then(response => {
           this.response = response
           this.getProjects()
@@ -480,9 +479,9 @@ export default {
         amount: this.actAmount,
         currency: 'EUR',
         projectID: this.activityClick,
-        date: this.actDate
-      }, { headers:
-      { authorization: `${this.user.uid}` } })
+        date: this.actDate,
+        userID: this.user.uid
+      })
         .then(response => {
           this.response = response
           this.getActivities()

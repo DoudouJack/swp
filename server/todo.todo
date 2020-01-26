@@ -52,10 +52,13 @@ API NEEDED ROUTES:
     ☐ Notifications Firebase Cloud Messaging
         ✔ Dont assign token when not logged in @done(20-01-23 20:01)
         ✔ When logged in save user + token inside DB @done(20-01-23 20:02)
-        ☐ notifcation bekommen per user an/aus machen
-        ☐ save notifications inside db table (new table)
+        ✔ notifcation bekommen per user an/aus machen => new db table @done(20-01-26 16:26)
+        ☐ Get Notification Setting for User
         ☐ standard events notifications (messages)
         ☐ sendMessage dynamisch machen (userID + event)
+            ☐ an jeden schicken der in der table ist
+            ☐ save notifications inside db table (new table)
+            ☐ get notifications for user
     ☐ 
 CLIENT:
     ☐ Components

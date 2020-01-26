@@ -3,6 +3,7 @@ const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 const admin = require('firebase-admin')
 Userproperties = require('../models/userproperties_schema')
+NotificationSetting = require('../models/notificationsetting_schema')
 
 const sendMessage = async (receiver, title, description) => {
     try {
@@ -54,7 +55,39 @@ const saveUserToken = async (userToken, messageToken) => {
     }
 }
 
+const notificationSetting = async (userID, on) => {
+    try {
+        console.log('works notification setting')
+        console.log(userID)
+        console.log(on)
+
+        const filter = {userID: userID}
+        const update = {userID: userID, notificationTurnOn: on}
+        
+
+        const updateQuery = await NotificationSetting.update(filter, update, {upsert: true, new: true})
+        console.log(updateQuery)
+       
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
+const getNotificationSetting = async (userID) => {
+    try {
+        const ret = await NotificationSetting.find({'userID': userID}).exec();
+        return ret
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
 module.exports = {
     notificationService: sendMessage,
-    saveUserToken: saveUserToken
+    saveUserToken: saveUserToken,
+    turnOnNotfications: notificationSetting,
+    getNotificationSetting: getNotificationSetting
 }
