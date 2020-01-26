@@ -348,7 +348,7 @@
               <div class="col-md-6 col-sm-12">
                 <div class="activity-open-amount">
                                       <span class="amount-positive">
-                                          {{ adata.splitAmount }} #placeholder {{adata.currency}}
+                                          Green: {{ adata.greenAmount }} Red: {{ adata.redAmount }} {{adata.currency}}
                                       </span>
                 </div>
               </div>
