@@ -66,7 +66,32 @@
             </div>
             <div class="modal-body">
               <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-              <input placeholder="Date" type="date" name="projectDate" v-model="projectDate"><br>
+<!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
+              <select name="projectMonth" v-model="projectMonth">
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+              <select name="projectYear" v-model="projectYear">
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option selected value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+              </select>
               <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
               <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType">
 
@@ -389,6 +414,8 @@ export default {
         email: '',
         password: ''
       },
+      projectMonth: '',
+      projectYear: '',
       error: null,
       user: '',
       token: '',
@@ -485,7 +512,7 @@ export default {
         member: this.projectMember.split(','),
         activity: '',
         projectPayType: this.projectType,
-        date: this.projectDate,
+        date: this.projectMonth + ' ' + this.projectYear,
         creator: this.user.uid
       })
         .then(response => {
@@ -529,7 +556,7 @@ export default {
       this.activitiesByProject = activitiesByProject
     },
     addActivityToProject () {
-      axios.post('http://127.0.0.1:8081/updateProject', {
+      axios.post('http://127.0.0.1:8081/addActivity', {
         _id: this.activityClick,
         activity: this.activitiesByProject
       })
