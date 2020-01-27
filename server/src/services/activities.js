@@ -22,10 +22,14 @@ const createActivity = async(title, description, amount, currency, projectID) =>
         // check if projectID is existing
         
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
-        console.log(projects)
-        console.log(projects.length)
-        console.log('Length:')
-        console.log(projects.memberLength)
+        let memberLength;
+
+        projects.forEach(function(value, key){
+            console.log(value.toObject().member)
+            console.log(value.toObject().member.length)
+            memberLength = value.toObject().member.length  
+        })
+       
         //var memberLength = projects.memberLength
         
         if(projects.length > 0 ){
