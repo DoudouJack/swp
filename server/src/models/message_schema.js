@@ -19,8 +19,6 @@ var message = mongoose.Schema({
     }
 });
 
-message.index({userID: 1}, {unique: true})
-
 
 var Message = module.exports = mongoose.model('Message', message)
 
