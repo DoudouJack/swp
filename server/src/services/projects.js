@@ -30,6 +30,9 @@ const createProject = async(title, description, member, activity, projectPayType
         project.creator = creator
         project.memberLength = member.length
 
+        user = firebase.auth().getUsermail
+
+
         const ret = await project.save()
 
 
