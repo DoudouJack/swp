@@ -30,7 +30,7 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             memberLength = value.toObject().member.length  
         })
        
-        //var memberLength = projects.memberLength
+       
         
         if(projects.length > 0 ){
             let activity = new Activity()
@@ -40,11 +40,9 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.amount = amount
             activity.currency = currency
             activity.projectID = projectID
-            activity.greenAmount = amount/3*(3-1)
-            activity.redAmount = amount/3
-       //     activity.greenAmount = amount/projects.member.length*(projects.member.length-1)
-       //     activity.redAmount = amount/projects.member.length
-        
+            activity.greenAmount = amount/memberLength*(memberLength-1)
+            activity.redAmount = amount/memberLength
+    
             const ret = await activity.save();
         
             return ret;
