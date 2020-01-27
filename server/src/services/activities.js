@@ -3,6 +3,7 @@ const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 Activity = require('../models/activity_schema')
 Project = require('../models/project_schema')
+Transaction = require('../models/transaction_schema')
 
 const getActivities = async () => {
     try {
@@ -27,7 +28,9 @@ const createActivity = async(title, description, amount, currency, projectID) =>
         projects.forEach(function(value, key){
             console.log(value.toObject().member)
             console.log(value.toObject().member.length)
-            memberLength = value.toObject().member.length  
+           // memberLength = value.toObject().member.length 
+            memberLength = 3 
+
         })
        
        
@@ -45,6 +48,21 @@ const createActivity = async(title, description, amount, currency, projectID) =>
     
             const ret = await activity.save();
         
+
+            for(var i = 0; i<=memberLength;i++){
+            let transaction = new Transaction()
+            console.log("Start loop started")
+           
+            transaction.activityID = "123"
+            transaction.userID = value.toObject().member[i]
+            transaction.amount = amount
+            transaction.currency = value.toObject().currency
+
+            transaction.save();
+            console.log("Transaction saved")
+            }
+
+
             return ret;
         }
         else {
