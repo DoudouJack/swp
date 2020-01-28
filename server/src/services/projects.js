@@ -16,7 +16,7 @@ const getProjects = async (userID) => {
     }
 }
 
-const createProject = async(title, description, member, activity, projectPayType, creator) => {
+const createProject = async(title, description, member, activity, projectPayType, creator, date) => {
     try {
         let link = await createLink()
         let project = new Project()
@@ -28,16 +28,13 @@ const createProject = async(title, description, member, activity, projectPayType
         project.link = link
         project.projectPayType = projectPayType
         project.creator = creator
-        project.memberLength = member.length
-
-        user = firebase.auth().getUsermail
-
-
+        project.date = date
+       
         const ret = await project.save()
-
 
         return ret
     } catch (error) {
+        console.log(error)
         return false
     }
 }
