@@ -23,18 +23,22 @@ const createActivity = async(title, description, amount, currency, projectID) =>
         // check if projectID is existing
         
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
-        let memberLength;
+        let memberLength, member, currency
+    //    let member = ['u1', 'u2', 'u3']
 
         projects.forEach(function(value, key){
             console.log(value.toObject().member)
             console.log(value.toObject().member.length)
-           // memberLength = value.toObject().member.length 
+           
+            member = value.toObject().member
+            currency = value.toObject().currency
+            memberLength = value.toObject().member.length 
             memberLength = 3 
+            
 
         })
        
        
-        
         if(projects.length > 0 ){
             let activity = new Activity()
 
@@ -51,13 +55,10 @@ const createActivity = async(title, description, amount, currency, projectID) =>
 
             for(var i = 0; i<=memberLength;i++){
             let transaction = new Transaction()
-            console.log("Start loop started")
-           
-            transaction.activityID = "123"
-            transaction.userID = value.toObject().member[i]
-            transaction.amount = amount
-            transaction.currency = value.toObject().currency
-
+            transaction.activityID = title
+            transaction.userID = member[i]
+            transaction.amount = amount/memberLength
+            transaction.currency = currency
             transaction.save();
             console.log("Transaction saved")
             }
