@@ -323,7 +323,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <span> {{ pdata.date }} #placeholder| {{ pdata.amount}} #placeholder</span>
+            <span> {{ pdata.date }} #placeholder| {{ pdata.projectAmount}} #placeholder</span>
             <span></span>
           </div>
         </div>
