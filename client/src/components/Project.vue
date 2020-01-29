@@ -418,6 +418,7 @@ export default {
     this.getActivities()
     this.getProjects()
     this.getNotifications()
+    this.getNotificationSettingsStatus()
     firebase.auth().currentUser.getIdToken(true).then(data => {
       this.token = data
       console.log(this.token)
@@ -476,6 +477,13 @@ export default {
           { userID: this.user.uid } })
         .then(notificationResponse => {
           this.notifications = notificationResponse.data
+        })
+    },
+    getNotificationSettingsStatus () {
+      axios.get('http://127.0.0.1:8081/getNotificationSetting', { params:
+          { userID: this.user.uid } })
+        .then(notificationSettingsResponse => {
+          this.notificationSettings = notificationSettingsResponse.data
         })
     },
     postProject () {
@@ -543,6 +551,7 @@ export default {
           id: this.projectClick
         })
           .then(response => {
+            this.response = response
             this.getProjects()
           })
       }
@@ -557,6 +566,7 @@ export default {
           this.getActivities()
           this.getProjects()
           this.getNotifications()
+          this.getNotificationSettingsStatus()
         })
         .catch(err => {
           this.error = err.message
@@ -578,13 +588,15 @@ export default {
       console.log('test')
     },
     updateSettings () {
-      axios.post('127.0.0.1:8081/notificationsTurnOn', {
+      axios.post('http://127.0.0.1:8081/notificationsTurnOn', {
         userID: this.user.uid,
         on: this.notificationSettings
       })
+      // this.getNotificationSettingsStatus()
     }
   }
 }
+
 </script>
 
 <style lang="scss">
