@@ -518,6 +518,7 @@ export default {
       })
         .then(response => {
           this.response = response
+          this.actualProjectID = response.projectID
           this.getProjects()
           console.log('nix')
         })
@@ -525,12 +526,6 @@ export default {
           this.error.push(e)
         })
       if (this.projectType === true) {
-        let pro
-        for (pro in this.projectData) {
-          if (pro.title === this.projectName) {
-            this.actualProjectID = pro._id
-          }
-        }
         axios.post('http://127.0.0.1:8081/createActivity', {
           title: 'Birthday',
           description: 'fixed amount activity',
