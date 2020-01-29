@@ -52,7 +52,8 @@ const createProject = async (title, description, member, activity, projectPayTyp
 
         const ret = await project.save()
 
-        return ret
+
+        return [ret, project._id]
     } catch (error) {
         console.log(error)
         return false

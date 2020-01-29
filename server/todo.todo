@@ -21,6 +21,10 @@ API NEEDED ROUTES:
         ✔ Format date in /getActivities @done(20-01-15 10:34)
         ☐ Get All Activity for a project 
         ☐ Amount anpassen nach formel (edouard)
+        ☐ Add (Activity) Creator + Paypal Link (With splitamount) to Schema
+        ☐ Retrieve Paypal Link from creator upon Activity Creation and save it
+        ☐ CreateActiviy date format ändern auf MM/DD/YYYY
+        ☐ Create Activity: id von neu erstellte activity in dem project objekt "activities" automatisch hinzufügen
         ✔ remove split from members @done(20-01-15 10:34)
     ☐ User
         ✔ show users activities @done(19-12-18 14:45)
@@ -30,6 +34,7 @@ API NEEDED ROUTES:
         ☐ update one attribute at user doesent change all attributes
         ✔ change users default currency @done(20-01-29 09:01)
         ✔ change users balance @done(20-01-23 11:15)
+        ☐ Save paypal link
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
         ✔ Get All Projects @done(19-12-12 21:28)
@@ -43,6 +48,7 @@ API NEEDED ROUTES:
         ✘ Remove Activity from project creation @cancelled(20-01-27 09:03)
         ☐ Add split method here
         ☐ Format Date 
+        ☐ send back _id of project after /createProject
     ☐ Misc
         ☐ *Middelware* between all routes!
         ☐ Alle Date Felder automatisch konvertieren in lesbare Datum (LESBAR GMTN ENTFERNEN)
