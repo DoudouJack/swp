@@ -8,12 +8,12 @@ var admin = require("firebase-admin");
 
 
 const getProjects = async (userID) => {
-    try {
-        const projects = await Project.find({ member: { "$in" : [userID] } }).exec();
+    try {
+        const projects = await Project.find({ member: { "$in": [userID] } }).exec();
         console.log(projects)
 
         return projects;
-       
+
     } catch (e) {
         return false
     }
@@ -21,37 +21,35 @@ const getProjects = async (userID) => {
 
 
 
-const createProject = async(title, description, member, activity, projectPayType, creator, date) => {
+const createProject = async (title, description, member, activity, projectPayType, creator, date) => {
     try {
         let link = await createLink()
         let project = new Project()
-        
-    
-    /* 
-   let memberFromEmail = []
-   for(let i = 0; i<=member.length;i++){ 
 
-   admin.auth().getUserByEmail('member[i]')
-   .then(function(userRecord){
-       memberFromEmail[i] = userRecord.toJSON().uid
-       console.log('**UID:**', member[i])
-   })
 
-    }
+
+        let memberFromEmail = []
+        for (let i = 0; i < member.length; i++) {
+            console.log(member[i])
+            await admin.auth().getUserByEmail(member[i])
+                .then(function (userRecord) {
+                    memberFromEmail[i] = userRecord.uid
+                })
+                .catch(function (error) {
+                    console.log('Error fetching user data:', error);
+                });
+        }
         member = memberFromEmail
-  */      
-   
 
+        project.title = title
+        project.description = description
+        project.member = member
+        project.activity = activity
+        project.link = link
+        project.projectPayType = projectPayType
+        project.creator = creator
+        project.date = date
 
-       project.title = title
-       project.description = description
-       project.member = member
-       project.activity = activity
-       project.link = link
-       project.projectPayType = projectPayType
-       project.creator = creator
-       project.date = date
-       
         const ret = await project.save()
 
         return ret
@@ -61,18 +59,18 @@ const createProject = async(title, description, member, activity, projectPayType
     }
 }
 
-const createLink = async() => {
+const createLink = async () => {
     /* TODO */
     return '/staticLinkNeedsToBeEdited'
 }
 
-const getSingleProject = async(id) => {
+const getSingleProject = async (id) => {
     try {
-        if(id === undefined){
+        if (id === undefined) {
             throw new Error('undefined id')
         }
 
-        const ret = await Project.find({'_id': ObjectId(id)}).exec();
+        const ret = await Project.find({ '_id': ObjectId(id) }).exec();
         return ret
     } catch (error) {
         return false
@@ -80,63 +78,63 @@ const getSingleProject = async(id) => {
 }
 
 
-const updateProject = async(id, title, description, projectCompleted, projectPayType) => {
+const updateProject = async (id, title, description, projectCompleted, projectPayType) => {
     try {
-        if(id === undefined){
+        if (id === undefined) {
             throw new Error('undefined id')
         }
 
-        const filter = {_id: ObjectId(id)}
-        const update = {title: title, description: description, projectCompleted: projectCompleted, projectPayType: projectPayType}
-        
-        const projectUpdate = await Project.findByIdAndUpdate(filter, update, {new: true}) // returns querys
+        const filter = { _id: ObjectId(id) }
+        const update = { title: title, description: description, projectCompleted: projectCompleted, projectPayType: projectPayType }
+
+        const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
         const ret = await projectUpdate.save()
-        
-        return ret        
+
+        return ret
     } catch (error) {
-        
+
     }
 }
 
-const addMemberToProject = async(id, member) => {
+const addMemberToProject = async (id, member) => {
     try {
-        if(id === undefined){
+        if (id === undefined) {
             throw new Error('undefined id')
         }
 
         let newMember = member[0]
 
-        const filter = {_id: ObjectId(id)}
-        const update = {$push: {member: newMember}}
-        
-        const projectUpdate = await Project.findByIdAndUpdate(filter, update, {new: true}) // returns querys
+        const filter = { _id: ObjectId(id) }
+        const update = { $push: { member: newMember } }
+
+        const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
         const ret = await projectUpdate.save()
 
         return ret
     } catch (error) {
-        
+
     }
 }
 
 
-const addActivity = async(id, activity) => {
+const addActivity = async (id, activity) => {
     try {
-        if(id === undefined){
+        if (id === undefined) {
             throw new Error('undefined id')
         }
 
         let newActivity = activity[0]
-        
-        const filter = {_id: ObjectId(id)}
-        const update = {$push: {activity: newActivity}}
-        
-        const projectUpdate = await Project.findByIdAndUpdate(filter, update, {new: true}) // returns querys
+
+        const filter = { _id: ObjectId(id) }
+        const update = { $push: { activity: newActivity } }
+
+        const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
         const ret = await projectUpdate.save()
 
         return ret
-        
+
     } catch (error) {
-        
+
     }
 }
 
