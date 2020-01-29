@@ -41,9 +41,10 @@ const createActivity = async (req, res, next) => {
     const amount = req.body.amount
     const currency = req.body.currency
     const projectID = req.body.projectID
+    const creator = req.body.creator
 
     try {
-        const internalresponse = await activityServiceCreate(title, description, amount, currency, projectID)
+        const internalresponse = await activityServiceCreate(title, description, amount, currency, projectID, creator)
         console.log("internal response")
         console.log(internalresponse)
 

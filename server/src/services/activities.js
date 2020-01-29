@@ -19,7 +19,7 @@ const getActivities = async () => {
 }
 
 
-const createActivity = async(title, description, amount, currency, projectID) => {
+const createActivity = async(title, description, amount, currency, projectID, creator) => {
     try {
         // check if projectID is existing
         
@@ -48,6 +48,8 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.projectID = projectID
             activity.greenAmount = Math.round(amount/memberLength*(memberLength-1)*100)/100,
             activity.redAmount = Math.round(amount/memberLength*100)/100
+            activity.creator = creator
+            activity.payLink = 'paypal.me/USER/BETRAG'
     
             let activityID = activity._id;
 

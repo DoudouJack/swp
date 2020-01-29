@@ -40,6 +40,14 @@ var activity = mongoose.Schema({
     redAmount: {
         type: Number,
         required: false
+    },
+    creator: {
+        type: String,
+        required: true
+    },
+    payLink: {
+        type: String,
+        required: false
     }
     
 });
