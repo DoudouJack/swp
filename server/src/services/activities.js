@@ -5,6 +5,7 @@ Activity = require('../models/activity_schema')
 Project = require('../models/project_schema')
 Transaction = require('../models/transaction_schema')
 
+
 const getActivities = async () => {
     try {
         const activities = await Activity.find({}).exec();
@@ -23,18 +24,20 @@ const createActivity = async(title, description, amount, currency, projectID) =>
         // check if projectID is existing
         
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
-        let memberLength;
+        let memberLength, member, currency, currentAmount
 
         projects.forEach(function(value, key){
             console.log(value.toObject().member)
             console.log(value.toObject().member.length)
            // memberLength = value.toObject().member.length 
-            memberLength = 3 
-
+            member = value.toObject().member
+            currency = value.toObject().currency
+            memberLength = value.toObject().member.length 
+            console.log("memberlength: " + memberLength)
+            currentAmount = value.toObject().projectAmount
+            console.log("current amount: " + currentAmount)
         })
        
-       
-        
         if(projects.length > 0 ){
             let activity = new Activity()
 
@@ -43,26 +46,37 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.amount = amount
             activity.currency = currency
             activity.projectID = projectID
-            activity.greenAmount = amount/memberLength*(memberLength-1)
-            activity.redAmount = amount/memberLength
+            activity.greenAmount = Math.round(amount/memberLength*(memberLength-1)*100)/100,
+            activity.redAmount = Math.round(amount/memberLength*100)/100
     
-            const ret = await activity.save();
-        
+            let activityID = activity._id;
 
-            for(var i = 0; i<=memberLength;i++){
+            const ret = await activity.save()
+
+            for(var i = 0; i < memberLength;i++){
             let transaction = new Transaction()
-            console.log("Start loop started")
+            
            
-            transaction.activityID = "123"
-            transaction.userID = value.toObject().member[i]
-            transaction.amount = amount
-            transaction.currency = value.toObject().currency
+            transaction.activityID = activityID
+            transaction.userID = member[i]
+            transaction.amount = amount/memberLength
+            transaction.currency = currency
 
             transaction.save();
+            
             console.log("Transaction saved")
             }
 
+            let newAmount = parseFloat(amount)+parseFloat(currentAmount)
 
+            const filter = {_id: ObjectId(projectID)}
+            const update = {projectAmount: newAmount}
+        
+            const projectUpdate = await Project.findByIdAndUpdate(filter, update, {new: true})
+            const ret2 = await projectUpdate.save()
+            console.log("amount update")
+            console.log(ret2)
+        
             return ret;
         }
         else {

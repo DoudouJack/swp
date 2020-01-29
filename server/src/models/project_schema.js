@@ -38,6 +38,14 @@ var project = mongoose.Schema({
         type: String,
         required: true
     },
+    date: {
+        type: String,
+        required: true
+    },
+    currency: {
+        type: String,
+        default: 'EUR'
+    }
 });
 
 

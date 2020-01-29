@@ -55,9 +55,10 @@ const createProject = async(req, res, next) => {
     const activity = req.body.activity
     const projectPayType = req.body.projectPayType
     const creator = req.body.creator
+    const date = req.body.date
 
     try {
-        const internalresponse = await projectServiceCreateProject(title, description, member, activity, projectPayType, creator)
+        const internalresponse = await projectServiceCreateProject(title, description, member, activity, projectPayType, creator, date)
         console.log("internal response")
         console.log(internalresponse)
 

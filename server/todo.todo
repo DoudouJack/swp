@@ -6,6 +6,8 @@ API NEEDED ROUTES:
         ✔ Update isPaid of transaction @done(19-12-09 22:17)
         ✔ in create function make only one user per activityID @done(19-12-11 17:12) Should be done due to index
         ✔ create increment id (index) @done(19-12-12 18:25)
+        ☐ Payment tracking
+        ☐ Paypal me abwicklung => update transaction
     ☐ Acitvity
         ✔ Wenn eine Activity erstellt wird => Split() => createTransaction @done(19-12-11 19:09)
         ✔ Create Activity @done(19-12-11 19:09)
@@ -26,7 +28,7 @@ API NEEDED ROUTES:
         ✔ show users transactions @done(19-12-18 14:45)
         ✔ change: userID --> dbID @done(20-01-23 11:12)
         ☐ update one attribute at user doesent change all attributes
-        ☐ change users default currency
+        ✔ change users default currency @done(20-01-29 09:01)
         ✔ change users balance @done(20-01-23 11:15)
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
@@ -37,7 +39,7 @@ API NEEDED ROUTES:
         ✔ Add Activity to Project @done(19-12-16 08:19)
         ☐ Gesamtbetrag Projekt add to model (mit berechnung formel edouard)
         ☐ Add date to model
-        ☐ Remove Activity from project creation
+        ✘ Remove Activity from project creation @cancelled(20-01-27 09:03)
         ☐ Add split method here
         ☐ Format Date 
     ☐ Misc
@@ -49,6 +51,8 @@ API NEEDED ROUTES:
         ☐ Routes
     ✔ Service Worker @done(20-01-19 13:50)
     ✔ Offline pwa features @done(20-01-20 08:17)
+    ☐ Wenn man Activity erstellt in projekt activity array hinzufügen
+    ☐ NGROK ( Mehrere User )
     ☐ Notifications Firebase Cloud Messaging
         ✔ Dont assign token when not logged in @done(20-01-23 20:01)
         ✔ When logged in save user + token inside DB @done(20-01-23 20:02)
