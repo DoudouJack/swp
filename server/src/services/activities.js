@@ -5,6 +5,7 @@ Activity = require('../models/activity_schema')
 Project = require('../models/project_schema')
 Transaction = require('../models/transaction_schema')
 
+
 const getActivities = async () => {
     try {
         const activities = await Activity.find({}).exec();
@@ -45,16 +46,17 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.amount = amount
             activity.currency = currency
             activity.projectID = projectID
-            activity.greenAmount = amount/memberLength*(memberLength-1)
-            activity.redAmount = amount/memberLength
-    
+            activity.greenAmount = Math.round(amount/memberLength*(memberLength-1)*100)/100,
+          //  activity.redAmount = amount/memberLength
+            activity.redAmount = Math.round(amount/memberLength*100)/100
+    //Math.round (217.4325 * 100) / 100
             let activityID = activity._id;
 
             const ret = await activity.save()
 
             for(var i = 0; i < memberLength;i++){
             let transaction = new Transaction()
-            console.log("Start loop started")
+            
            
             transaction.activityID = activityID
             transaction.userID = member[i]

@@ -28,7 +28,7 @@ API NEEDED ROUTES:
         ✔ show users transactions @done(19-12-18 14:45)
         ✔ change: userID --> dbID @done(20-01-23 11:12)
         ☐ update one attribute at user doesent change all attributes
-        ☐ change users default currency
+        ✔ change users default currency @done(20-01-29 09:01)
         ✔ change users balance @done(20-01-23 11:15)
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
