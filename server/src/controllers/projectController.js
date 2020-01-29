@@ -62,10 +62,10 @@ const createProject = async(req, res, next) => {
         console.log("internal response")
         console.log(internalresponse)
 
-        if (internalresponse !== false) {
+        if (internalresponse) {
             res.json({
                 message: 'Saved succesfully.',
-                data: []
+                projectID: internalresponse[1]  
             })
 
         } else {
