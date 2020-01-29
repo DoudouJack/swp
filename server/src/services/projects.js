@@ -2,6 +2,9 @@ const { db } = require('../con/dbcon')
 const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 Project = require('../models/project_schema')
+var admin = require("firebase-admin");
+
+
 
 
 const getProjects = async (userID) => {
@@ -16,19 +19,38 @@ const getProjects = async (userID) => {
     }
 }
 
+
+
 const createProject = async(title, description, member, activity, projectPayType, creator, date) => {
     try {
         let link = await createLink()
         let project = new Project()
+        
+    
+    /* 
+   let memberFromEmail = []
+   for(let i = 0; i<=member.length;i++){ 
 
-        project.title = title
-        project.description = description
-        project.member = member
-        project.activity = activity
-        project.link = link
-        project.projectPayType = projectPayType
-        project.creator = creator
-        project.date = date
+   admin.auth().getUserByEmail('member[i]')
+   .then(function(userRecord){
+       memberFromEmail[i] = userRecord.toJSON().uid
+       console.log('**UID:**', member[i])
+   })
+
+    }
+        member = memberFromEmail
+  */      
+   
+
+
+       project.title = title
+       project.description = description
+       project.member = member
+       project.activity = activity
+       project.link = link
+       project.projectPayType = projectPayType
+       project.creator = creator
+       project.date = date
        
         const ret = await project.save()
 
