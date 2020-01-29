@@ -36,8 +36,9 @@ API NEEDED ROUTES:
         ✔ Get single Project @done(19-12-16 08:45)
         ✔ Update single project @done(19-12-12 21:28)
         ✔ Add member to project @done(19-12-12 21:28)
+            ☐ do split() again for all activites
         ✔ Add Activity to Project @done(19-12-16 08:19)
-        ☐ Gesamtbetrag Projekt add to model (mit berechnung formel edouard)
+        ✔ Gesamtbetrag Projekt add to model (mit berechnung formel edouard) @done(20-01-28 16:52)
         ☐ Add date to model
         ✘ Remove Activity from project creation @cancelled(20-01-27 09:03)
         ☐ Add split method here
