@@ -47,9 +47,8 @@ const createActivity = async(title, description, amount, currency, projectID) =>
             activity.currency = currency
             activity.projectID = projectID
             activity.greenAmount = Math.round(amount/memberLength*(memberLength-1)*100)/100,
-          //  activity.redAmount = amount/memberLength
             activity.redAmount = Math.round(amount/memberLength*100)/100
-    //Math.round (217.4325 * 100) / 100
+    
             let activityID = activity._id;
 
             const ret = await activity.save()
