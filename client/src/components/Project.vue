@@ -1,5 +1,5 @@
 <template>
-  <div id="app-container">
+  <div id="app-container" :dark="goDark">
 
     <section class="off-screen-elements">
       <!-- **** START SETTINGS MODAL -->
@@ -13,8 +13,15 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>
-              <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="darkTheme">Delete Account? </label></div>
+              <div class="darktheme-switch-container">
+              <label class="switch">
+                <input id="darktheme-switch" v-model="goDark" type="checkbox" checked @click="updateSettings()">
+                <span class="slider"></span>
+              </label>
+                <span class="darktheme-switch-label">Dark Theme</span><br>
+              </div>
+<!--              <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>-->
+              <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="deleteAccount">Delete Account? </label></div>
               <div class="form-check">
                 Preferred Currency
                 <select>
@@ -24,8 +31,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Speichern & Schließen</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
             </div>
           </div>
         </div>
@@ -333,7 +340,6 @@
 <!--
     <span>{{activityResponse}}</span>
     <span>{{projectResponse}}</span>-->
-    <span>{{ projectDate }}</span>
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     <article v-if="user" class="data-row">
@@ -447,7 +453,8 @@ export default {
       notifications: [],
       notificationSettings: true,
       fixedAmount: '',
-      actualProjectID: ''
+      actualProjectID: '',
+      goDark: false
     }
   },
   mounted () {
@@ -455,34 +462,8 @@ export default {
     this.getProjects()
     this.getNotifications()
     this.getNotificationSettingsStatus()
-    firebase.auth().currentUser.getIdToken(true).then(data => {
-      this.token = data
-      console.log(this.token)
-      api.getTransactions(this.token)
-        .then(response => {
-          console.log(response)
-        })
-    })
-    this.user = firebase.auth().currentUser
-    console.log(this.user.uid)
-    console.log(this.user)
-    console.log(this.user.displayName)
-    console.log('test')
   },
   created () {
-    firebase.auth().currentUser.getIdToken(true).then(data => {
-      this.token = data
-      console.log(this.token)
-      api.getTransactions(this.token)
-        .then(response => {
-          console.log(response)
-        })
-    })
-    this.user = firebase.auth().currentUser
-    console.log(this.user.uid)
-    console.log(this.user)
-    console.log(this.user.displayName)
-    console.log('test')
   },
   methods: {
     /*    TEMPLATE TO FOLLOW WHEN TOKEN USE IS IMPLEMENTED IN BACKEND
@@ -524,10 +505,12 @@ export default {
     },
     postProject () {
       this.projectDate = this.projectMonth + ' ' + this.projectYear
+      let members = this.user.email + ',' + this.projectMember
+      console.log(members)
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
-        member: this.projectMember.split(','),
+        member: members.split(','),
         activity: '',
         projectPayType: this.projectType,
         date: this.projectMonth + ' ' + this.projectYear,
@@ -1189,6 +1172,18 @@ export default {
   }
 
   span.notification-switch-label {
+    top: 6px;
+    position: relative;
+    padding-left: 15px;
+    font-size: 15px;
+  }
+
+  .darktheme-switch-container {
+    height: 50px;
+    border-bottom: 3px solid $text-light;
+  }
+
+  span.darktheme-switch-label {
     top: 6px;
     position: relative;
     padding-left: 15px;
