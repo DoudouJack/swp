@@ -43,7 +43,7 @@
             </div>
             <div class="modal-body">
               <form action="">
-                <input placeholder="Email or phone" type="text" name="activityName" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+                <input placeholder="Email or phone" type="text" name="addNewUser" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -67,6 +67,8 @@
             <div class="modal-body">
               <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
 <!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
+              <span>{{ projectMonth }}  {{ projectYear }}</span>
+              <span>{{ projectDate }}</span>
               <select name="projectMonth" v-model="projectMonth">
                 <option value="January">January</option>
                 <option value="February">February</option>
@@ -93,13 +95,12 @@
                 <option value="2025">2025</option>
               </select>
               <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" value="false" v-model="projectType">
+              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" v-model="projectType">
 
               <div class="tooltip"><span>Fixed amount project?</span>
-                <span class="tooltiptext">For projects that have a fixed volumen, e.g. a birthday gift</span>
+                <span class="tooltiptext">For projects that have one only activity with a fixed amount per participant, e.g. a birthday gift</span>
               </div>
-
-              <input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Betrag"/>
+              <input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Amount" v-model="fixedAmount" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -332,6 +333,7 @@
 <!--
     <span>{{activityResponse}}</span>
     <span>{{projectResponse}}</span>-->
+    <span>{{ projectDate }}</span>
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
     <article v-if="user" class="data-row">
@@ -371,9 +373,14 @@
                 <span class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-md-6 col-sm-12">
-                <div class="activity-open-amount">
+                <div class="activity-open-amount" v-if="adata.creator = user.uid">
                                       <span class="amount-positive">
-                                          Green: {{ adata.greenAmount }} Red: {{ adata.redAmount }} {{adata.currency}}
+                                          {{ adata.greenAmount }} {{adata.currency}}
+                                      </span>
+                </div>
+                <div class="activity-open-amount" v-else>
+                                      <span class="amount-negative">
+                                          {{ adata.redAmount }} {{adata.currency}}
                                       </span>
                 </div>
               </div>
@@ -438,7 +445,9 @@ export default {
       projectClick: '',
       projectType: 'true',
       notifications: [],
-      notificationSettings: true
+      notificationSettings: true,
+      fixedAmount: '',
+      actualProjectID: ''
     }
   },
   mounted () {
@@ -514,6 +523,7 @@ export default {
         })
     },
     postProject () {
+      this.projectDate = this.projectMonth + ' ' + this.projectYear
       axios.post('http://127.0.0.1:8081/createProject', {
         title: this.projectName,
         description: this.projectName,
@@ -531,6 +541,33 @@ export default {
         .catch(e => {
           this.error.push(e)
         })
+      if (this.projectType === true) {
+        let pro
+        for (pro in this.projectData) {
+          if (pro.title === this.projectName) {
+            this.actualProjectID = pro._id
+          }
+        }
+        axios.post('http://127.0.0.1:8081/createActivity', {
+          title: 'Birthday',
+          description: 'fixed amount activity',
+          member: this.user.uid,
+          amount: this.fixedAmount,
+          currency: 'EUR',
+          projectID: this.actualProjectID,
+          date: '',
+          creator: this.user.uid
+        })
+          .then(response => {
+            this.response = response
+            this.getActivities()
+            // this.getActivitiesByProject(this.activityClick)
+            // this.addActivityToProject()
+          })
+          .catch(e => {
+            this.error.push(e)
+          })
+      }
     },
     postActivity () {
       axios.post('http://127.0.0.1:8081/createActivity', {
@@ -546,8 +583,8 @@ export default {
         .then(response => {
           this.response = response
           this.getActivities()
-          this.getActivitiesByProject(this.activityClick)
-          this.addActivityToProject()
+          // this.getActivitiesByProject(this.activityClick)
+          // this.addActivityToProject()
         })
         .catch(e => {
           this.error.push(e)
@@ -1195,5 +1232,15 @@ export default {
   .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+  }
+
+  .amount-positive {
+    color: #629c4f;
+    font-weight: bold;
+  }
+
+  .amount-negative {
+    color: darkred;
+    font-weight: bold;
   }
 </style>
