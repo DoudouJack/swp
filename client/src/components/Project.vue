@@ -449,7 +449,7 @@ export default {
       activitiesByProject: '',
       usersToBeAdded: '',
       projectClick: '',
-      projectType: 'true',
+      projectType: false,
       notifications: [],
       notificationSettings: true,
       fixedAmount: '',
@@ -518,39 +518,38 @@ export default {
       })
         .then(response => {
           this.response = response
-          this.getProjects()
-          console.log('nix')
+          this.actualProjectID = response.data.projectID
+          console.log('projectID ' + this.actualProjectID)
+          console.log('type: ' + this.projectType)
+          if (this.projectType) {
+            axios.post('http://127.0.0.1:8081/createActivity', {
+              title: 'Birthday',
+              description: 'fixed amount activity',
+              member: this.user.uid,
+              amount: this.fixedAmount,
+              currency: 'EUR',
+              projectID: this.actualProjectID,
+              date: '',
+              creator: this.user.uid
+            })
+              .then(response => {
+                this.response = response
+                console.log('activity: ' + this.response)
+                this.getProjects()
+                this.getActivities()
+                // this.getActivitiesByProject(this.activityClick)
+                // this.addActivityToProject()
+              })
+              .catch(e => {
+                this.error.push(e)
+              })
+          } else {
+            this.getProjects()
+          }
         })
         .catch(e => {
           this.error.push(e)
         })
-      if (this.projectType === true) {
-        let pro
-        for (pro in this.projectData) {
-          if (pro.title === this.projectName) {
-            this.actualProjectID = pro._id
-          }
-        }
-        axios.post('http://127.0.0.1:8081/createActivity', {
-          title: 'Birthday',
-          description: 'fixed amount activity',
-          member: this.user.uid,
-          amount: this.fixedAmount,
-          currency: 'EUR',
-          projectID: this.actualProjectID,
-          date: '',
-          creator: this.user.uid
-        })
-          .then(response => {
-            this.response = response
-            this.getActivities()
-            // this.getActivitiesByProject(this.activityClick)
-            // this.addActivityToProject()
-          })
-          .catch(e => {
-            this.error.push(e)
-          })
-      }
     },
     postActivity () {
       axios.post('http://127.0.0.1:8081/createActivity', {
