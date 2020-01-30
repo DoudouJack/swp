@@ -23,6 +23,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
     try {
         // check if projectID is existing
         
+        if(amount>=0){
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
         let memberLength, member, currency, currentAmount
 
@@ -99,10 +100,14 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             console.log("no project ID found")
             return false
         }
+    }else{
+        console.log('Activity´s amount needed to be >=0')
+        return false
+    }
     } catch (error) {
         console.log(error)
         return false;
-    }
+    } 
 }
 
 const split = async(memberLength, amount) => {
