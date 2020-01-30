@@ -54,6 +54,22 @@ const createActivity = async(title, description, amount, currency, projectID, cr
     
             let activityID = activity._id;
 
+           /*
+           Get formated Date in activity
+           */
+            let today = new Date();  
+            let dd = today.getDate(); 
+            let mm = today.getMonth() + 1; 
+            let yyyy = today.getFullYear(); 
+            if (dd < 10) { 
+                dd = '0' + dd; 
+            } 
+            if (mm < 10) { 
+                mm = '0' + mm; 
+            } 
+            today = mm + '/' + dd + '/' + yyyy; 
+            activity.date = today
+
             const ret = await activity.save()
 
      
@@ -150,6 +166,9 @@ const getSingleActivity = async(id) => {
         return false
     }
 }
+
+
+
 
 
 
