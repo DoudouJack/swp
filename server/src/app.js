@@ -81,6 +81,10 @@ app.post('/addMember', projectController.addMember)
 app.post('/addActivity', projectController.addActivity)
 
 
+
+app.get('/getActivitiesFromProject', projectController.getActivitiesFromProject)
+
+
 /* USER */
 
 /*POST http://localhost:8081/createUser */

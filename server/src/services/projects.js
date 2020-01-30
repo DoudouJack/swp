@@ -139,6 +139,18 @@ const addActivity = async (id, activity) => {
     }
 }
 
+const getActivitiesFromProject = async (id) => {
+    try {
+        if (id === undefined) {
+            throw new Error('Project not found')
+        }
+        const ret = await Project.findOne({ _id: ObjectId(id) }).exec();
+        return ret.activity
+    } catch (error) {
+        return false
+    }
+}
+
 
 module.exports = {
     projectServiceGetAll: getProjects,
@@ -146,5 +158,6 @@ module.exports = {
     projectServiceGetSingleProject: getSingleProject,
     projectServiceUpdateProject: updateProject,
     projectServiceAddMember: addMemberToProject,
-    projectServiceAddActivity: addActivity
+    projectServiceAddActivity: addActivity,
+    projectServiceGetActivitiesFromProject: getActivitiesFromProject
 }
