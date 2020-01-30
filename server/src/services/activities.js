@@ -19,7 +19,7 @@ const getActivities = async () => {
 }
 
 
-const createActivity = async(title, description, amount, currency, projectID, creator) => {
+const createActivity = async(title, description, amount, currency, projectID, creator, date) => {
     try {
         // check if projectID is existing
         
@@ -51,13 +51,14 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             activity.redAmount = Math.round(amount/memberLength*100)/100
             activity.creator = creator
             activity.payLink = 'paypal.me/USER/BETRAG'
-    
+              
             let activityID = activity._id;
 
            /*
            Get formated Date in activity
            */
-            let today = new Date();  
+            if(date != null){
+            let today = new Date(date);  
             let dd = today.getDate(); 
             let mm = today.getMonth() + 1; 
             let yyyy = today.getFullYear(); 
@@ -69,6 +70,20 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             } 
             today = mm + '/' + dd + '/' + yyyy; 
             activity.date = today
+            } else {
+                let today = new Date(date);  
+            let dd = today.getDate(); 
+            let mm = today.getMonth() + 1; 
+            let yyyy = today.getFullYear(); 
+            if (dd < 10) { 
+                dd = '0' + dd; 
+            } 
+            if (mm < 10) { 
+                mm = '0' + mm; 
+            } 
+            today = mm + '/' + dd + '/' + yyyy; 
+            activity.date = today
+            }
 
             const ret = await activity.save()
 

@@ -43,7 +43,7 @@ var activity = mongoose.Schema({
     },
     creator: {
         type: String,
-        required: true
+     //   required: true
     },
     payLink: {
         type: String,
