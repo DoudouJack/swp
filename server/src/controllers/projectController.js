@@ -4,6 +4,7 @@ const { projectServiceGetSingleProject } = require('../services/projects')
 const { projectServiceUpdateProject } = require('../services/projects')
 const { projectServiceAddMember } = require('../services/projects')
 const { projectServiceAddActivity } = require('../services/projects')
+const { projectServiceGetActivitiesFromProject } = require('../services/projects')
 
 //const { auth } = middelwareService
 /*
@@ -205,6 +206,33 @@ const addActivity = async(req, res, next) => {
     }
 }
 
+const getActivitiesFromProject = async (req, res, next) => {
+    let id;
+    if(Object.keys(req.body).length === 0) {
+      id = req.query.id
+    } else {
+      id = req.body.id
+    }
+   
+    try {
+      const internalresponse = await projectServiceGetActivitiesFromProject(id)
+      console.log("****Project Controller internal response****")
+      console.log(internalresponse)
+      if (internalresponse !== false) {
+        res.json({
+          "Activities:": internalresponse
+        })
+      } else {
+        res.json({
+          "message" : "Error. Something went wrong."
+        })
+      }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+  }
+
 
 
 module.exports = {
@@ -213,5 +241,6 @@ module.exports = {
     getSingleProject,
     updateProject,
     addMember,
-    addActivity
+    addActivity,
+    getActivitiesFromProject
 }

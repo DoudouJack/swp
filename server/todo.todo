@@ -16,15 +16,15 @@ API NEEDED ROUTES:
         ✔ Update single activity @done(19-12-12 18:55)
         ✔ Get single activity @done(19-12-12 19:31)
         ✔ create increment id (index in schema) @done(19-12-12 18:25)
-        ☐ When creating activity, create transactions for all members with splitted amount
+        ✔ When creating activity, create transactions for all members with splitted amount @done(20-01-30 09:06)
         ✔ Remove "member" from model @done(20-01-15 10:19)
         ✔ Format date in /getActivities @done(20-01-15 10:34)
-        ☐ Get All Activity for a project 
+        ✔ Get All Activity for a project @done(20-01-30 10:46)
         ☐ Amount anpassen nach formel (edouard)
         ✔ Add (Activity) Creator + Paypal Link (With splitamount) to Schema @done(20-01-29 21:17)
         ☐ Retrieve Paypal Link from creator upon Activity Creation and save it
         ☐ CreateActiviy date format ändern auf MM/DD/YYYY
-        ☐ Create Activity: id von neu erstellte activity in dem project objekt "activities" automatisch hinzufügen
+        ✔ Create Activity: id von neu erstellte activity in dem project objekt "activities" automatisch hinzufügen @done(20-01-30 09:48)
         ✔ remove split from members @done(20-01-15 10:34)
     ☐ User
         ✔ show users activities @done(19-12-18 14:45)

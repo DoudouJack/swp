@@ -23,6 +23,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
     try {
         // check if projectID is existing
         
+        if(amount>=0){
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
         let memberLength, member, currency, currentAmount
 
@@ -55,6 +56,10 @@ const createActivity = async(title, description, amount, currency, projectID, cr
 
             const ret = await activity.save()
 
+     
+            /*
+            creates Transaction for each user in project with splitted amount
+            */
             for(var i = 0; i < memberLength;i++){
             let transaction = new Transaction()
             
@@ -78,6 +83,16 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             const ret2 = await projectUpdate.save()
             console.log("amount update")
             console.log(ret2)
+
+             /*
+            Adds Activity to corrosponding Project
+            */
+           let newActivityIDToProject = ret._id.toString()
+           const filterAddActivity = { _id: ObjectId(projectID) }
+           const updateAddActivity = { $push: { activity: newActivityIDToProject } }
+           const projectUpdateAddActivity = await Project.findByIdAndUpdate(filterAddActivity, updateAddActivity, { new: true })
+           const returnAddedActivity = await projectUpdateAddActivity.save()
+           
         
             return ret;
         }
@@ -85,10 +100,14 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             console.log("no project ID found")
             return false
         }
+    }else{
+        console.log('Activity´s amount needed to be >=0')
+        return false
+    }
     } catch (error) {
         console.log(error)
         return false;
-    }
+    } 
 }
 
 const split = async(memberLength, amount) => {
@@ -131,6 +150,10 @@ const getSingleActivity = async(id) => {
         return false
     }
 }
+
+
+
+
 
 
 module.exports = {
