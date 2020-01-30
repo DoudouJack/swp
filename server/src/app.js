@@ -81,7 +81,7 @@ app.post('/addMember', projectController.addMember)
 app.post('/addActivity', projectController.addActivity)
 
 
-
+/*GET http://127.0.0.1:8081/getActivitiesFromProject?id=*/
 app.get('/getActivitiesFromProject', projectController.getActivitiesFromProject)
 
 
