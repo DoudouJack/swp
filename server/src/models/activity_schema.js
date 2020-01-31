@@ -43,11 +43,15 @@ var activity = mongoose.Schema({
     },
     creator: {
         type: String,
-     //   required: true
+        required: true
     },
     payLink: {
         type: String,
         required: false
+    },
+    customDate:{
+        type: String,
+        default:  new Date().toUTCString()
     }
     
 });

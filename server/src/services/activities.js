@@ -19,7 +19,7 @@ const getActivities = async () => {
 }
 
 
-const createActivity = async(title, description, amount, currency, projectID, creator, date) => {
+const createActivity = async(title, description, amount, currency, projectID, creator, customDate) => {
     try {
         // check if projectID is existing
         
@@ -54,11 +54,29 @@ const createActivity = async(title, description, amount, currency, projectID, cr
               
             let activityID = activity._id;
 
+
+            /*
+            format the CustomDate 
+            */
+           if(customDate!=null){
+            let todayCustom = new Date(customDate);  
+            let dd = todayCustom.getDate(); 
+            let mm = todayCustom.getMonth() + 1; 
+            let yyyy = todayCustom.getFullYear(); 
+            if (dd < 10) { 
+                dd = '0' + dd; 
+            } 
+            if (mm < 10) { 
+                mm = '0' + mm; 
+            } 
+            todayCustom = mm + '/' + dd + '/' + yyyy; 
+            activity.customDate = todayCustom
+           }
+
            /*
            Get formated Date in activity
            */
-            if(date != null){
-            let today = new Date(date);  
+            let today = new Date();  
             let dd = today.getDate(); 
             let mm = today.getMonth() + 1; 
             let yyyy = today.getFullYear(); 
@@ -70,20 +88,6 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             } 
             today = mm + '/' + dd + '/' + yyyy; 
             activity.date = today
-            } else {
-                let today = new Date(date);  
-            let dd = today.getDate(); 
-            let mm = today.getMonth() + 1; 
-            let yyyy = today.getFullYear(); 
-            if (dd < 10) { 
-                dd = '0' + dd; 
-            } 
-            if (mm < 10) { 
-                mm = '0' + mm; 
-            } 
-            today = mm + '/' + dd + '/' + yyyy; 
-            activity.date = today
-            }
 
             const ret = await activity.save()
 
