@@ -74,7 +74,7 @@
             <div class="modal-body">
               <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
 <!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
-              <span>{{ projectMonth }}  {{ projectYear }}</span>
+<!--              <span>{{ projectMonth }}  {{ projectYear }}</span>-->
               <span>{{ projectDate }}</span>
               <select name="projectMonth" v-model="projectMonth">
                 <option value="January">January</option>
@@ -376,10 +376,11 @@
                   {{adata.title}}
 <!--                  {{adata.projectID}}-->
                 </h4>
-                <span class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
+                <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
+                <span v-else class="activity-desc" > {{ adata.date }} – {{adata.creator}} paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-md-6 col-sm-12">
-                <div class="activity-open-amount" v-if="adata.creator = user.uid">
+                <div class="activity-open-amount" v-if="adata.creator == user.uid">
                                       <span class="amount-positive">
                                           {{ adata.greenAmount }} {{adata.currency}}
                                       </span>
@@ -480,6 +481,8 @@ export default {
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
           console.log(activityResponse)
+          console.log('activity user.uid :' + this.user.uid)
+          console.log('activity creator :' + this.activitiesData)
         })
     },
     getProjects () {
@@ -563,6 +566,7 @@ export default {
         creator: this.user.uid
       })
         .then(response => {
+          console.log(this.actDate)
           this.response = response
           this.getActivities()
           // this.getActivitiesByProject(this.activityClick)
