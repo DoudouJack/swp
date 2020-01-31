@@ -61,7 +61,8 @@ const createActivity = async(title, description, amount, currency, projectID, cr
            if(customDate!=null){
             let todayCustom = new Date(customDate);  
             let dd = todayCustom.getDate(); 
-            let mm = todayCustom.getMonth() + 1; 
+            let mm = todayCustom.getMonth() + 1;
+            let mmm =  todayCustom.getMonth();
             let yyyy = todayCustom.getFullYear(); 
             if (dd < 10) { 
                 dd = '0' + dd; 
@@ -69,7 +70,75 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             if (mm < 10) { 
                 mm = '0' + mm; 
             } 
-            todayCustom = mm + '/' + dd + '/' + yyyy; 
+            let day = todayCustom.getDay();
+            switch(day){
+                case 1: 
+                    day = "Monday"
+                break;
+                case 2:
+                    day = "Tuesday"
+                break;
+                case 3:
+                    day = "Wednesday"
+                break;
+                case 4:
+                    day = "Thursday"
+                break;
+                case 5:
+                    day = "Friday"
+                break;
+                case 6:
+                    day = "Saturday"
+                break;
+                case 7:
+                    day = "Sunday"
+                break;
+            }
+
+            switch(mmm){
+                case 0: 
+                    mmm = "Jan"
+                break;
+                case 1:
+                    mmm = "Feb"
+                break;
+                case 2:
+                    mmm = "Mar"
+                break;
+                case 3:
+                    mmm = "Apr"
+                break;
+                case 4:
+                    mmm = "May"
+                break;
+                case 5:
+                    mmm = "Jun"
+                break;
+                case 6:
+                    mmm = "Jul"
+                break;
+                case 7:
+                    mmm = "Aug"
+                break;
+                case 8:
+                    mmm = "Sep"
+                break;
+                case 9:
+                    mmm = "Oct"
+                break;
+                case 10:
+                    mmm = "Nov"
+                break;
+                case 11:
+                    mmm = "Dec"
+                break;
+            }
+
+
+
+
+
+            todayCustom = day + ', ' + dd + ' ' + mmm + ' ' + yyyy; 
             activity.customDate = todayCustom
            }
 
