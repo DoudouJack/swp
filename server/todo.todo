@@ -20,7 +20,7 @@ API NEEDED ROUTES:
         ✔ Remove "member" from model @done(20-01-15 10:19)
         ✔ Format date in /getActivities @done(20-01-15 10:34)
         ✔ Get All Activity for a project @done(20-01-30 10:46)
-        ☐ Amount anpassen nach formel (edouard)
+        ✔ Amount anpassen nach formel (edouard) @done(20-02-01 17:12)
         ✔ Add (Activity) Creator + Paypal Link (With splitamount) to Schema @done(20-01-29 21:17)
         ☐ Retrieve Paypal Link from creator upon Activity Creation and save it
         ✔ CreateActiviy date format ändern auf MM/DD/YYYY @done(20-01-30 14:34)
@@ -34,7 +34,7 @@ API NEEDED ROUTES:
         ☐ update one attribute at user doesent change all attributes
         ✔ change users default currency @done(20-01-29 09:01)
         ✔ change users balance @done(20-01-23 11:15)
-        ☐ Save paypal link
+        ✔ Save paypal link @done(20-02-01 17:49)
     ☐ Project
         ✔ Create Project @done(19-12-12 21:28)
         ✔ Get All Projects @done(19-12-12 21:28)
@@ -44,10 +44,10 @@ API NEEDED ROUTES:
             ☐ do split() again for all activites
         ✔ Add Activity to Project @done(19-12-16 08:19)
         ✔ Gesamtbetrag Projekt add to model (mit berechnung formel edouard) @done(20-01-28 16:52)
-        ☐ Add date to model
+        ✔ Add date to model @done(20-02-01 17:49)
         ✘ Remove Activity from project creation @cancelled(20-01-27 09:03)
         ☐ Add split method here
-        ☐ Format Date 
+        ✔ Format Date @done(20-02-01 17:48)
         ✔ send back _id of project after /createProject @done(20-01-29 21:12)
     ☐ Misc
         ☐ *Middelware* between all routes!
@@ -58,7 +58,7 @@ API NEEDED ROUTES:
         ☐ Routes
     ✔ Service Worker @done(20-01-19 13:50)
     ✔ Offline pwa features @done(20-01-20 08:17)
-    ☐ Wenn man Activity erstellt in projekt activity array hinzufügen
+    ✔ Wenn man Activity erstellt in projekt activity array hinzufügen @done(20-02-01 17:49)
     ☐ NGROK ( Mehrere User )
     ☐ Notifications Firebase Cloud Messaging
         ✔ Dont assign token when not logged in @done(20-01-23 20:01)
