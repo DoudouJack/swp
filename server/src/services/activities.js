@@ -172,6 +172,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             transaction.userID = member[i]
             transaction.amount = amount/memberLength
             transaction.currency = currency
+            transaction.projectID = projectID
 
             transaction.save();
             

@@ -3,6 +3,8 @@ const { mongoose } = require('../con/dbcon')
 const { ObjectId } = mongoose.Types.ObjectId
 Project = require('../models/project_schema')
 var admin = require("firebase-admin");
+Transaction = require('../models/transaction_schema')
+Activity = require('../models/activity_schema')
 
 
 
@@ -99,6 +101,7 @@ const updateProject = async (id, title, description, projectCompleted, projectPa
 
 const addMemberToProject = async (id, member) => {
     try {
+        console.log('*************************AddMemberToProject Called********************')
         if (id === undefined) {
             throw new Error('undefined id')
         }
@@ -109,6 +112,37 @@ const addMemberToProject = async (id, member) => {
         const update = { $push: { member: newMember } }
 
         const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
+
+/*
+       let activity =  projectUpdate.activity
+
+        let newSplittedAmount = 99
+
+       for(let i = 0; i<activity.length; i++){
+           console.log(activity[i])
+           const singleActivity = await Activity.findById({_id: activity[i]})
+           console.log('Single Activity: ', singleActivity)
+           let query = {activityID: activity[i]}
+           let update2 = {amount: newSplittedAmount}
+           const transactions = await Transaction.findAndUModify(query, update2);
+           console.log(transactions)
+           transactions.save()
+
+       }
+
+       // console.log(activity)
+
+
+        let newSplittedAmount = 10
+        let query = {projectID: id}
+        let update2 = {amount: newSplittedAmount}
+        const transactions = await Transaction.findOneAndUpdate(query, update2);
+        console.log("transactions")
+        console.log(transactions)
+   */
+
+
+
         const ret = await projectUpdate.save()
 
         return ret
