@@ -310,7 +310,7 @@
               </div>
               <div class="col-6">
                 <div id="status" class="trigger limit">
-                  <span class="status-amount amount-you-get">34€</span><span class="status-amount amount-you-owe">40€</span>
+                  <span class="status-amount amount-you-get">{{ totalGreen }}€</span><span class="status-amount amount-you-owe">{{ totalRed }}€</span>
                 </div>
               </div>
             </div>
@@ -352,7 +352,7 @@
         <div class="row">
           <div class="col-lg-9 col-md-8 col-sm-12">
             <h2 class="data-row-title">{{pdata.title}}
-<!--              {{pdata._id}}-->
+<!--              {{pdata._id}}-->{{ projectResponse }}
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -465,7 +465,10 @@ export default {
       notificationSettings: true,
       fixedAmount: '',
       actualProjectID: '',
-      goDark: false
+      goDark: false,
+      totalGreen: 0,
+      totalRed: 0,
+      activitiesOfUser: []
     }
   },
   mounted () {
@@ -473,6 +476,8 @@ export default {
     this.getProjects()
     this.getNotifications()
     this.getNotificationSettingsStatus()
+    this.getGreen()
+    this.getRed()
   },
   created () {
   },
@@ -500,6 +505,19 @@ export default {
           { userID: this.user.uid } })
         .then(projectResponse => {
           this.projectData = projectResponse.data.data
+          // this.getRed()
+          this.projectData.forEach(proj => proj.activity.forEach(act => this.activitiesOfUser.push(act)))
+
+          var act
+          for (act in this.projectData) {
+            console.log('activity object: ' + act)
+            if (this.user.uid === act.creator) {
+              console.log('uid :' + this.user.uid)
+              console.log('creator :' + act.creator)
+              this.totalGreen = this.totalGreen + act.greenAmount
+              console.log('green :' + this.totalGreen)
+            }
+          }
         })
     },
     getNotifications () {
@@ -627,6 +645,8 @@ export default {
           this.getProjects()
           this.getNotifications()
           this.getNotificationSettingsStatus()
+          this.getGreen()
+          this.getRed()
         })
         .catch(err => {
           this.error = err.message
@@ -646,6 +666,8 @@ export default {
       console.log(this.user)
       console.log(this.user.displayName)
       console.log('test')
+      this.getGreen()
+      this.getRed()
     },
     updateSettings () {
       axios.post('http://127.0.0.1:8081/notificationsTurnOn', {
