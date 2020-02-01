@@ -23,7 +23,7 @@ API NEEDED ROUTES:
         ☐ Amount anpassen nach formel (edouard)
         ✔ Add (Activity) Creator + Paypal Link (With splitamount) to Schema @done(20-01-29 21:17)
         ☐ Retrieve Paypal Link from creator upon Activity Creation and save it
-        ☐ CreateActiviy date format ändern auf MM/DD/YYYY
+        ✔ CreateActiviy date format ändern auf MM/DD/YYYY @done(20-01-30 14:34)
         ✔ Create Activity: id von neu erstellte activity in dem project objekt "activities" automatisch hinzufügen @done(20-01-30 09:48)
         ✔ remove split from members @done(20-01-15 10:34)
     ☐ User

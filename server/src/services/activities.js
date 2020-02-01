@@ -19,7 +19,7 @@ const getActivities = async () => {
 }
 
 
-const createActivity = async(title, description, amount, currency, projectID, creator) => {
+const createActivity = async(title, description, amount, currency, projectID, creator, customDate) => {
     try {
         // check if projectID is existing
         
@@ -51,8 +51,112 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             activity.redAmount = Math.round(amount/memberLength*100)/100
             activity.creator = creator
             activity.payLink = 'paypal.me/USER/BETRAG'
-    
+              
             let activityID = activity._id;
+
+
+            /*
+            format the CustomDate 
+            */
+           if(customDate!=null){
+            let todayCustom = new Date(customDate);  
+            let dd = todayCustom.getDate(); 
+            let mm = todayCustom.getMonth() + 1;
+            let mmm =  todayCustom.getMonth();
+            let yyyy = todayCustom.getFullYear(); 
+            if (dd < 10) { 
+                dd = '0' + dd; 
+            } 
+            if (mm < 10) { 
+                mm = '0' + mm; 
+            } 
+            let day = todayCustom.getDay();
+            switch(day){
+                case 1: 
+                    day = "Monday"
+                break;
+                case 2:
+                    day = "Tuesday"
+                break;
+                case 3:
+                    day = "Wednesday"
+                break;
+                case 4:
+                    day = "Thursday"
+                break;
+                case 5:
+                    day = "Friday"
+                break;
+                case 6:
+                    day = "Saturday"
+                break;
+                case 7:
+                    day = "Sunday"
+                break;
+            }
+
+            switch(mmm){
+                case 0: 
+                    mmm = "Jan"
+                break;
+                case 1:
+                    mmm = "Feb"
+                break;
+                case 2:
+                    mmm = "Mar"
+                break;
+                case 3:
+                    mmm = "Apr"
+                break;
+                case 4:
+                    mmm = "May"
+                break;
+                case 5:
+                    mmm = "Jun"
+                break;
+                case 6:
+                    mmm = "Jul"
+                break;
+                case 7:
+                    mmm = "Aug"
+                break;
+                case 8:
+                    mmm = "Sep"
+                break;
+                case 9:
+                    mmm = "Oct"
+                break;
+                case 10:
+                    mmm = "Nov"
+                break;
+                case 11:
+                    mmm = "Dec"
+                break;
+            }
+
+
+
+
+
+            todayCustom = day + ', ' + dd + ' ' + mmm + ' ' + yyyy; 
+            activity.customDate = todayCustom
+           }
+
+           /*
+           Get formated Date in activity
+           */
+            let today = new Date();  
+            let dd = today.getDate(); 
+            let mm = today.getMonth() + 1; 
+            let yyyy = today.getFullYear(); 
+            if (dd < 10) { 
+                dd = '0' + dd; 
+            } 
+            if (mm < 10) { 
+                mm = '0' + mm; 
+            } 
+            today = mm + '/' + dd + '/' + yyyy; 
+            activity.date = today
 
             const ret = await activity.save()
 
@@ -150,6 +254,9 @@ const getSingleActivity = async(id) => {
         return false
     }
 }
+
+
+
 
 
 

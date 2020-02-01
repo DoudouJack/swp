@@ -48,6 +48,10 @@ var activity = mongoose.Schema({
     payLink: {
         type: String,
         required: false
+    },
+    customDate:{
+        type: String,
+        default:  new Date().toUTCString()
     }
     
 });

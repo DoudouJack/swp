@@ -18,16 +18,21 @@
                 <input id="darktheme-switch" v-model="goDark" type="checkbox" checked @click="updateSettings()">
                 <span class="slider"></span>
               </label>
-                <span class="darktheme-switch-label">Dark Theme</span><br>
+                <span class="darktheme-switch-label">Dark Theme?</span><br>
               </div>
-<!--              <div class="form-check"><input type="checkbox" class="form-check-input" id="darkTheme"><label class="form-check-label" for="darkTheme">Dark Theme?</label></div>-->
-              <div class="form-check"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="deleteAccount">Delete Account? </label></div>
-              <div class="form-check">
+              <div class="settings-option"></div>
+              <div class="form-check settings-option"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="deleteAccount">Delete Account? </label></div>
+              <div>
+                <div class="settings-option">
                 Preferred Currency
                 <select>
                   <option value="euro">EURO</option>
                   <option value="dollar">DOLLAR</option>
                 </select>
+                </div>
+                <div class="settings-option">
+                  <input class="input-neutral" placeholder="PayPal.me Link" type="text" name="paypalMeLink"><br>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -389,6 +394,11 @@
                                       <span class="amount-negative">
                                           {{ adata.redAmount }} {{adata.currency}}
                                       </span>
+                  <div class="pay limit">
+                    <a href="paypal.me/vhuwer">
+                    <img class="payment-icon" src="/../../img/icons/paypal.png">
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -692,6 +702,9 @@ export default {
     border-color: $color-error;
     transition: border .3s ease-in-out;
   }
+  input:valid.input-neutral{
+    border-color: $text-light;
+  }
   input[type="checkbox"] {
     width: auto;
   }
@@ -704,6 +717,12 @@ export default {
   select {
     color: $color-success;
     background: $text-light;
+  }
+
+  .settings-option{
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-bottom: 1px solid $background-alt;
   }
 
   /*MODAL*/
@@ -1181,11 +1200,6 @@ export default {
     font-size: 15px;
   }
 
-  .darktheme-switch-container {
-    height: 50px;
-    border-bottom: 3px solid $text-light;
-  }
-
   span.darktheme-switch-label {
     top: 6px;
     position: relative;
@@ -1240,5 +1254,10 @@ export default {
   .amount-negative {
     color: darkred;
     font-weight: bold;
+  }
+
+  /*PAYMENT*/
+  img.payment-icon {
+    width: 20px;
   }
 </style>
