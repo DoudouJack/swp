@@ -124,7 +124,7 @@
       <!-- **** END ADD PROJECT MODAL -->
       <!-- **** START EDIT PROJECT MODAL -->
       <!-- eslint-disable -->
-      <div v-for="(index, projData) in singleProject" v-bind:key="projData" v-if="index != 0" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <div v-for="(index, projData) in singleProject" v-bind:key="projData" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
       <!-- eslint-enable -->
 
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -136,36 +136,9 @@
               </button>
             </div>
             <div class="modal-body">
-              <input type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+              <input type="text" :placeholder="projData.title" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
               <!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
               <!--              <span>{{ projectMonth }}  {{ projectYear }}</span>-->
-              <span>{{ projectDate }}</span>
-              <select name="projectMonth" v-model="projectMonth">
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-              <select name="projectYear" v-model="projectYear">
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option selected value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </select>
-              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
               <input class="fixed-amount-checkbox" type="checkbox" name="projectType" v-model="projectType">
 
               <div class="tooltip"><span>Fixed amount project?</span>
@@ -175,7 +148,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="updateProject()">Update</button>
             </div>
           </div>
         </div>
@@ -770,6 +743,48 @@ export default {
         .signOut()
         .then(() => {
           location.reload()
+        })
+    },
+    updateProject () {
+      axios.post('http://127.0.0.1:8081/updateProject', {
+        title: this.projectName,
+        description: this.projectName,
+        id: this.projectClick,
+        projectPayType: this.projectType
+      })
+        .then(response => {
+          this.response = response
+          this.actualProjectID = response.data.projectID
+          console.log('projectID ' + this.actualProjectID)
+          console.log('type: ' + this.projectType)
+          if (this.projectType) {
+            axios.post('http://127.0.0.1:8081/createActivity', {
+              title: 'Birthday',
+              description: 'fixed amount activity',
+              member: this.user.uid,
+              amount: this.fixedAmount,
+              currency: 'EUR',
+              projectID: this.actualProjectID,
+              date: '',
+              creator: this.user.uid
+            })
+              .then(response => {
+                this.response = response
+                console.log('activity: ' + this.response)
+                this.getProjects()
+                this.getActivities()
+                // this.getActivitiesByProject(this.activityClick)
+                // this.addActivityToProject()
+              })
+              .catch(e => {
+                this.error.push(e)
+              })
+          } else {
+            this.getProjects()
+          }
+        })
+        .catch(e => {
+          this.error.push(e)
         })
     }
   }
