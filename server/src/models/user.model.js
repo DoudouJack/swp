@@ -44,6 +44,10 @@ var userSchema = new Schema({
     },
     id: {
         type: String
+    },
+    payPalLink: {
+        type: String,
+        required: true
     }
 });
 

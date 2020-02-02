@@ -24,6 +24,10 @@ var transaction = mongoose.Schema({
     isPaid: {
         type: Boolean,
         default: false
+    },
+    projectID: {
+        type: String,
+        required: true
     }
 });
 

@@ -39,7 +39,7 @@ const getTransactions = async () => {
     }
 }
 
-const createTransactions = async (userID, activityID, amount, currency) => {
+const createTransactions = async (userID, activityID, amount, currency, projectID) => {
     try {
         let transaction = new Transaction()
 
@@ -47,6 +47,7 @@ const createTransactions = async (userID, activityID, amount, currency) => {
         transaction.userID = userID
         transaction.amount = amount
         transaction.currency = currency
+        transaction.projectID = projectID
 
         const ret = await transaction.save();
     

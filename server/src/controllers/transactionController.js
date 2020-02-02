@@ -46,7 +46,7 @@ const createTransaction = async (req, res, next) => {
   
 
   try {
-    const internalresponse = await transactionServiceCreate(userID, activityID, amount, currency)
+    const internalresponse = await transactionServiceCreate(userID, activityID, amount, currency, projectID)
     console.log("internal response create")
     console.log(internalresponse)
     
