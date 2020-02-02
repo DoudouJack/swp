@@ -122,6 +122,65 @@
         </div>
       </div>
       <!-- **** END ADD PROJECT MODAL -->
+      <!-- **** START EDIT PROJECT MODAL -->
+      <!-- eslint-disable -->
+      <div v-for="(index, projData) in singleProject" v-bind:key="projData" v-if="index != 0" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <!-- eslint-enable -->
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Project {{ projData.title }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+              <!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
+              <!--              <span>{{ projectMonth }}  {{ projectYear }}</span>-->
+              <span>{{ projectDate }}</span>
+              <select name="projectMonth" v-model="projectMonth">
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+              <select name="projectYear" v-model="projectYear">
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option selected value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+              </select>
+              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" v-model="projectType">
+
+              <div class="tooltip"><span>Fixed amount project?</span>
+                <span class="tooltiptext">For projects that have one only activity with a fixed amount per participant, e.g. a birthday gift</span>
+              </div>
+              <input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Amount" v-model="fixedAmount" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- **** END EDIT PROJECT MODAL -->
       <!-- **** START ADD ACTIVITIY MODAL -->
       <div class="modal fade" id="addActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -351,8 +410,8 @@
       <div class="container-fluid data-row-container">
         <div class="row">
           <div class="col-lg-9 col-md-8 col-sm-12">
-            <h2 class="data-row-title">{{pdata.title}}
-<!--              {{pdata._id}}-->{{ projectResponse }}
+            <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
+<!--              {{pdata._id}}-->
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -468,7 +527,17 @@ export default {
       goDark: false,
       totalGreen: 0,
       totalRed: 0,
-      activitiesOfUser: []
+      activitiesOfUser: [],
+      singleProject: [],
+      singleProjectTitle: [],
+      singleProjectDate: '',
+      singleProjectMembers: [],
+      editProjectClick: ''
+    }
+  },
+  watch: {
+    projectClick: function () {
+      this.getSingleProject()
     }
   },
   mounted () {
@@ -476,8 +545,6 @@ export default {
     this.getProjects()
     this.getNotifications()
     this.getNotificationSettingsStatus()
-    this.getGreen()
-    this.getRed()
   },
   created () {
   },
@@ -671,6 +738,21 @@ export default {
         on: this.notificationSettings
       })
       // this.getNotificationSettingsStatus()
+    },
+    getSingleProject () {
+      axios.get('http://127.0.0.1:8081/getSingleProject', { params:
+      { id: this.projectClick } })
+        .then(singleProjectResponse => {
+          this.singleProject = singleProjectResponse.data.data
+        })
+      console.log(this.projectClick)
+      /*      this.projectData.forEach(function (proj) {
+        if (proj._id === this.projectClick) {
+          this.singleProjectTitle = proj.title
+          this.singleProjectDate = proj.date
+          this.singleProjectMembers = proj.member
+        }
+      }) */
     }
   }
 }
