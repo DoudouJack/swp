@@ -55,10 +55,12 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             let activityID = activity._id;
 
 
+
+            //customDate = "2020-02-20"//customDateTest
             /*
             format the CustomDate 
             */
-           if(customDate!=null){
+            
             let todayCustom = new Date(customDate);  
             let dd = todayCustom.getDate(); 
             let mm = todayCustom.getMonth() + 1;
@@ -140,22 +142,22 @@ const createActivity = async(title, description, amount, currency, projectID, cr
 
             todayCustom = day + ', ' + dd + ' ' + mmm + ' ' + yyyy; 
             activity.customDate = todayCustom
-           }
+           
 
            /*
            Get formated Date in activity
            */
             let today = new Date();  
-            let dd = today.getDate(); 
-            let mm = today.getMonth() + 1; 
-            let yyyy = today.getFullYear(); 
-            if (dd < 10) { 
-                dd = '0' + dd; 
+             let ddd = today.getDate(); 
+             let mmmm = today.getMonth() + 1; 
+           let  yyyyy = today.getFullYear(); 
+            if (ddd < 10) { 
+                ddd = '0' + ddd; 
             } 
-            if (mm < 10) { 
-                mm = '0' + mm; 
+            if (mmmm < 10) { 
+                mmmm = '0' + mmmm; 
             } 
-            today = mm + '/' + dd + '/' + yyyy; 
+            today = mmmm + '/' + ddd + '/' + yyyyy; 
             activity.date = today
 
             const ret = await activity.save()
@@ -173,7 +175,14 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             transaction.amount = amount/memberLength
             transaction.currency = currency
             transaction.projectID = projectID
+/*
+             const filter = { _id: ObjectId(id) }
+        const update = { $push: { member: newMember } }
 
+        const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
+
+        const ret = await projectUpdate.save()
+*/
             transaction.save();
             
             console.log("Transaction saved")

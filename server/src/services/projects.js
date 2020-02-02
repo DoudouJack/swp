@@ -113,37 +113,56 @@ const addMemberToProject = async (id, member) => {
 
         const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
 
-/*
+        const ret = await projectUpdate.save()
+
+
+
+        /* Update current Transactions with new Amount*/
        let activity =  projectUpdate.activity
 
-        let newSplittedAmount = 99
+       let newAmountToSplitt
+       let newAmountSplitted
+       let singleActivityID 
+       let projectMember = projectUpdate.member.length
 
-       for(let i = 0; i<activity.length; i++){
-           console.log(activity[i])
-           const singleActivity = await Activity.findById({_id: activity[i]})
-           console.log('Single Activity: ', singleActivity)
-           let query = {activityID: activity[i]}
-           let update2 = {amount: newSplittedAmount}
-           const transactions = await Transaction.findAndUModify(query, update2);
-           console.log(transactions)
-           transactions.save()
+       for(let i = 1; i<activity.length; i++){
+        singleActivityID = activity[i]
+        const singleActivity = await Activity.find({'_id': singleActivityID}).exec();
+        
+        singleActivity.forEach(function(value, key){
+        newAmountToSplitt = value.toObject().amount
+        })
+       
+       newAmountSplitted = Math.round(newAmountToSplitt/projectMember*100)/100
+        
+       try{
+        let query = {activityID: singleActivityID}
+           let update2 = {amount : newAmountSplitted}
+      //     const transactions = await Transaction.findOneAndUpdate(query, update2);
+           const transactions = await Transaction.findByIdAndUpdate(query, update2);
+           let myTransaction = await transactions.save()
+           console.log('MYTRANSACTION: ', myTransaction)
+
+
+           /*Create new Transaction for the new Member*/
+           let transactionForNewMember = new Transaction()
+           transactionForNewMember.activityID = singleActivityID
+           transactionForNewMember.userID = member
+           transactionForNewMember.amount = newAmountSplitted
+           transactionForNewMember.currency = projectUpdate.currency
+           transactionForNewMember.projectID = projectUpdate._id
+            transactionForNewMember.save();
+          
+       } catch (error){
+           console.log('some error occurs')
+       }
 
        }
+       
 
        // console.log(activity)
 
-
-        let newSplittedAmount = 10
-        let query = {projectID: id}
-        let update2 = {amount: newSplittedAmount}
-        const transactions = await Transaction.findOneAndUpdate(query, update2);
-        console.log("transactions")
-        console.log(transactions)
-   */
-
-
-
-        const ret = await projectUpdate.save()
+        
 
         return ret
     } catch (error) {
