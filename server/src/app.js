@@ -45,6 +45,8 @@ app.get('/getTransactionFor', transactionController.getTransactionFor)
 /*  http://localhost:8081/updateTransactionIsPaid?activityID=a2&userID=u1  GET */
 app.get('/updateTransactionIsPaid', transactionController.updateTransactionIsPaid)
 
+app.get('/transactionUser', transactionController.transactionUser)
+
 
 /* ACTIVITY */
 /* http://localhost:8081/activity GET */
