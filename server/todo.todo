@@ -73,9 +73,3 @@ API NEEDED ROUTES:
             ☐ if notifications turned on then send (optional when FE is ready)
     ☐ 
 CLIENT:
-    ☐ Components
-        ☐ Create "Dashboard" all projects activity
-        ☐ Create singleProject Component
-        ☐ Create Nav Bar Component
-        ☐ Create Footer Component
-        ☐
