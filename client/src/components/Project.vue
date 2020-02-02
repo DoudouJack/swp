@@ -377,25 +377,17 @@
           </div>
           <div v-if="user" class="activities-inner-container data-row col-12 hidden-sm">
             <h3 class="notification-heading">Last Transactions</h3>
-            <div class="sidebar-notifications-container">
+            <div v-for="trans in transactions" v-bind:key="trans" class="sidebar-notifications-container">
               <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
-              <article class="notification">
+              <article v-if="trans.userID == user.uid" class="notification">
                 <p class="notification-content-container">
-                  <span class="actor-a">Victor</span> send <span class="actor-b">you</span> <span class="amount">10€</span>
+                  <span class="actor-a">You</span> sent <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
                 </p>
                 <p class="notification-date-container">
-                  <span class="date">12.02.2020</span>
+                  <span class="date">{{ trans.dateOfPayment }}</span>
                 </p>
               </article>
               <!-- ENDE NOTIFICATION ELEMENT -->
-              <article class="notification">
-                <p class="notification-content-container">
-                  <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
-                </p>
-                <p class="notification-date-container">
-                  <span class="date">12.02.2020</span>
-                </p>
-              </article>
             </div>
           </div>
         </sections>
@@ -532,7 +524,8 @@ export default {
       singleProjectTitle: [],
       singleProjectDate: '',
       singleProjectMembers: [],
-      editProjectClick: ''
+      editProjectClick: '',
+      transactions: []
     }
   },
   watch: {
@@ -545,6 +538,7 @@ export default {
     this.getProjects()
     this.getNotifications()
     this.getNotificationSettingsStatus()
+    this.getAllTransactions()
   },
   created () {
   },
@@ -712,6 +706,7 @@ export default {
           this.getProjects()
           this.getNotifications()
           this.getNotificationSettingsStatus()
+          this.getAllTransactions()
         })
         .catch(err => {
           this.error = err.message
@@ -753,6 +748,13 @@ export default {
           this.singleProjectMembers = proj.member
         }
       }) */
+    },
+    getAllTransactions () {
+      console.log('transactions')
+      axios.get('http://127.0.0.1:8081/transactions')
+        .then(transactionsResponse => {
+          this.transactions = transactionsResponse.data.data
+        })
     }
   }
 }
