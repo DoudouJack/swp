@@ -254,6 +254,7 @@
                       <p class="notification-content-container">
                         <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
                         <span>{{ notifications }}</span>
+                        <span> {{ notificationSettings }}</span>
                       </p>
                       <p class="notification-date-container">
                         <span class="date">12.02.2020</span>
@@ -291,7 +292,7 @@
 
             <div id="logout-nav" class="trigger limit">
               <div class="avatar-container limit">
-                <a href="/logout">
+                <a @click="userLogout()">
                   <img class="avatar" src="../../public/img/icons/exit.png">
                 </a>
               </div>
@@ -541,6 +542,13 @@ export default {
     this.getAllTransactions()
   },
   created () {
+    firebase.onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user
+      } else {
+        this.user = null
+      }
+    })
   },
   methods: {
     /*    TEMPLATE TO FOLLOW WHEN TOKEN USE IS IMPLEMENTED IN BACKEND
@@ -585,7 +593,7 @@ export default {
       axios.get('http://127.0.0.1:8081/getNotificationsForUser', { params:
           { userID: this.user.uid } })
         .then(notificationResponse => {
-          this.notifications = notificationResponse.data
+          this.notifications = notificationResponse.data.data
         })
     },
     getNotificationSettingsStatus () {
@@ -754,6 +762,14 @@ export default {
       axios.get('http://127.0.0.1:8081/transactions')
         .then(transactionsResponse => {
           this.transactions = transactionsResponse.data.data
+        })
+    },
+    userLogout () {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.reload()
         })
     }
   }
