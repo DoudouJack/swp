@@ -178,6 +178,29 @@
           </div>
         </div>
       </div>
+      <!-- **** START EDIT ACTIVITIY MODAL -->
+      <div v-for="activity in singleActivity" v-bind:key="activity" class="modal fade" id="editActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Activity: {{ activity.title }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+                <input :placeholder="activity.title" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
+                <input :placeholder="activity.amount" type="number" step="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" @click="updateActivity()" data-dismiss="modal">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- **************** START HEADER ELEMENT MIT ACCOUNT & EINSTELLUNGEN *****************  -->
@@ -209,7 +232,7 @@
               </div>
             </div>
 
-            <div id="notifications" class="trigger limit">
+            <div id="tiv" class="trigger limit">
               <div class="avatar-container limit">
                 <img class="avatar" src="../../public/img/icons/alert.png">
               </div>
@@ -217,7 +240,7 @@
                 <div class="dropdown-inner account-dropdown-inner dark">
                   <div class="notification-switch-container">
                     <label class="switch">
-                      <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings()">
+                      <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings">
                       <span class="slider"></span>
                     </label>
                     <span class="notification-switch-label">Push notifications?</span>
@@ -226,8 +249,8 @@
                     <article class="notification">
                       <p class="notification-content-container">
                         <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
-                        <span>{{ notifications }}</span>
-                        <span> {{ notificationSettings }}</span>
+<!--                        <span>{{ notifications }}</span>
+                        <span> {{ notificationSettings }}</span>-->
                       </p>
                       <p class="notification-date-container">
                         <span class="date">12.02.2020</span>
@@ -403,7 +426,7 @@
             <div v-if="pdata._id == adata.projectID" class="row">
               <div class="col-md-6 col-sm-12">
                 <h4 class="activitiy-header">
-                  {{adata.title}}
+                  {{adata.title}} <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editActivity" @click="activityClick = adata._id" v-if="adata.creator == user.uid"></i>
 <!--                  {{adata.projectID}}-->
                 </h4>
                 <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
@@ -499,12 +522,16 @@ export default {
       singleProjectDate: '',
       singleProjectMembers: [],
       editProjectClick: '',
-      transactions: []
+      transactions: [],
+      singleActivity: []
     }
   },
   watch: {
     projectClick: function () {
       this.getSingleProject()
+    },
+    activityClick: function () {
+      this.getSingleActivity()
     }
   },
   mounted () {
@@ -550,7 +577,7 @@ export default {
           // this.getRed()
           this.projectData.forEach(proj => proj.activity.forEach(act => this.activitiesOfUser.push(act)))
 
-          var act
+          /*          var act
           for (act in this.projectData) {
             console.log('activity object: ' + act)
             if (this.user.uid === act.creator) {
@@ -559,7 +586,7 @@ export default {
               this.totalGreen = this.totalGreen + act.greenAmount
               console.log('green :' + this.totalGreen)
             }
-          }
+          } */
         })
     },
     getNotifications () {
@@ -782,6 +809,32 @@ export default {
           } else {
             this.getProjects()
           }
+        })
+        .catch(e => {
+          this.error.push(e)
+        })
+    },
+    getSingleActivity () {
+      axios.get('http://127.0.0.1:8081/getSingleActivity', { params:
+          { id: this.activityClick } })
+        .then(singleActivityResponse => {
+          this.singleActivity = singleActivityResponse.data.data
+        })
+      console.log(this.activityClick)
+    },
+    updateActivity () {
+      axios.post('http://127.0.0.1:8081/updateActivity', {
+        title: this.actName,
+        description: this.actName,
+        amount: this.actAmount,
+        id: this.activityClick
+      })
+        .then(response => {
+          console.log(this.actDate)
+          this.response = response
+          this.getActivities()
+          // this.getActivitiesByProject(this.activityClick)
+          // this.addActivityToProject()
         })
         .catch(e => {
           this.error.push(e)
