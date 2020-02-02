@@ -382,7 +382,7 @@
 <!--                  {{adata.projectID}}-->
                 </h4>
                 <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
-                <span v-else class="activity-desc" > {{ adata.date }} – {{adata.creator}} paid {{adata.amount}} {{adata.currency}}</span>
+                <span v-else class="activity-desc" > {{ adata.customDate }} – {{adata.creator}} paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-md-6 col-sm-12">
                 <div class="activity-open-amount" v-if="adata.creator == user.uid">
@@ -645,8 +645,6 @@ export default {
           this.getProjects()
           this.getNotifications()
           this.getNotificationSettingsStatus()
-          this.getGreen()
-          this.getRed()
         })
         .catch(err => {
           this.error = err.message
@@ -666,8 +664,6 @@ export default {
       console.log(this.user)
       console.log(this.user.displayName)
       console.log('test')
-      this.getGreen()
-      this.getRed()
     },
     updateSettings () {
       axios.post('http://127.0.0.1:8081/notificationsTurnOn', {
