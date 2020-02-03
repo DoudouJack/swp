@@ -34,9 +34,8 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             member = value.toObject().member
             currency = value.toObject().currency
             memberLength = value.toObject().member.length 
-            console.log("memberlength: " + memberLength)
             currentAmount = value.toObject().projectAmount
-            console.log("current amount: " + currentAmount)
+            
         })
        
         if(projects.length > 0 ){
