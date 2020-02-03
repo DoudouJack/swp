@@ -102,9 +102,26 @@ const updateTransaction = async(activityID, userID) => {
     }
 }
 
+const getTransactionForUser = async(userID) => {
+    try {
+        console.log("get transaction for userid")
+        console.log(userID)
+
+        if(userID === undefined){
+            throw new Error('undefined id')
+        }
+        
+        const transactionFor = await Transaction.find({'userID': userID}).exec();
+        return transactionFor;
+    } catch (e) {
+        return false
+    }
+}
+
 module.exports = {
     transactionServiceGetAll: getTransactions,
     transactionServiceCreate: createTransactions,
     transactionServiceGetFor: getTransactionFor,
-    transactionServiceUpdateIsPaid : updateTransaction
+    transactionServiceUpdateIsPaid : updateTransaction,
+    transactionGetUser: getTransactionForUser
 }

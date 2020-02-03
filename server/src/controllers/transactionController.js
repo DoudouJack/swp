@@ -2,7 +2,7 @@ const { transactionServiceGetAll } = require('../services/transactions')
 const { transactionServiceCreate } = require('../services/transactions')
 const { transactionServiceGetFor } = require('../services/transactions')
 const { transactionServiceUpdateIsPaid } = require('../services/transactions')
-
+const { transactionGetUser } = require('../services/transactions')
 
 
 //const { auth } = middelwareService
@@ -139,6 +139,31 @@ const updateTransactionIsPaid = async (req, res, next) => {
     }
 }
 
+const transactionUser = async (req, res, next) => {
+    let userID = req.body.userID
+    console.log(userID)
+
+    try {
+      const internalresponse = await transactionGetUser(userID)
+      console.log(internalresponse)
+    
+    if (internalresponse !== false) {
+      res.json({
+        "message" : "success",
+        "data": internalresponse
+      })
+    } else {
+      res.json({
+        "message" : "Error. Something went wrong."
+      })
+    }
+    } catch (e) {
+      console.log(e.message)
+      res.sendStatus(500) && next(error)
+    }
+
+}
+
 
 
 
@@ -147,5 +172,6 @@ module.exports = {
   transaction,
   createTransaction,
   getTransactionFor,
-  updateTransactionIsPaid 
+  updateTransactionIsPaid,
+  transactionUser
 }

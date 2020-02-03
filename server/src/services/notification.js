@@ -11,7 +11,13 @@ const sendMessage = async (receiver, title, description) => {
         // get message token for userID (token)
         console.log('in here')
         const retMessageToken = await Userproperties.find({'userToken': receiver}).exec()
-     
+        console.log(retMessageToken)
+        console.log(retMessageToken.length)
+
+        if(retMessageToken.length === 0){
+            return false
+        }
+
         retMessageToken.forEach(function(value, key){
             console.log(value.toObject().messageToken)
 
