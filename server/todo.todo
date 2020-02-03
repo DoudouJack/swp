@@ -31,7 +31,7 @@ API NEEDED ROUTES:
         ✔ show users projects @done(19-12-18 14:45)
         ✔ show users transactions @done(19-12-18 14:45)
         ✔ change: userID --> dbID @done(20-01-23 11:12)
-        ☐ update one attribute at user doesent change all attributes
+        ✔ update one attribute at user doesent change all attributes @done(20-02-03 15:41)
         ✔ change users default currency @done(20-01-29 09:01)
         ✔ change users balance @done(20-01-23 11:15)
         ✔ Save paypal link @done(20-02-01 17:49)

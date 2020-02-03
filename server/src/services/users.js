@@ -51,7 +51,7 @@ const getUserBalanceByID = async (id) => {
 }
 
 
-const createUser = async (userID, name, fon, email, project, activity, transaction, payPalLink) => {
+const createUser = async (userID, name, fon, email, project, activity, transaction, paypalName) => {
     try {
 
         let user = new User()
@@ -64,7 +64,7 @@ const createUser = async (userID, name, fon, email, project, activity, transacti
         user.project = project
         user.activity = activity
         user.transaction = transaction
-        user.payPalLink = payPalLink
+        user.paypalName = paypalName
         
         console.log(user)
 

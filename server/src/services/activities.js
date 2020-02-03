@@ -41,7 +41,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
        
         if(projects.length > 0 ){
             let activity = new Activity()
-
+           
             activity.title = title
             activity.description = description
             activity.amount = amount
@@ -50,17 +50,25 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             activity.greenAmount = Math.round(amount/memberLength*(memberLength-1)*100)/100,
             activity.redAmount = Math.round(amount/memberLength*100)/100
             activity.creator = creator
-            activity.payLink = 'paypal.me/USER/BETRAG'
-              
+
+            /*Create the paylink from creators paypalName and splitted amount*/
+            const url = 'https://www.paypal.me/'
+            let userpaypalname
+            let payLink
+            const user = await User.find({'userID': creator}).exec();
+            user.forEach(function(value, key){ 
+                member = value.toObject().member
+                userpaypalname = value.toObject().paypalName
+            })
+            betrag = Math.round(amount/memberLength*100)/100
+            payLink = url+userpaypalname+'/'+betrag
+            activity.payLink = payLink
+            
             let activityID = activity._id;
 
-
-
-            //customDate = "2020-02-20"//customDateTest
             /*
-            format the CustomDate 
+            format the CustomDate output: "Fri, 31 January 2020"
             */
-            
             let todayCustom = new Date(customDate);  
             let dd = todayCustom.getDate(); 
             let mm = todayCustom.getMonth() + 1;
@@ -175,14 +183,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             transaction.amount = amount/memberLength
             transaction.currency = currency
             transaction.projectID = projectID
-/*
-             const filter = { _id: ObjectId(id) }
-        const update = { $push: { member: newMember } }
 
-        const projectUpdate = await Project.findByIdAndUpdate(filter, update, { new: true }) // returns querys
-
-        const ret = await projectUpdate.save()
-*/
             transaction.save();
             
             console.log("Transaction saved")

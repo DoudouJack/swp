@@ -22,12 +22,12 @@ const { userServiceGetUser } = require('../services/users')
     const project = req.body.project
     const activity = req.body.activity
     const transaction = req.body.transaction
-    const payPalLink = req.body.payPalLink
+    const paypalName = req.body.paypalName
 
 
    try {
       const internalresponse = await userServiceCreate(userID, name, fon, email, 
-        project, activity, transaction, payPalLink)
+        project, activity, transaction, paypalName)
       console.log("internal response user create")
       console.log(internalresponse)
       

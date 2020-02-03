@@ -8,7 +8,7 @@ var userSchema = new Schema({
     },
     name: {
         type: String,
-        required: true
+        required: false
     },
     fon: {
         type: Number,
@@ -45,9 +45,9 @@ var userSchema = new Schema({
     id: {
         type: String
     },
-    payPalLink: {
+    paypalName: {
         type: String,
-        required: true
+        required: false
     }
 });
 
