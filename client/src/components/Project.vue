@@ -232,12 +232,12 @@
               </div>
             </div>
 
-            <div id="tiv" class="trigger limit">
+            <div id="notifications" class="trigger limit">
               <div class="avatar-container limit">
                 <img class="avatar" src="../../public/img/icons/alert.png">
               </div>
               <div class="dropdown notification-dropdown">
-                <div class="dropdown-inner account-dropdown-inner dark">
+                <div class="dropdown-inner dark">
                   <div class="notification-switch-container">
                     <label class="switch">
                       <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings">
@@ -271,22 +271,22 @@
               </div>
             </div>
 
-            <div id="account-nav" class="trigger limit">
+            <div id="account-nav" class="trigger limit clickable" data-toggle="modal" data-target="#settings">
               <div class="avatar-container limit">
                 <img class="avatar" src="../../public/img/icons/user.png">
               </div>
-              <div class="dropdown account-dropdown">
-                <div class="dropdown-inner account-dropdown-inner dark">
+              <!--div class="dropdown account-dropdown">
+                <div class="dropdown-inner dark">
                   <ul class="menu-list vertical">
                     <li><a href="/">My Account</a></li>
                     <li><a href="/">Log out</a></li>
                     <li class="clickable" data-toggle="modal" data-target="#settings">Settings</li>
                   </ul>
                 </div>
-              </div>
+              </div-->
             </div>
 
-            <div id="logout-nav" class="trigger limit">
+            <div id="logout-nav" class="trigger limit clickable">
               <div class="avatar-container limit">
                 <a @click="userLogout()">
                   <img class="avatar" src="../../public/img/icons/exit.png">
@@ -395,7 +395,8 @@
     <span>{{projectResponse}}</span>-->
     <div v-for="pdata in projectData" v-bind:key="pdata">
     <!-- **************** START PROJEKT ELEMENT :: ZUM LOOPEN ****************  -->
-    <article v-if="user" class="data-row">
+      <!--TODO wenn alles gezahlt, dann klasse "inactive" -->
+      <article v-if="user" class="data-row">
       <div class="container-fluid data-row-container">
         <div class="row">
           <div class="col-lg-9 col-md-8 col-sm-12">
@@ -422,6 +423,7 @@
             </div>
           </div>
           <!-- BLOCK FOR ACTIVITIES TO BE LOOPED -->
+          <!--TODO wenn alles gezahlt, dann klasse "inactive" -->
           <article class="activity indented" v-for="adata in activitiesData" v-bind:key="adata">
             <div v-if="pdata._id == adata.projectID" class="row">
               <div class="col-md-6 col-sm-12">
@@ -443,7 +445,7 @@
                                           {{ adata.redAmount }} {{adata.currency}}
                                       </span>
                   <div class="pay limit">
-                    <a href="paypal.me/vhuwer">
+                    <a href="paypal.me/valentinhuwer">
                     <img class="payment-icon" src="/../../img/icons/paypal.png">
                     </a>
                   </div>
@@ -866,18 +868,29 @@ export default {
   $shadow: 0 0 20px #36445859;
   $transition-time: .3s;
 
-  /*DARK THEME VARIABLES*/
-  /* IF DARK THEME ENABLED
-  $background: lighten($background-dark, 10%);
-  $white: $background-dark;
-  p, h1, h2, h3, h4, span{
-    color: $text-light;
+  #app-container{
+    transition: background-color 1s;
+    --background: #f0f4f9;
+    --white: #fbfbfb;
   }
-  */
+  /*DARK THEME VARIABLES*/
+  /* IF DARK THEME ENABLED*/
+
+  #app-container[dark="true"] {
+    --background: #495c78;
+    --white: $background-dark;
+    p, h1, h2, h3, h4, span {
+      color: $text-light;
+    }
+    background: lighten($background-dark, 5%);
+    .data-row{
+      background: lighten($background-dark, 10%);
+    }
+  }
 
   /*MIXINS*/
   @mixin iconAnimation() {
-    transform: rotate(180deg);
+    transform: scale(1.1);
   }
 
   /*FORMS*/
@@ -924,7 +937,7 @@ export default {
   }
 
   .modal-backdrop {
-    background: white;
+    background: var(--white);
     &.show {
       opacity: .7;
     }
@@ -959,7 +972,7 @@ export default {
 
   /*RULES*/
   body{
-    background: $background;
+    background: var(--background);
   }
   #body{
     padding: 0 5%;
@@ -984,7 +997,7 @@ export default {
     -webkit-border-radius: $border-radius;
     -moz-border-radius: $border-radius;
     border-radius: $border-radius;
-    background: $white;
+    background: var(--white);
     padding: $innergap;
     padding-bottom: $innergap;
     margin-bottom: $outergap;
@@ -1033,7 +1046,7 @@ export default {
   }
   .clickable, .clickable i, i.clickable{
     cursor: pointer;
-    transition: transform .6s ease-in-out;
+    transition: transform .3s ease-in-out;
   }
   i.clickable{
     &:hover{
@@ -1053,10 +1066,15 @@ export default {
       color: $text-light;
     }
   }
-  article.activity>.row{
-    padding-top: 20px;
+  article.activity {
+    &.inactive{
+      opacity: .35;
+    }
+    & > .row {
+      padding-top: 20px;
+    }
   }
-  .activitiy-header{
+  .activitiy-header {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 700;
@@ -1100,11 +1118,11 @@ export default {
       font-size: 17px !important;
     }
   }
-  #status .amount-you-owe{
+  #status .amount-you-owe, #app-container[dark="true"] #status .amount-you-owe{
     color: $color-error;
     padding-left: 10px;
   }
-  #status .amount-you-get{
+  #status .amount-you-get, #app-container[dark="true"] #status .amount-you-get{
     color: $color-success;
     padding-right:  10px;
     border-right: $border-width $border-style $bordercolor;
@@ -1181,7 +1199,7 @@ export default {
   .trigger .dropdown{
     visibility: hidden;
     opacity: 0;
-    transform: translatey(-20px);
+    transform: translatey(20px);
     transition: .3s ease-in-out, opacity .25s ease-in-out;
   }
   .trigger:hover .dropdown{
@@ -1220,7 +1238,7 @@ export default {
   .data-row{
     padding-top: $innergap;
     padding-bottom: $innergap;
-    background: $white;
+    background: var(--white);
     margin: $outergap auto;
     -webkit-border-radius: $border-radius;
     -moz-border-radius: $border-radius;
@@ -1269,7 +1287,7 @@ export default {
       ~i{
         font-size: 24px;
         &.white{
-          color: $white;
+          color: var(--white);
         }
       }
     }
@@ -1305,7 +1323,7 @@ export default {
     position: absolute;
     left: 0;
     top: 0;
-    background-color: white;
+    background-color: var(--background);
     opacity: .7;
     width: 100%;
     height: 100%;
@@ -1432,18 +1450,25 @@ export default {
     opacity: 1;
   }
 
-  .amount-positive {
-    color: #629c4f;
+  .amount-positive, #app-container[dark="true"] .amount-positive {
+    color: $color-success;
     font-weight: bold;
   }
 
-  .amount-negative {
-    color: darkred;
+  .amount-negative, #app-container[dark="true"] .amount-negative {
+    color: $color-error;
     font-weight: bold;
   }
 
   /*PAYMENT*/
   img.payment-icon {
+    transition: transform .3s ease-in-out;
     width: 20px;
+    &:hover{
+      @include iconAnimation();
+    }
+  }
+  .pay{
+    display: inline-block;
   }
 </style>
