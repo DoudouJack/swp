@@ -130,7 +130,10 @@ const deleteUser = async (id) => {
         if(id === undefined){
             throw new Error('User not found :(')
         }
-        const user = await User.findOneAndRemove({_id : ObjectId(id)}).exec();
+
+
+
+        const user = await User.findOneAndRemove({'userID' : id}).exec();
         return user;
     }   catch (e) {
         console.log(e)
