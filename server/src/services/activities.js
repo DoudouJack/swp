@@ -21,7 +21,11 @@ const getActivities = async () => {
 
 const createActivity = async(title, description, amount, currency, projectID, creator, customDate) => {
     try {
+        console.log('/CREATEACTIVITY called')
         // check if projectID is existing
+
+        
+
         
         if(amount>=0){
         const projects = await Project.find({'_id': ObjectId(projectID)}).exec();
@@ -186,6 +190,10 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             transaction.save();
             
             console.log("Transaction saved")
+
+            /*Transaction of Activity creator is autom. isPaid=true*/
+           const transactionTest = await Transaction.findOneAndUpdate({'userID': creator, 'activityID': activityID}, {'isPaid': true}).exec();
+        
             }
 
             let newAmount = parseFloat(amount)+parseFloat(currentAmount)
