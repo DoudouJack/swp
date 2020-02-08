@@ -431,7 +431,7 @@
                   {{adata.title}} <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editActivity" @click="activityClick = adata._id" v-if="adata.creator == user.uid"></i>
 <!--                  {{adata.projectID}}-->
                 </h4>
-                <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
+                <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – I paid {{adata.amount}} {{adata.currency}}</span>
                 <span v-else class="activity-desc" > {{ adata.customDate }} – {{adata.creator}} paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-md-6 col-sm-12">
@@ -566,6 +566,17 @@ export default {
           { userID: this.user.uid } })
         .then(activityResponse => {
           this.activitiesData = activityResponse.data.data
+          console.log('in getActivities')
+          console.log(this)
+          this.totalGreen = 0
+          this.totalRed = 0
+          for (let i = 0; i < this.activitiesData.length; i++) {
+            if (this.activitiesData[i].creator === this.user.uid) {
+              this.totalGreen += this.activitiesData[i].greenAmount
+            } else {
+              this.totalRed = this.activitiesData[i].redAmount
+            }
+          }
           console.log(activityResponse)
           console.log('activity user.uid :' + this.user.uid)
           console.log('activity creator :' + this.activitiesData)
@@ -579,7 +590,7 @@ export default {
           // this.getRed()
           this.projectData.forEach(proj => proj.activity.forEach(act => this.activitiesOfUser.push(act)))
 
-          /*          var act
+          /* var act
           for (act in this.projectData) {
             console.log('activity object: ' + act)
             if (this.user.uid === act.creator) {
