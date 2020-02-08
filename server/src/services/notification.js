@@ -10,6 +10,7 @@ const sendMessage = async (receiver, title, description) => {
     try {
         // get message token for userID (token)
         console.log('in here')
+        console.log(receiver)
         const retMessageToken = await Userproperties.find({'userToken': receiver}).exec()
         console.log(retMessageToken)
         console.log(retMessageToken.length)
