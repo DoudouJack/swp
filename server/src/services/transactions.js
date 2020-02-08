@@ -112,11 +112,13 @@ const getTransactionForUser = async(userID) => {
         }
         
         const transactionFor = await Transaction.find({'userID': userID}).exec();
+
         return transactionFor;
     } catch (e) {
         return false
     }
 }
+
 
 module.exports = {
     transactionServiceGetAll: getTransactions,

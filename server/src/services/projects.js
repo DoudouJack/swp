@@ -5,7 +5,7 @@ Project = require('../models/project_schema')
 var admin = require("firebase-admin");
 Transaction = require('../models/transaction_schema')
 Activity = require('../models/activity_schema')
-
+const { notificationService } = require('./notification')
 
 
 
@@ -106,7 +106,19 @@ const addMemberToProject = async (id, member) => {
             throw new Error('undefined id')
         }
 
-        let newMember = member[0]
+        let newMember
+        console.log(member)
+        await admin.auth().getUserByEmail(member)
+            .then(function (userRecord) {
+                newMember = userRecord.uid
+            })
+            .catch(function (error) {
+                console.log('Error fetching user data:', error);
+                return false
+            });
+        
+        console.log("new member")
+        console.log(member)
 
         const filter = { _id: ObjectId(id) }
         const update = { $push: { member: newMember } }
@@ -116,53 +128,79 @@ const addMemberToProject = async (id, member) => {
         const ret = await projectUpdate.save()
 
 
+        const projectGet = await Project.find({ '_id': ObjectId(id) }).exec();
+        let projectTitle;
+
+        projectGet.forEach(function(value, key){
+            console.log(value.toObject().title)
+            projectTitle = value.toObject().title    
+        })
+
+
+        //send notification to user that he was invited
+        const receiver = newMember // userID
+        const title = "Project Invite!"
+        const description = "You were invited to the Project " + projectTitle;
+        
+        try {
+            const internalresponse = await notificationService(receiver, title, description)
+            console.log("internal response")
+            console.log(internalresponse)
+
+        } catch (e) {
+            console.log(e.message)
+            
+        }
+
+
+
 
         /* Update current Transactions with new Amount*/
-       let activity =  projectUpdate.activity
+        let activity = projectUpdate.activity
 
-       let newAmountToSplitt
-       let newAmountSplitted
-       let singleActivityID 
-       let projectMember = projectUpdate.member.length
+        let newAmountToSplitt
+        let newAmountSplitted
+        let singleActivityID
+        let projectMember = projectUpdate.member.length
 
-       for(let i = 1; i<activity.length; i++){
-        singleActivityID = activity[i]
-        const singleActivity = await Activity.find({'_id': singleActivityID}).exec();
-        
-        singleActivity.forEach(function(value, key){
-        newAmountToSplitt = value.toObject().amount
-        })
-       
-       newAmountSplitted = Math.round(newAmountToSplitt/projectMember*100)/100
-        
-       try{
-        let query = {activityID: singleActivityID}
-           let update2 = {amount : newAmountSplitted}
-           const transactions = await Transaction.findOneAndUpdate(query, update2);
-      //     const transactions = await Transaction.findByIdAndUpdate(query, update2);
-           let myTransaction = await transactions.save()
-        //   console.log('MYTRANSACTION: ', myTransaction)
+        for (let i = 1; i < activity.length; i++) {
+            singleActivityID = activity[i]
+            const singleActivity = await Activity.find({ '_id': singleActivityID }).exec();
+
+            singleActivity.forEach(function (value, key) {
+                newAmountToSplitt = value.toObject().amount
+            })
+
+            newAmountSplitted = Math.round(newAmountToSplitt / projectMember * 100) / 100
+
+            try {
+                let query = { activityID: singleActivityID }
+                let update2 = { amount: newAmountSplitted }
+                const transactions = await Transaction.findOneAndUpdate(query, update2);
+                //     const transactions = await Transaction.findByIdAndUpdate(query, update2);
+                let myTransaction = await transactions.save()
+                //   console.log('MYTRANSACTION: ', myTransaction)
 
 
-           /*Create new Transaction for the new Member*/
-           let transactionForNewMember = new Transaction()
-           transactionForNewMember.activityID = singleActivityID
-           transactionForNewMember.userID = member
-           transactionForNewMember.amount = newAmountSplitted
-           transactionForNewMember.currency = projectUpdate.currency
-           transactionForNewMember.projectID = projectUpdate._id
-            transactionForNewMember.save();
-          
-       } catch (error){
-           console.log('some error occurs')
-       }
+                /*Create new Transaction for the new Member*/
+                let transactionForNewMember = new Transaction()
+                transactionForNewMember.activityID = singleActivityID
+                transactionForNewMember.userID = member
+                transactionForNewMember.amount = newAmountSplitted
+                transactionForNewMember.currency = projectUpdate.currency
+                transactionForNewMember.projectID = projectUpdate._id
+                transactionForNewMember.save();
 
-       }
-       
+            } catch (error) {
+                console.log('some error occurs')
+            }
 
-       // console.log(activity)
+        }
 
-        
+
+        // console.log(activity)
+
+
 
         return ret
     } catch (error) {
