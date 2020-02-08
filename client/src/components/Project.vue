@@ -21,7 +21,11 @@
                 <span class="darktheme-switch-label">Dark Theme?</span><br>
               </div>
               <div class="settings-option"></div>
-              <div class="form-check settings-option"><input type="checkbox" class="form-check-input" id="deleteAccount"><label class="form-check-label" for="deleteAccount">Delete Account? </label></div>
+              <div class="form-check settings-option">
+                <input v-model="deleteAcc" type="checkbox" class="form-check-input" id="deleteAccount" @click="deleteAccount()">
+                <label class="form-check-label" for="deleteAccount">Delete Account? </label>
+                <p id="deleteMessage">If the checkbox is clicked your account will be deleted!</p>
+              </div>
               <div>
                 <div class="settings-option">
                 Preferred Currency
@@ -37,7 +41,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="updateSettings()">Save</button>
             </div>
           </div>
         </div>
@@ -525,7 +529,8 @@ export default {
       singleProjectMembers: [],
       editProjectClick: '',
       transactions: [],
-      singleActivity: []
+      singleActivity: [],
+      deleteAcc: ''
     }
   },
   watch: {
