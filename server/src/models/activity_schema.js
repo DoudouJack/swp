@@ -52,6 +52,10 @@ var activity = mongoose.Schema({
     customDate:{
         type: String,
         default:  new Date().toUTCString()
+    },
+    transactions: {
+        type: Array,
+        require: false
     }
     
 });

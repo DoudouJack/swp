@@ -191,10 +191,51 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             
             console.log("Transaction saved")
 
+
+
+
             /*Transaction of Activity creator is autom. isPaid=true*/
            const transactionTest = await Transaction.findOneAndUpdate({'userID': creator, 'activityID': activityID}, {'isPaid': true}).exec();
         
-            }
+           /*Add new Transactions to new Activity*/
+            let newTransactionToActivity = transaction._id.toString()
+//            console.log('TransactionID')
+//            console.log(newTransactionToActivity)
+            
+            const filteraddTransactionToActivity = { _id: ObjectId(ret._id) }
+//            console.log('ActivityID')
+  //          console.log(filteraddTransactionToActivity)
+            
+            const updateAddTransactionToActivity = { $push: {transactions: newTransactionToActivity }}
+    //        console.log('Update')
+      //      console.log(updateAddTransactionToActivity)
+
+
+            const activityUpdateAddTransaction = await Activity.findByIdAndUpdate(filteraddTransactionToActivity, updateAddTransactionToActivity, {new: true})
+        //    console.log('findByID')
+          //  console.log(activityUpdateAddTransaction)
+            
+            
+            const returnAddTransactionToActivity = await activityUpdateAddTransaction.save()
+            //console.log('returnAddTransactionToActivity')
+            //console.log(returnAddTransactionToActivity)
+            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             let newAmount = parseFloat(amount)+parseFloat(currentAmount)
 
