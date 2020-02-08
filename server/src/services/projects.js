@@ -141,7 +141,7 @@ const addMemberToProject = async (id, member) => {
            const transactions = await Transaction.findOneAndUpdate(query, update2);
       //     const transactions = await Transaction.findByIdAndUpdate(query, update2);
            let myTransaction = await transactions.save()
-           console.log('MYTRANSACTION: ', myTransaction)
+        //   console.log('MYTRANSACTION: ', myTransaction)
 
 
            /*Create new Transaction for the new Member*/
