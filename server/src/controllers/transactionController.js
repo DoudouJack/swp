@@ -110,8 +110,10 @@ const updateTransactionIsPaid = async (req, res, next) => {
 
     /* EXPORT TO FUNCTION */
     if (Object.keys(req.body).length === 0) {
+      
       activityID = req.query.activityID
-      userID = req.quiery.userID
+      userID = req.query.userID
+      
     }
     else {
       activityID = req.body.activityID 

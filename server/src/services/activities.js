@@ -147,10 +147,6 @@ const createActivity = async(title, description, amount, currency, projectID, cr
                 break;
             }
 
-
-
-
-
             todayCustom = day + ', ' + dd + ' ' + mmm + ' ' + yyyy; 
             activity.customDate = todayCustom
            
@@ -179,17 +175,14 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             */
             for(var i = 0; i < memberLength;i++){
             let transaction = new Transaction()
-            
-           
             transaction.activityID = activityID
             transaction.userID = member[i]
             transaction.amount = amount/memberLength
             transaction.currency = currency
             transaction.projectID = projectID
-
             transaction.save();
             
-            console.log("Transaction saved")
+    //        console.log("Transaction saved")
 
 
 
@@ -199,43 +192,11 @@ const createActivity = async(title, description, amount, currency, projectID, cr
         
            /*Add new Transactions to new Activity*/
             let newTransactionToActivity = transaction._id.toString()
-//            console.log('TransactionID')
-//            console.log(newTransactionToActivity)
-            
             const filteraddTransactionToActivity = { _id: ObjectId(ret._id) }
-//            console.log('ActivityID')
-  //          console.log(filteraddTransactionToActivity)
-            
             const updateAddTransactionToActivity = { $push: {transactions: newTransactionToActivity }}
-    //        console.log('Update')
-      //      console.log(updateAddTransactionToActivity)
-
-
             const activityUpdateAddTransaction = await Activity.findByIdAndUpdate(filteraddTransactionToActivity, updateAddTransactionToActivity, {new: true})
-        //    console.log('findByID')
-          //  console.log(activityUpdateAddTransaction)
-            
-            
             const returnAddTransactionToActivity = await activityUpdateAddTransaction.save()
-            //console.log('returnAddTransactionToActivity')
-            //console.log(returnAddTransactionToActivity)
-            
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             let newAmount = parseFloat(amount)+parseFloat(currentAmount)
 

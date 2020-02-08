@@ -47,6 +47,7 @@ var userSchema = new Schema({
     },
     paypalName: {
         type: String,
+        default: "myPaypalName",
         required: false
     }
 });

@@ -98,12 +98,32 @@ const updateTransaction = async(activityID, userID) => {
         const activityGet = await Activity.find({ '_id': ObjectId(activityID) }).exec();
         let activityTitle;
         let creator;
+        let newGreenAmount;
+        let amountUpdate
 
         activityGet.forEach(function(value, key){
             console.log(value.toObject().title)
             activityTitle = value.toObject().title   
             creator = value.toObject().creator
+            newGreenAmount = value.toObject().greenAmount
         })
+        console.log('First Green Amount')
+        console.log(newGreenAmount)
+
+        console.log('Transaction Amount')
+        console.log(ret.amount)
+      //  newGreenAmount = (newGreenAmount - ret.amount) 
+        console.log('Green Amount')
+        console.log(newGreenAmount)
+        
+         //Update greenAmount in Activity if user paid his transaction
+
+        const filterUpdateAmount = { _id: ObjectId(activityID.toString()) }
+        const updateAmount = {  greenAmount: (newGreenAmount - ret.amount) }
+        const activityUpdatedAmount = await Activity.findByIdAndUpdate(filterUpdateAmount, updateAmount, { new: true })
+        const returnActivityUpdatedAmount = await activityUpdatedAmount.save()
+        console.log('Activitiy Updated Amount')
+        console.log(returnActivityUpdatedAmount)
 
         console.log("in here !!!!!!")
         console.log(activityTitle)
@@ -125,6 +145,9 @@ const updateTransaction = async(activityID, userID) => {
         const receiver = creator // userID
         const title = "New incomming Payment!"
         const description = senderEmail + " just paid for Activity " + activityTitle;
+
+        
+        
         
         try {
             const internalresponse = await notificationService(receiver, title, description)
@@ -142,6 +165,8 @@ const updateTransaction = async(activityID, userID) => {
         console.log(e.message)
         return false
     }
+
+    
 }
 
 const getTransactionForUser = async(userID) => {
