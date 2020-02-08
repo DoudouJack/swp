@@ -131,11 +131,20 @@ const getNotificationSettings = async (req, res, next) => {
 }
 
 const getNotificationForUser = async (req, res, next) => {
-    const userID = req.body.userID
+    let userID;
+    console.log(req.body)
+
+    if (Object.keys(req.body).length === 0) {
+        userID = req.query.userID
+    }
+    else {
+        userID = req.body.userID
+    }
 
     try {
         const internalresponse = await getNotificationUser(userID)
-        console.log("internal response")
+        console.log("internal response notification")
+        console.log(userID)
         console.log(internalresponse)
 
         if(internalresponse) {
