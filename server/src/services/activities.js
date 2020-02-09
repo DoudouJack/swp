@@ -4,6 +4,7 @@ const { ObjectId } = mongoose.Types.ObjectId
 Activity = require('../models/activity_schema')
 Project = require('../models/project_schema')
 Transaction = require('../models/transaction_schema')
+User = require('../models/user.model')
 
 /*
 const getActivities = async () => {
@@ -69,11 +70,12 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             /*Create the paylink from creators paypalName and splitted amount*/
           
             const url = 'https://www.paypal.me/'
+            let memberUser
             let userpaypalname
             let payLink
             const user = await User.find({'userID': creator}).exec();
             user.forEach(function(value, key){ 
-                member = value.toObject().member
+                memberUser = value.toObject().member
                 userpaypalname = value.toObject().paypalName
             })
 
