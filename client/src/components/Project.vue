@@ -685,6 +685,7 @@ export default {
           console.log(this.actDate)
           this.response = response
           this.getActivities()
+          this.getProjects()
           // this.getActivitiesByProject(this.activityClick)
           // this.addActivityToProject()
         })
