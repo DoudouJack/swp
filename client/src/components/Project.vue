@@ -437,7 +437,7 @@
                   {{adata.title}} <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editActivity" @click="activityClick = adata._id" v-if="adata.creator == user.uid"></i>
 <!--                  {{adata.projectID}}-->
                 </h4>
-                <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – I paid {{adata.amount}} {{adata.currency}}</span>
+                <span v-if="adata.creator == user.uid" class="activity-desc" > {{ adata.date }} – You paid {{adata.amount}} {{adata.currency}}</span>
                 <span v-else class="activity-desc" > {{ adata.customDate }} – {{adata.creator}} paid {{adata.amount}} {{adata.currency}}</span>
               </div>
               <div class="col-md-6 col-sm-12">
