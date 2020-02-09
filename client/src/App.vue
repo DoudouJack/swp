@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <navbar></navbar> -->
-    <router-view></router-view>
+<!--    <router-view></router-view>-->
 <!--    <Header></Header>-->
     <Project></Project>
     <main class="py-4">

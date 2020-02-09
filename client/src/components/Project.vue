@@ -946,6 +946,29 @@ export default {
             }
           })
       }
+    },
+    submitReg () {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.formReg.email, this.formReg.password)
+        .then(data => {
+          data.user
+            .updateProfile({
+              displayName: this.formReg.name
+            })
+            .then(() => {})
+        })
+        .catch(err => {
+          this.error = err.message
+        })
+      this.checkAuth()
+      this.getActivities()
+      this.getProjects()
+      this.getNotifications()
+      this.getNotificationSettingsStatus()
+      this.getAllTransactions()
+      this.getTransactionsUser()
+      this.getAllTransactionsUser()
     }
   }
 }
