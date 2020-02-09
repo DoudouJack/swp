@@ -5,6 +5,18 @@ Activity = require('../models/activity_schema')
 Project = require('../models/project_schema')
 Transaction = require('../models/transaction_schema')
 
+/*
+const getActivities = async () => {
+    try {
+        const activities = await Activity.find({}).exec();
+
+
+        return activities;
+       
+    } catch (e) {
+        return false
+    }
+}*/
 
 const getActivities = async () => {
     try {
@@ -55,6 +67,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             activity.creator = creator
 
             /*Create the paylink from creators paypalName and splitted amount*/
+          
             const url = 'https://www.paypal.me/'
             let userpaypalname
             let payLink
@@ -63,10 +76,11 @@ const createActivity = async(title, description, amount, currency, projectID, cr
                 member = value.toObject().member
                 userpaypalname = value.toObject().paypalName
             })
+
             betrag = Math.round(amount/memberLength*100)/100
             payLink = url+userpaypalname+'/'+betrag
             activity.payLink = payLink
-            
+        
             let activityID = activity._id;
 
             /*
@@ -103,7 +117,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
                 case 6:
                     day = "Saturday"
                 break;
-                case 7:
+                case 0:
                     day = "Sunday"
                 break;
             }
@@ -188,16 +202,36 @@ const createActivity = async(title, description, amount, currency, projectID, cr
 
 
 
-            /*Transaction of Activity creator is autom. isPaid=true*/
+            //Transaction of Activity creator is autom. isPaid=true
            const transactionTest = await Transaction.findOneAndUpdate({'userID': creator, 'activityID': activityID}, {'isPaid': true}).exec();
         
-           /*Add new Transactions to new Activity*/
+           //Add new Transactions to new Activity
             let newTransactionToActivity = transaction._id.toString()
             const filteraddTransactionToActivity = { _id: ObjectId(ret._id) }
             const updateAddTransactionToActivity = { $push: {transactions: newTransactionToActivity }}
             const activityUpdateAddTransaction = await Activity.findByIdAndUpdate(filteraddTransactionToActivity, updateAddTransactionToActivity, {new: true})
             const returnAddTransactionToActivity = await activityUpdateAddTransaction.save()
         }
+        
+        
+/*
+       const transactionTestneu = new Transaction()
+
+       const filteraddTransactionToActivity = { _id: ObjectId(ret._id) }
+       console.log('****************************************')
+       transactionTestneu._id = transaction._id
+       transactionTestneu.userID = member[i]
+
+       transactionTestneu.save()
+       console.log(transactionTestneu)
+       const updateAddTransactionToActivity = { $push: {transactions: transactionTestneu }}
+       const activityUpdateAddTransaction = await Activity.findByIdAndUpdate(filteraddTransactionToActivity, updateAddTransactionToActivity, {new: true})
+       const returnAddTransactionToActivity = await activityUpdateAddTransaction.save()
+      // console.log('****************************************')
+       //console.log(returnAddTransactionToActivity)
+   }
+   */
+   
 
             let newAmount = parseFloat(amount)+parseFloat(currentAmount)
 

@@ -678,7 +678,8 @@ export default {
         currency: 'EUR',
         projectID: this.activityClick,
         date: this.actDate,
-        creator: this.user.uid
+        creator: this.user.uid,
+        customDate: this.actDate
       })
         .then(response => {
           console.log(this.actDate)
