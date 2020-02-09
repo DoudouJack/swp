@@ -400,6 +400,7 @@
             <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
 <!--              {{pdata._id}}-->
 <!--              {{ transactionsUser }}-->
+              {{ transactionsOfActivities }}
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -525,7 +526,9 @@ export default {
       transactions: [],
       singleActivity: [],
       deleteAcc: '',
-      transactionsUser: []
+      transactionsUser: [],
+      transactionsOfActivities: [],
+      transactionsPaid: []
     }
   },
   watch: {
@@ -734,6 +737,7 @@ export default {
           this.getNotificationSettingsStatus()
           this.getAllTransactions()
           this.getTransactionsUser()
+          setTimeout(() => { this.getAllTransactionsUser() }, 5000)
         })
         .catch(err => {
           this.error = err.message
@@ -865,6 +869,22 @@ export default {
         .catch(e => {
           this.error.push(e)
         })
+    },
+    getAllTransactionsUser () {
+      console.log('trans it 1')
+      for (let index = 0; index < this.activitiesData.length; index++) {
+        console.log(this.activitiesData[index])
+        axios.get('http://127.0.0.1:8081/getTransactionFor?activityID=' + this.activitiesData[index]._id)
+          .then(transactionsAct => {
+            console.log('trans it')
+            this.transactionsOfActivities.push(transactionsAct.data.data)
+          })
+      }
+      for (let index = 0; index < this.transactionsOfActivities.length; index++) {
+        if (this.transactionsOfActivities[index].isPaid) {
+          this.transactionsOfActivities[index].push(this.transactionsPaid)
+        }
+      }
     }
   }
 }
