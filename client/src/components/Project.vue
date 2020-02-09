@@ -686,6 +686,7 @@ export default {
           this.response = response
           this.getActivities()
           this.getProjects()
+          setTimeout(() => this.flushTransactions(), 1000)
           // this.getActivitiesByProject(this.activityClick)
           // this.addActivityToProject()
         })
@@ -708,6 +709,10 @@ export default {
         _id: this.activityClick,
         activity: this.activitiesByProject
       })
+    },
+    flushTransactions () {
+      this.transactionsPaid = []
+      this.getAllTransactionsUser()
     },
     addMember () {
       var user
@@ -737,7 +742,7 @@ export default {
           this.getNotificationSettingsStatus()
           this.getAllTransactions()
           this.getTransactionsUser()
-          setTimeout(() => { this.getAllTransactionsUser() }, 5000)
+          this.getAllTransactionsUser()
         })
         .catch(err => {
           this.error = err.message
