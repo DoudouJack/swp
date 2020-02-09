@@ -254,11 +254,11 @@
                       <p class="notification-content-container">
                         <span class="actor-a"> {{ notif.title }}</span>
                       </p>
+                      <p class="notification-date-container">
+                        <span class="date"> Received {{ notif.date }} </span>
+                      </p>
                       <p class="notification-message-container">
                         <span class="actor-b"> {{ notif.message }} </span>
-                      </p>
-                      <p class="notification-date-container">
-                        <span class="date"> {{ notif.date }} </span>
                       </p>
                     </article>
                     <!-- ENDE NOTIFICATION ELEMENT -->
@@ -375,7 +375,7 @@
               <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
               <article v-if="trans.userID == user.uid" class="notification">
                 <p class="notification-content-container">
-                  <span class="actor-a">You</span> sent <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
+                  <span class="actor-a">You</span> paid <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
                 </p>
                 <p class="notification-date-container">
                   <span class="date">{{ trans.dateOfPayment }}</span>
@@ -1231,12 +1231,12 @@ export default {
   .actor-a{
     font-weight: bold;
   }
-  .notification-message-container{
-    margin-bottom: 5px;
-  }
   .notification-date-container{
     margin-top: -5px;
     color: $text-muted;
+    opacity: 0.5;
+    font-style: italic;
+    margin-bottom: 0px;
   }
   .notification {
     border-bottom: 1px solid $text-muted;
