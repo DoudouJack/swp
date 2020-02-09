@@ -668,7 +668,7 @@ export default {
             if (this.activitiesData[i].creator === this.user.uid) {
               this.totalGreen += this.activitiesData[i].greenAmount
             } else {
-              this.totalRed = this.activitiesData[i].redAmount
+              this.totalRed += this.activitiesData[i].redAmount
             }
           }
           console.log(activityResponse)
