@@ -238,7 +238,9 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             let newAmount = parseFloat(amount)+parseFloat(currentAmount)
 
             const filter = {_id: ObjectId(projectID)}
-            const update = {projectAmount: newAmount}
+            const newProjectAmount = Math.round(newAmount*100/100)
+            const update = {projectAmount: newProjectAmount}
+            
         
             const projectUpdate = await Project.findByIdAndUpdate(filter, update, {new: true})
             const ret2 = await projectUpdate.save()
