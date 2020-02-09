@@ -244,7 +244,7 @@
                 <div class="dropdown-inner dark">
                   <div class="notification-switch-container">
                     <label class="switch">
-                      <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings">
+                      <input id="notifications-switch" v-model="notificationSettings" type="checkbox" checked @click="updateSettings()">
                       <span class="slider"></span>
                     </label>
                     <span class="notification-switch-label">Push notifications?</span>
@@ -522,7 +522,7 @@
                                           {{ adata.redAmount }} {{adata.currency}}
                                       </span>
                   <div class="pay limit">
-                    <a href="paypal.me/valentinhuwer">
+                    <a href="paypal.me/valentinhuwer" @click="updateTransactionIsPaid()">
                     <img class="payment-icon" src="/../../img/icons/paypal.png">
                     </a>
                   </div>
@@ -707,7 +707,7 @@ export default {
       axios.get('http://127.0.0.1:8081/getNotificationSetting', { params:
           { userID: this.user.uid } })
         .then(notificationSettingsResponse => {
-          this.notificationSettings = notificationSettingsResponse.data
+          this.notificationSettings = notificationSettingsResponse.data[0].notificationTurnOn
         })
     },
     postProject () {
@@ -855,9 +855,8 @@ export default {
     updateSettings () {
       axios.post('http://127.0.0.1:8081/notificationsTurnOn', {
         userID: this.user.uid,
-        on: this.notificationSettings
+        on: !this.notificationSettings
       })
-      // this.getNotificationSettingsStatus()
     },
     getSingleProject () {
       axios.get('http://127.0.0.1:8081/getSingleProject', { params:
@@ -945,6 +944,12 @@ export default {
             }
           })
       }
+    },
+    updateTransactionIsPaid () {
+      axios.get('http://127.0.0.1:8081/updateTransactionIsPaid', { params: {
+        _id: this.activityID,
+        userID: this.user.uid
+      } })
     },
     submitReg () {
       firebase
