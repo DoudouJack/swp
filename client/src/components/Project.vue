@@ -128,7 +128,7 @@
       <!-- **** END ADD PROJECT MODAL -->
       <!-- **** START EDIT PROJECT MODAL -->
       <!-- eslint-disable -->
-      <div v-for="(index, projData) in singleProject" v-bind:key="projData" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <div v-for="projData in singleProject" v-bind:key="projData" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
       <!-- eslint-enable -->
 
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -399,6 +399,7 @@
           <div class="col-lg-9 col-md-8 col-sm-12">
             <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
 <!--              {{pdata._id}}-->
+<!--              {{ transactionsUser }}-->
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -523,7 +524,8 @@ export default {
       editProjectClick: '',
       transactions: [],
       singleActivity: [],
-      deleteAcc: ''
+      deleteAcc: '',
+      transactionsUser: []
     }
   },
   watch: {
@@ -587,7 +589,11 @@ export default {
           this.projectData = projectResponse.data.data
           // this.getRed()
           this.projectData.forEach(proj => proj.activity.forEach(act => this.activitiesOfUser.push(act)))
-
+          console.log('TEST')
+          var uid = 'xH5piLGPq9YqPMEBw1g7s0wKUdG3'
+          var otheruser = firebase.auth().getUser(uid)
+          console.log('other user: ' + otheruser.displayName)
+          console.log('convert: ' + firebase.auth().getUser(uid))
           /* var act
           for (act in this.projectData) {
             console.log('activity object: ' + act)
@@ -727,6 +733,7 @@ export default {
           this.getNotifications()
           this.getNotificationSettingsStatus()
           this.getAllTransactions()
+          this.getTransactionsUser()
         })
         .catch(err => {
           this.error = err.message
@@ -774,6 +781,13 @@ export default {
       axios.get('http://127.0.0.1:8081/transactions')
         .then(transactionsResponse => {
           this.transactions = transactionsResponse.data.data
+        })
+    },
+    getTransactionsUser () {
+      axios.get('http://127.0.0.1:8081/transactionUser', { params:
+          { userID: this.user.uid } })
+        .then(transactionsResponse => {
+          this.transactionsUser = transactionsResponse.data.data
         })
     },
     userLogout () {
