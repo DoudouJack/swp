@@ -49,7 +49,7 @@ const createTransactions = async (userID, activityID, amount, currency, projectI
 
         transaction.activityID = activityID
         transaction.userID = userID
-        transaction.amount = amount
+        transaction.amount = Math.round(amount*100/100)
         transaction.currency = currency
         transaction.projectID = projectID
 

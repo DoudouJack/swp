@@ -177,7 +177,7 @@ const createActivity = async(title, description, amount, currency, projectID, cr
             let transaction = new Transaction()
             transaction.activityID = activityID
             transaction.userID = member[i]
-            transaction.amount = amount/memberLength
+            transaction.amount = Math.round((amount/memberLength)*100/100)
             transaction.currency = currency
             transaction.projectID = projectID
             transaction.save();
