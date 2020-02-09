@@ -7,19 +7,19 @@ var transaction = mongoose.Schema({
     },
     activityID: {
         type: String,
-        required: true
+        required: false
     },
     userID: {
         type: String,
-        required: true
+        required: false
     },
     amount: {
         type: String,
-        required: true
+        required: false
     },
     currency: {
         type: String,
-        required: true
+        required: false
     },
     isPaid: {
         type: Boolean,
@@ -27,7 +27,7 @@ var transaction = mongoose.Schema({
     },
     projectID: {
         type: String,
-        required: true
+        required: false
     },
     redAmount: {
         type: Number,

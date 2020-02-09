@@ -55,7 +55,7 @@ var activity = mongoose.Schema({
     },
     transactions: {
         type: Array,
-        require: false
+        required: false
     }
     
 });
