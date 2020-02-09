@@ -825,7 +825,7 @@ export default {
     updateProject () {
       axios.post('http://127.0.0.1:8081/updateProject', {
         title: this.newName,
-        id: this.projectClick,
+        id: this.projectClick
       })
     },
     getSingleActivity () {
