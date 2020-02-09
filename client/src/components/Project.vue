@@ -307,7 +307,7 @@
     <section id="body">
       <div class="row">
         <!-- **************** START BODY ELEMENT MIT TRANSAKTIONSÜBERSICHT ****************  -->
-        <div v-if="!user" class="login-container">
+        <div v-if="!user && !registerON" class="login-container">
           <div class="overlay-login"></div>
             <div class="card">
               <div class="card-header">Login</div>
@@ -350,10 +350,81 @@
                     <div class="col-md-8 offset-md-4">
                       <button type="submit" class="btn btn-primary">Login</button>
                     </div>
+                    <div>
+                      <p @click="registerON=true">No Account yet? Click here to Register</p>
+                    </div>
                   </div>
                 </form>
               </div>
             </div>
+        </div>
+        <div v-if="!user && registerON" class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">Register</div>
+                <div class="card-body">
+                  <div v-if="errorReg" class="alert alert-danger">{{error}}</div>
+                  <form action="#" @submit.prevent="submitReg">
+                    <div class="form-group row">
+                      <label for="nameReg" class="col-md-4 col-form-label text-md-right">Name</label>
+
+                      <div class="col-md-6">
+                        <input
+                          id="nameReg"
+                          type="name"
+                          class="form-control"
+                          name="name"
+                          value
+                          required
+                          autofocus
+                          v-model="formReg.name"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="emailReg" class="col-md-4 col-form-label text-md-right">Email</label>
+
+                      <div class="col-md-6">
+                        <input
+                          id="emailReg"
+                          type="email"
+                          class="form-control"
+                          name="email"
+                          value
+                          required
+                          autofocus
+                          v-model="formReg.email"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="passwordReg" class="col-md-4 col-form-label text-md-right">Password</label>
+
+                      <div class="col-md-6">
+                        <input
+                          id="passwordReg"
+                          type="password"
+                          class="form-control"
+                          name="password"
+                          required
+                          v-model="formReg.password"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                      <div class="col-md-8 offset-md-4">
+                        <button type="submitReg" class="btn btn-primary" @click="submitReg">Register</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <sections class="activities col-md-4 col-sm-12">
           <div v-if="user" class="balance inner container data-row col-12">
@@ -495,9 +566,15 @@ export default {
         email: '',
         password: ''
       },
+      formReg: {
+        nameReg: '',
+        emailReg: '',
+        passwordReg: ''
+      },
       projectMonth: '',
       projectYear: '',
       error: null,
+      errorReg: null,
       user: '',
       token: '',
       projectData: [],
@@ -538,7 +615,8 @@ export default {
       transactionsOfActivities: [],
       transactionsPaid: [],
       newName: '',
-      newAmount: 0
+      newAmount: 0,
+      registerON: false
     }
   },
   watch: {
