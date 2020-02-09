@@ -88,7 +88,7 @@ const updateTransaction = async(activityID, userID) => {
         }
 
         const filter = { activityID: activityID, userID: userID };
-        const update = { isPaid: true };
+        const update = { isPaid: true, redAmount: 0 };
 
         const transactionUpdate = await Transaction.findOneAndUpdate(filter, update);
         
