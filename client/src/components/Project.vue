@@ -371,9 +371,9 @@
           </div>
           <div v-if="user" class="activities-inner-container data-row col-12 hidden-sm">
             <h3 class="notification-heading">Last Transactions</h3>
-            <div v-for="trans in transactions" v-bind:key="trans" class="sidebar-notifications-container">
+            <div v-for="trans in transactionsPaid" v-bind:key="trans" class="sidebar-notifications-container">
               <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
-              <article v-if="trans.userID == user.uid" class="notification">
+              <article class="notification">
                 <p class="notification-content-container">
                   <span class="actor-a">You</span> paid <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
                 </p>
@@ -400,7 +400,6 @@
             <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
 <!--              {{pdata._id}}-->
 <!--              {{ transactionsUser }}-->
-              {{ transactionsOfActivities }}
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -877,13 +876,13 @@ export default {
         axios.get('http://127.0.0.1:8081/getTransactionFor?activityID=' + this.activitiesData[index]._id)
           .then(transactionsAct => {
             console.log('trans it')
-            this.transactionsOfActivities.push(transactionsAct.data.data)
+            for (let index = 0; index < transactionsAct.data.data.length; index++) {
+              console.log(transactionsAct.data.data[index])
+              if (transactionsAct.data.data[index].isPaid === true) {
+                this.transactionsPaid.push(transactionsAct.data.data[index])
+              }
+            }
           })
-      }
-      for (let index = 0; index < this.transactionsOfActivities.length; index++) {
-        if (this.transactionsOfActivities[index].isPaid) {
-          this.transactionsOfActivities[index].push(this.transactionsPaid)
-        }
       }
     }
   }
