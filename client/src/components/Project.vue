@@ -350,7 +350,7 @@
                     <div class="col-md-8 offset-md-4">
                       <button type="submit" class="btn btn-primary">Login</button>
                     </div>
-                    <div>
+                    <div class="full-width">
                       <p @click="registerON=true">No Account yet? Click here to Register</p>
                     </div>
                   </div>
@@ -358,7 +358,8 @@
               </div>
             </div>
         </div>
-        <div v-if="!user && registerON" class="container">
+        <div v-if="!user && registerON" class="container login-container">
+          <div class="overlay-login"></div>
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="card">
@@ -1020,6 +1021,11 @@ export default {
     transform: scale(1.1);
   }
 
+  /*Utility*/
+  .full-width{
+    width: 100%;
+  }
+
   /*FORMS*/
   input {
     margin-bottom: 5px;
@@ -1448,6 +1454,10 @@ export default {
     -moz-border-radius: 0;
     border-radius: 0;
     margin: 10vh auto;
+  }
+  .card-body .full-width p{
+    text-align: center;
+    margin-top: 30px;
   }
   .login-container{
     width: 100%;
