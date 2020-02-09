@@ -373,7 +373,7 @@
             <h3 class="notification-heading">Last Transactions</h3>
             <div v-for="trans in transactionsPaid" v-bind:key="trans" class="sidebar-notifications-container">
               <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
-              <article v-if="user == trans.userID" class="notification">
+              <article v-if="user.uid == trans.userID" class="notification">
                 <p class="notification-content-container">
                   <span class="actor-a">You</span> paid <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
                 </p>
