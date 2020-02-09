@@ -58,13 +58,13 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="">
+              <form class="validated" action="">
                 <input placeholder="Email or phone" type="text" name="addNewUser" v-model="usersToBeAdded" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addMember()" >Add</button>
             </div>
           </div>
         </div>
@@ -81,46 +81,49 @@
               </button>
             </div>
             <div class="modal-body">
-              <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
-<!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
-<!--              <span>{{ projectMonth }}  {{ projectYear }}</span>-->
-              <span>{{ projectDate }}</span>
-              <select name="projectMonth" v-model="projectMonth">
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-              <select name="projectYear" v-model="projectYear">
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option selected value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </select>
-              <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
-              <input class="fixed-amount-checkbox" type="checkbox" name="projectType" v-model="projectType">
-
-              <div class="tooltip"><span>Fixed amount project?</span>
-                <span class="tooltiptext">For projects that have one only activity with a fixed amount per participant, e.g. a birthday gift</span>
-              </div>
-              <input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Amount" v-model="fixedAmount" />
+              <form class="validated">
+                <input placeholder="Project" type="text" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+  <!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
+  <!--              <span>{{ projectMonth }}  {{ projectYear }}</span>-->
+                <span>{{ projectDate }}</span>
+                <select name="projectMonth" v-model="projectMonth">
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+                <select name="projectYear" v-model="projectYear">
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option selected value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+                <input placeholder="Email or phone, separated with comma" type="text" name="projectMembers" v-model="projectMember" required pattern="(?:[^@]+@[^\.]+\..{2,10}|^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]{8}$)"><br>
+                <span>
+                <input class="fixed-amount-checkbox" type="checkbox" name="projectType" v-model="projectType">
+                  <div class="tooltip"><span>Fixed amount project?</span>
+                    <span class="tooltiptext">For projects that have one only activity with a fixed amount per participant, e.g. a birthday gift</span>
+                  </div>
+                  <input type="number" step="0.1" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$" class="fixed-amount-input" placeholder="Amount" v-model="fixedAmount" />
+              </span>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="postProject()">Add</button>
             </div>
           </div>
         </div>
@@ -169,15 +172,15 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="">
+              <form class="validated" action="">
                 <input placeholder="Activity" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
-                <input placeholder="Date" type="date" name="activityDate" v-model="actDate" required><br>
-                <input placeholder="Amount Paid" type="number" step="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
+                <input placeholder="Date" type="date" name="activityDate" value="2020-12-12" v-model="actDate" required><br>
+                <input placeholder="Amount Paid" type="number" step="0.01" min="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
+                <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary" @click="postActivity()" data-dismiss="modal">Add</button>
             </div>
           </div>
         </div>
@@ -195,7 +198,7 @@
             <div class="modal-body">
               <form action="">
                 <input :placeholder="activity.title" type="text" name="activityName" v-model="newName" required pattern=".{2,}$"><br>
-                <input :placeholder="activity.amount" type="number" step="0.01" name="activityAmount" v-model="newAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
+                <input :placeholder="activity.amount" type="number" min="0.01" step="0.01" name="activityAmount" v-model="newAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -212,7 +215,7 @@
       <div class="header-container dark container-fluid">
         <div class="row">
           <div class="col-6 header-left hidden-sm">
-            <h1 class="logo">WHO OWES WHO</h1>
+            <h1 class="logo">share.it</h1>
             <!--  <div class="row-add-project clickable"  data-toggle="modal" data-target="#addProject">
                 <div class="icon-heading">
                   <div>
@@ -1000,6 +1003,7 @@ export default {
     transition: background-color 1s;
     --background: #f0f4f9;
     --white: #fbfbfb;
+    min-height: calc(100vh - 58px);
   }
   /*DARK THEME VARIABLES*/
   /* IF DARK THEME ENABLED*/
@@ -1015,7 +1019,12 @@ export default {
       background: lighten($background-dark, 10%);
     }
   }
-
+  body{
+    background: #495c78;
+  }
+  .py-4{
+    display: none;
+  }
   /*MIXINS*/
   @mixin iconAnimation() {
     transform: scale(1.1);
@@ -1100,7 +1109,16 @@ export default {
   }
   .fixed-amount-checkbox:checked ~ .fixed-amount-input {
     opacity: 1;
-    width: 53px;
+    width: 80px;
+  }
+  /*Form Validation via CSS*/
+  input:invalid~.btn-primary {
+    opacity: .4;
+    pointer-events: none;
+  }
+  form.validated button {
+    margin: 10px 10px 0 0;
+    float: right;
   }
 
   /*RULES*/
@@ -1109,9 +1127,6 @@ export default {
   }
   #body{
     padding: 0 5%;
-  }
-  div#app-container {
-    min-height: calc(100vh - 122px);
   }
   div{
     max-height: 100%;
@@ -1393,6 +1408,9 @@ export default {
   }
 
   /*FOOTER*/
+  #footer.visible-container{
+    margin: 0;
+  }
   #footer{
     margin-top: $outergap;
   }
