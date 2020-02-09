@@ -28,7 +28,12 @@ var transaction = mongoose.Schema({
     projectID: {
         type: String,
         required: true
+    },
+    redAmount: {
+        type: Number,
+        required: false
     }
+
 });
 
 transaction.index({userID: 1, activityID: 1}, {unique: true})
