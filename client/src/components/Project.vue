@@ -354,7 +354,7 @@
                       <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                     <div class="full-width">
-                      <p @click="registerON=true">No Account yet? Click here to Register</p>
+                      <p @click="registerON=true">No account yet? Click here to register</p>
                     </div>
                   </div>
                 </form>
