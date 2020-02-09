@@ -128,7 +128,7 @@
       <!-- **** END ADD PROJECT MODAL -->
       <!-- **** START EDIT PROJECT MODAL -->
       <!-- eslint-disable -->
-      <div v-for="(index, projData) in singleProject" v-bind:key="projData" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <div v-for="projData in singleProject" v-bind:key="projData" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
       <!-- eslint-enable -->
 
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -250,25 +250,18 @@
                     <span class="notification-switch-label">Push notifications?</span>
                   </div>
                   <ul class="menu-list vertical">
-                    <article class="notification">
+                    <article v-for="notif in notifications" v-bind:key="notif" class="notification">
                       <p class="notification-content-container">
-                        <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
-<!--                        <span>{{ notifications }}</span>
-                        <span> {{ notificationSettings }}</span>-->
+                        <span class="actor-a"> {{ notif.title }}</span>
                       </p>
                       <p class="notification-date-container">
-                        <span class="date">12.02.2020</span>
+                        <span class="date"> Received {{ notif.date }} </span>
+                      </p>
+                      <p class="notification-message-container">
+                        <span class="actor-b"> {{ notif.message }} </span>
                       </p>
                     </article>
                     <!-- ENDE NOTIFICATION ELEMENT -->
-                    <article class="notification">
-                      <p class="notification-content-container">
-                        <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
-                      </p>
-                      <p class="notification-date-container">
-                        <span class="date">12.02.2020</span>
-                      </p>
-                    </article>
                     <!-- <li class="clickable" data-toggle="modal" data-target="#notification-modal">Alle ansehen</li> -->
                   </ul>
                 </div>
@@ -382,7 +375,7 @@
               <!-- START: NOTOFICATION ELEMENT -- TODO: mit Transaktionen füllen -->
               <article v-if="trans.userID == user.uid" class="notification">
                 <p class="notification-content-container">
-                  <span class="actor-a">You</span> sent <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
+                  <span class="actor-a">You</span> paid <span class="actor-b"></span> <span class="amount">{{ trans.amount }}€</span>
                 </p>
                 <p class="notification-date-container">
                   <span class="date">{{ trans.dateOfPayment }}</span>
@@ -406,6 +399,7 @@
           <div class="col-lg-9 col-md-8 col-sm-12">
             <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
 <!--              {{pdata._id}}-->
+<!--              {{ transactionsUser }}-->
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -530,7 +524,8 @@ export default {
       editProjectClick: '',
       transactions: [],
       singleActivity: [],
-      deleteAcc: ''
+      deleteAcc: '',
+      transactionsUser: []
     }
   },
   watch: {
@@ -594,7 +589,11 @@ export default {
           this.projectData = projectResponse.data.data
           // this.getRed()
           this.projectData.forEach(proj => proj.activity.forEach(act => this.activitiesOfUser.push(act)))
-
+          console.log('TEST')
+          var uid = 'xH5piLGPq9YqPMEBw1g7s0wKUdG3'
+          var otheruser = firebase.auth().getUser(uid)
+          console.log('other user: ' + otheruser.displayName)
+          console.log('convert: ' + firebase.auth().getUser(uid))
           /* var act
           for (act in this.projectData) {
             console.log('activity object: ' + act)
@@ -735,6 +734,7 @@ export default {
           this.getNotifications()
           this.getNotificationSettingsStatus()
           this.getAllTransactions()
+          this.getTransactionsUser()
         })
         .catch(err => {
           this.error = err.message
@@ -782,6 +782,13 @@ export default {
       axios.get('http://127.0.0.1:8081/transactions')
         .then(transactionsResponse => {
           this.transactions = transactionsResponse.data.data
+        })
+    },
+    getTransactionsUser () {
+      axios.get('http://127.0.0.1:8081/transactionUser', { params:
+          { userID: this.user.uid } })
+        .then(transactionsResponse => {
+          this.transactionsUser = transactionsResponse.data.data
         })
     },
     userLogout () {
@@ -1236,9 +1243,15 @@ export default {
   .notification-content-container{
     margin: 0;
   }
+  .actor-a{
+    font-weight: bold;
+  }
   .notification-date-container{
     margin-top: -5px;
     color: $text-muted;
+    opacity: 0.5;
+    font-style: italic;
+    margin-bottom: 0px;
   }
   .notification {
     border-bottom: 1px solid $text-muted;
