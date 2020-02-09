@@ -250,25 +250,18 @@
                     <span class="notification-switch-label">Push notifications?</span>
                   </div>
                   <ul class="menu-list vertical">
-                    <article class="notification">
+                    <article v-for="notif in notifications" v-bind:key="notif" class="notification">
                       <p class="notification-content-container">
-                        <span class="actor-a">Victor</span> send <span class="ator-b">you</span> <span class="amount">10€</span>
-<!--                        <span>{{ notifications }}</span>
-                        <span> {{ notificationSettings }}</span>-->
+                        <span class="actor-a"> {{ notif.title }}</span>
+                      </p>
+                      <p class="notification-message-container">
+                        <span class="actor-b"> {{ notif.message }} </span>
                       </p>
                       <p class="notification-date-container">
-                        <span class="date">12.02.2020</span>
+                        <span class="date"> {{ notif.date }} </span>
                       </p>
                     </article>
                     <!-- ENDE NOTIFICATION ELEMENT -->
-                    <article class="notification">
-                      <p class="notification-content-container">
-                        <span class="actor-a">You</span> sent <span class="ator-b">Lisa</span> <span class="amount">200€</span>
-                      </p>
-                      <p class="notification-date-container">
-                        <span class="date">12.02.2020</span>
-                      </p>
-                    </article>
                     <!-- <li class="clickable" data-toggle="modal" data-target="#notification-modal">Alle ansehen</li> -->
                   </ul>
                 </div>
@@ -1234,6 +1227,12 @@ export default {
   /*NOTIFICATIONS*/
   .notification-content-container{
     margin: 0;
+  }
+  .actor-a{
+    font-weight: bold;
+  }
+  .notification-message-container{
+    margin-bottom: 5px;
   }
   .notification-date-container{
     margin-top: -5px;
