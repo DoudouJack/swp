@@ -128,19 +128,19 @@
       <!-- **** END ADD PROJECT MODAL -->
       <!-- **** START EDIT PROJECT MODAL -->
       <!-- eslint-disable -->
-      <div v-for="projData in singleProject" v-bind:key="projData" class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
+      <div class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="Settings" aria-hidden="true">
       <!-- eslint-enable -->
 
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div v-for="p in singleProject" v-bind:key="p" class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Edit Project {{ projData.title }}</h5>
+              <h5 class="modal-title">Edit Project {{ p.title }}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <input type="text" :placeholder="projData.title" name="projectName" v-model="projectName" required pattern=".{3,}$"><br>
+              <input type="text" :placeholder="p.title" name="projectName" v-model="newName" required pattern=".{3,}$"><br>
               <!--              <input placeholder="Date" type="data-date-min-view-mode-2" name="projectDate" v-model="projectDate"><br>-->
               <!--              <span>{{ projectMonth }}  {{ projectYear }}</span>-->
               <input class="fixed-amount-checkbox" type="checkbox" name="projectType" v-model="projectType">
@@ -183,8 +183,8 @@
         </div>
       </div>
       <!-- **** START EDIT ACTIVITIY MODAL -->
-      <div v-for="activity in singleActivity" v-bind:key="activity" class="modal fade" id="editActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal fade" id="editActivity" tabindex="-1" role="dialog" aria-labelledby="Add Activity" aria-hidden="true">
+        <div v-for="activity in singleActivity" v-bind:key="activity" class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Edit Activity: {{ activity.title }}</h5>
@@ -194,8 +194,8 @@
             </div>
             <div class="modal-body">
               <form action="">
-                <input :placeholder="activity.title" type="text" name="activityName" v-model="actName" required pattern=".{2,}$"><br>
-                <input :placeholder="activity.amount" type="number" step="0.01" name="activityAmount" v-model="actAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
+                <input :placeholder="activity.title" type="text" name="activityName" v-model="newName" required pattern=".{2,}$"><br>
+                <input :placeholder="activity.amount" type="number" step="0.01" name="activityAmount" v-model="newAmount" required pattern="^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$"><br>
               </form>
             </div>
             <div class="modal-footer">
@@ -408,6 +408,7 @@
             <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
 <!--              {{pdata._id}}-->
 <!--              {{ transactionsUser }}-->
+              {{ singleProject }}
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
@@ -535,7 +536,9 @@ export default {
       deleteAcc: '',
       transactionsUser: [],
       transactionsOfActivities: [],
-      transactionsPaid: []
+      transactionsPaid: [],
+      newName: '',
+      newAmount: 0
     }
   },
   watch: {
@@ -784,7 +787,10 @@ export default {
       { id: this.projectClick } })
         .then(singleProjectResponse => {
           this.singleProject = singleProjectResponse.data.data
+          console.log(this.singleProject.length)
         })
+      console.log('singleProject')
+      console.log(this.singleProject)
       console.log(this.projectClick)
       /*      this.projectData.forEach(function (proj) {
         if (proj._id === this.projectClick) {
@@ -818,45 +824,9 @@ export default {
     },
     updateProject () {
       axios.post('http://127.0.0.1:8081/updateProject', {
-        title: this.projectName,
-        description: this.projectName,
+        title: this.newName,
         id: this.projectClick,
-        projectPayType: this.projectType
       })
-        .then(response => {
-          this.response = response
-          this.actualProjectID = response.data.projectID
-          console.log('projectID ' + this.actualProjectID)
-          console.log('type: ' + this.projectType)
-          if (this.projectType) {
-            axios.post('http://127.0.0.1:8081/createActivity', {
-              title: 'Birthday',
-              description: 'fixed amount activity',
-              member: this.user.uid,
-              amount: this.fixedAmount,
-              currency: 'EUR',
-              projectID: this.actualProjectID,
-              date: '',
-              creator: this.user.uid
-            })
-              .then(response => {
-                this.response = response
-                console.log('activity: ' + this.response)
-                this.getProjects()
-                this.getActivities()
-                // this.getActivitiesByProject(this.activityClick)
-                // this.addActivityToProject()
-              })
-              .catch(e => {
-                this.error.push(e)
-              })
-          } else {
-            this.getProjects()
-          }
-        })
-        .catch(e => {
-          this.error.push(e)
-        })
     },
     getSingleActivity () {
       axios.get('http://127.0.0.1:8081/getSingleActivity', { params:
@@ -868,9 +838,8 @@ export default {
     },
     updateActivity () {
       axios.post('http://127.0.0.1:8081/updateActivity', {
-        title: this.actName,
-        description: this.actName,
-        amount: this.actAmount,
+        title: this.newName,
+        amount: this.newAmount,
         id: this.activityClick
       })
         .then(response => {
