@@ -479,7 +479,6 @@
             <h2 class="data-row-title">{{pdata.title}}   <i class="fas fa-edit clickable" data-toggle="modal" data-target="#editProject" @click="projectClick = pdata._id" v-if="pdata.creator == user.uid"></i>
 <!--              {{pdata._id}}-->
 <!--              {{ transactionsUser }}-->
-              {{ singleProject }}
             </h2>
           </div>
           <div class="col-md-4 col-lg-3 col-sm-12">
